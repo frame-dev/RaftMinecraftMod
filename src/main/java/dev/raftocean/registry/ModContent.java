@@ -83,6 +83,9 @@ public final class ModContent {
                         output.accept(dev.raftocean.story.IslandContent.BEACON_LOG.get());
                         output.accept(dev.raftocean.story.IslandContent.HAVEN_LOG.get());
                         output.accept(dev.raftocean.story.IslandContent.STARFALL_LOG.get());
+                        output.accept(dev.raftocean.story.Exploration.SURVEY.get());
+                        output.accept(dev.raftocean.story.Exploration.REFUGE.get());
+                        output.accept(dev.raftocean.story.Exploration.ORCHARD.get());
                         output.accept(dev.raftocean.creature.CreatureContent.SPEAR.get());
                         output.accept(dev.raftocean.creature.CreatureContent.BAIT.get());
                         output.accept(SCRAP.get()); output.accept(DRIFT_LEAF.get()); output.accept(SEALED_NOTE.get());

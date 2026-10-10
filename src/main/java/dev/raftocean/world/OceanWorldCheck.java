@@ -197,6 +197,7 @@ public final class OceanWorldCheck {
         OceanSpawn.onLogout(new PlayerEvent.PlayerLoggedOutEvent(respawned));
         checks += dev.raftocean.creature.CreatureCheck.ocean(level);
         checks += dev.raftocean.story.IslandCheck.run(level);
+        checks += dev.raftocean.story.ExplorationCheck.run(level);
         return checks;
     }
 
@@ -267,6 +268,8 @@ public final class OceanWorldCheck {
         }
         var bed = dev.raftocean.survival.SurvivalCheck.create(level, dev.raftocean.entity.RaftPiece.Kind.BED); bed.setPos(12.5, 63, 12.5);
         var first = new TestPlayer(level, UUID.randomUUID()); var second = new TestPlayer(level, UUID.randomUUID());
+        OceanRaftData.get(level).remember(first.getUUID(),bed.getUUID(),bed.position());
+        OceanRaftData.get(level).remember(second.getUUID(),bed.getUUID(),bed.position());
         first.setPos(bed.position().add(0, .26, 0)); second.setPos(bed.position().add(0, .26, .5));
         level.addNewPlayer(first); level.addNewPlayer(second);
         var clock = level.dimensionType().defaultClock().orElseThrow();

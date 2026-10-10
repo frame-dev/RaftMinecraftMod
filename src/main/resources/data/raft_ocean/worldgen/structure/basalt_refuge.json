@@ -1,0 +1,10 @@
+{
+  "type": "raft_ocean:island",
+  "template": "raft_ocean:islands/basalt_refuge",
+  "biomes": [
+    "minecraft:ocean"
+  ],
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none"
+}

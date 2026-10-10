@@ -19,7 +19,7 @@ public record RaftMachineContext(RaftEntity raft,BlockPos anchor,RaftBuildable t
     }
     public boolean valid(Player player) {
         var piece=raft.pieces().get(anchor);
-        return !raft.isRemoved() && player.isAlive() && player.level()==raft.level() && piece!=null
+        return dev.raftocean.crew.CrewAccess.allowed(player,raft) && !raft.isRemoved() && player.isAlive() && player.level()==raft.level() && piece!=null
                 && piece.addonId().equals(type.id().toString())
                 && raft.machineContext(anchor).map(current->current.state()==state).orElse(false)
                 && player.position().distanceToSqr(worldPosition())<=64;

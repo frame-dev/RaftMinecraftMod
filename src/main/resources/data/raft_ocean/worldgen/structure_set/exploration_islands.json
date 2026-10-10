@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "raft_ocean:kelp_observatory",
+      "weight": 1
+    },
+    {
+      "structure": "raft_ocean:basalt_refuge",
+      "weight": 1
+    },
+    {
+      "structure": "raft_ocean:orchard_cove",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 810731,
+    "spacing": 24,
+    "separation": 12
+  }
+}

@@ -2,8 +2,44 @@
 
 
 
-- Updated: 2026-10-10.
-- Latest: Raft Ocean 0.11.31; artifact build/libs/raft_ocean-0.11.31.jar.
+- Updated: 2026-10-11.
+- Latest: Raft Ocean 0.11.32; artifact build/libs/raft_ocean-0.11.32.jar.
+  Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.32/API2.
+  Seven new native expeditions: Kelp Observatory, Basalt Refuge, Orchard Cove;
+  Broken Keel, Coral Grotto, Drowned Court and Chart Vault below sea level.
+  Three original bilingual journals with independent discovery bits and branching
+  clues; main six-stage journey retained, story open-ended. New island/ruin sets
+  added to old Ocean World generator settings; only new chunks are affected.
+  New flooded sites avoid island candidates. Long-Range Receiver sneak-use cycles
+  seven optional signals then main story; normal use follows selected signal.
+  Saved captain/crew/guest roles; public nearby /raftcrew join boards as guest;
+  captain assigns /raftcrew role <player> crew|guest. Guests cannot build, operate
+  controls or use storage; native/addon menu handles and paddles enforce access.
+  Established/shared-starter crew retained. Shared studied samples/projects;
+  offline crew catch up, recipe gates refresh, learned knowledge retained on leave.
+  Saved research/roles transferred when a lost raft is replaced.
+  Lethal damage with an online living crewmate opens a 60s rescue window;
+  sneak empty-hand teammate interaction within3blocks channels3seconds, restores
+  6health with2s native protection. Interrupted/held clicks, timeout death,
+  no-ally/disabled rescue, void/kill exceptions tested. Inventory not copied.
+  Config multiplayer.sharedResearch/crewPermissions/playerRescue true;
+  rescueWindowSeconds60,reviveHealth6; sharedStarterRaft defaultfalse retained.
+  Build/bootstrap passed:259199crafting,666research,44crew/rescue,862survival;
+  all1399loaded recipes audited; collision425,movement1210,carry729 passed.
+  Ocean-world815checks passed, including actual generation, chests and journals.
+  Packaged1353Ditems,357blocks,7renderers,615bilingual keys;
+  564models/64meshes surface-safe with prior silhouettes preserved.
+  Guide docs/EXPEDITIONS_AND_CREW.md; generator tools/generate_exploration.py;
+  logs build/expedition-runtime.log and build/expedition-final.log;
+  docs/crafting-audit-0.11.32.csv. Finished1–10;current11;release12 notstarted.
+  Limits: no lying-down/carried-body animation; live two-client moving-raft rescue,
+  permissions/JEI and visual exploration testing pending. Previous live movement,
+  collision/large-raft and actual third-party mod jar confirmation remain pending.
+  Compatibility0.11.31 retained. Shark600s/bird300s and Peaceful behavior retained.
+  Install0.11.32 on every client/server.
+
+- Retained: Raft Ocean 0.11.31; artifact build/libs/raft_ocean-0.11.31.jar.
   Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
   ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.31/API2.
   Optional integration:12shared material tags across56crafting recipes and

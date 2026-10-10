@@ -1,0 +1,26 @@
+{
+  "structures": [
+    {
+      "structure": "raft_ocean:broken_keel",
+      "weight": 1
+    },
+    {
+      "structure": "raft_ocean:coral_grotto",
+      "weight": 1
+    },
+    {
+      "structure": "raft_ocean:drowned_court",
+      "weight": 1
+    },
+    {
+      "structure": "raft_ocean:chart_vault",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 810733,
+    "spacing": 16,
+    "separation": 8
+  }
+}

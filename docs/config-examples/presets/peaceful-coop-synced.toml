@@ -175,6 +175,11 @@ gameMode = "PEACEFUL"
 	starterPlanks = 16
 	starterBread = 8
 	sharedStarterRaft = true
+	sharedResearch = true
+	crewPermissions = true
+	playerRescue = true
+	rescueWindowSeconds = 60
+	reviveHealth = 6.0
 
 [progression]
 	researchRequired = true

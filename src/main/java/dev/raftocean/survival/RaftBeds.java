@@ -88,7 +88,7 @@ public final class RaftBeds {
     }
     private static boolean valid(ServerPlayer player, Rest rest) {
         Vec3 center = rest.raft.stationPosition(rest.pos, RaftPiece.Kind.BED);
-        return player.isAlive() && player.level().players().contains(player) && !player.isSpectator() && !rest.raft.isRemoved() && player.level() == rest.raft.level()
+        return dev.raftocean.crew.CrewAccess.allowed(player,rest.raft) && player.isAlive() && player.level().players().contains(player) && !player.isSpectator() && !rest.raft.isRemoved() && player.level() == rest.raft.level()
                 && center != null && center.distanceToSqr(player.position()) <= 9 && player.getHealth() >= rest.health;
     }
     private record Rest(RaftEntity raft, BlockPos pos, long since, float health) { }

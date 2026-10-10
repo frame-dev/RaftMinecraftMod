@@ -569,6 +569,10 @@ public final class RaftEntity extends Entity {
     @Override
     public InteractionResult interact(Player player, InteractionHand hand, Vec3 location) {
         ItemStack held = player.getItemInHand(hand);
+        if(!dev.raftocean.crew.CrewAccess.allowed(player,this)) {
+            player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("raft_ocean.crew.denied"));
+            return InteractionResult.FAIL;
+        }
         if (held.is(ModContent.PADDLE.get())) { return ModContent.PADDLE.get().use(level(), player, hand); }
         boolean add = held.is(ModContent.FOUNDATION.get());
         RaftPiece.Kind buildKind = ModContent.structuralKind(held);

@@ -50,7 +50,7 @@ public final class Research {
     public static boolean research(Player player,ItemStack sample){
         int material=materialIndex(sample);
         if(player.level().isClientSide() || material<0 || materialKnown(player,material)){return false;}
-        sample.shrink(1);player.setData(MATERIALS,player.getData(MATERIALS)|1<<material);return true;
+        sample.shrink(1);player.setData(MATERIALS,player.getData(MATERIALS)|1<<material);dev.raftocean.crew.CrewAccess.publish(player);return true;
     }
     public static int state(Player player,int topic){
         if(topic<0 || topic>=TOPICS.length){return -1;}migrate(player);
@@ -60,6 +60,7 @@ public final class Research {
     public static boolean study(Player player,int topic){
         if(player.level().isClientSide() || state(player,topic)!=1){return false;}
         player.setData(KNOWLEDGE,player.getData(KNOWLEDGE)|1<<topic);
+        dev.raftocean.crew.CrewAccess.publish(player);
         if(player instanceof net.minecraft.server.level.ServerPlayer serverPlayer){
             ResearchRecipes.reconcile(serverPlayer,true);
             var advancement=serverPlayer.level().getServer().getAdvancements().get(
@@ -74,6 +75,7 @@ public final class Research {
         player.setData(SCHEMA,1);
         player.setData(MATERIALS,ALL_MATERIALS);
         player.setData(KNOWLEDGE,ALL_PROJECTS);
+        dev.raftocean.crew.CrewAccess.publish(player);
         ResearchRecipes.reconcile(player,true);
         for(var topic:TOPICS){
             var advancement=player.level().getServer().getAdvancements().get(

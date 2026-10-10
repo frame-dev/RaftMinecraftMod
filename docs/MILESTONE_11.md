@@ -1,5 +1,7 @@
 # Milestone 11 — polish, balance and performance (0.11.0)
 
+The current 0.11.32 update adds [original expeditions and crew features](EXPEDITIONS_AND_CREW.md), with new-chunk generation, open-ended branching clues, shared research, permissions and timed rescue. The following describes the original milestone baseline.
+
 All 383 English keys have matching German entries and format placeholders,
 including commands, cup messages, station help and config labels. Destination
 proper names and the six open-ended story journals remain unchanged.

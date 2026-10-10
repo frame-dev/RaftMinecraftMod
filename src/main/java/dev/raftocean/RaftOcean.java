@@ -20,6 +20,20 @@ public final class RaftOcean {
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SYNCED, dev.raftocean.config.RaftConfig.SPEC);
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.CLIENT, dev.raftocean.config.RaftConfig.CLIENT_SPEC);
         dev.raftocean.story.IslandContent.register(modEventBus);
+        dev.raftocean.story.Exploration.initialize();
+        dev.raftocean.crew.CrewRescue.initialize();
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewAccess::onLogin);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewAccess::onTick);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewRescue::onDeath);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewRescue::onDamage);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewRescue::onInteract);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewRescue::onUse);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewRescue::onBlock);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewRescue::onAttack);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewRescue::onBreak);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewRescue::onTick);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewRescue::onLogout);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewRescue::onStop);
         dev.raftocean.creature.CreatureContent.register(modEventBus);
         NeoForge.EVENT_BUS.addListener(dev.raftocean.creature.CreatureSpawning::onTick);
         NeoForge.EVENT_BUS.addListener(dev.raftocean.world.OceanMobRules::onJoin);
@@ -99,6 +113,7 @@ public final class RaftOcean {
                 LOGGER.info("Raft Ocean: {} runtime station assertions passed.", stationChecks);
                 int researchChecks=dev.raftocean.progression.ResearchCheck.run(event.getServer().overworld());
                 LOGGER.info("Raft Ocean: {} runtime research assertions passed.", researchChecks);
+                LOGGER.info("Raft Ocean: {} runtime crew/rescue assertions passed.",dev.raftocean.crew.CrewCheck.run(event.getServer().overworld()));
                 int salvageChecks = dev.raftocean.salvage.SalvageCheck.run(event.getServer().overworld());
                 LOGGER.info("Raft Ocean: {} runtime salvage assertions passed.", salvageChecks);
                 int survivalChecks = dev.raftocean.survival.SurvivalCheck.run(event.getServer().overworld());

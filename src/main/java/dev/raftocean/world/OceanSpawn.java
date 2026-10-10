@@ -96,7 +96,10 @@ public final class OceanSpawn {
                 RaftOcean.LOGGER.error("Could not create a safe starter raft for {}", player.getPlainTextName());
                 return;
             }
-            if(home!=null && (dev.raftocean.config.RaftConfig.SHARED_STARTER.get() || data.crewSize(home.raft())>1)){data.replaceRaft(home.raft(),raft.getUUID(),raft.position());}
+            if(home!=null)dev.raftocean.crew.CrewData.get(level).replace(home.raft(),raft.getUUID());
+            if(home!=null && (dev.raftocean.config.RaftConfig.SHARED_STARTER.get() || data.crewSize(home.raft())>1)){
+                data.replaceRaft(home.raft(),raft.getUUID(),raft.position());
+            }
             data.remember(player.getUUID(), raft.getUUID(), raft.position());
         }
         Vec3 target = dev.raftocean.survival.RaftBeds.spawnPosition(player, raft);

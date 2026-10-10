@@ -15,7 +15,7 @@ public final class PaddleItem extends Item {
         var raft = level.getEntitiesOfClass(RaftEntity.class, player.getBoundingBox().inflate(1), candidate ->
                         !candidate.isRemoved() && candidate.getCollisionBoxes().stream().anyMatch(box -> RaftContact.isSupported(player.getBoundingBox(), box)))
                 .stream().min(Comparator.comparingDouble(candidate -> candidate.distanceToSqr(player))).orElse(null);
-        if (raft == null || raft.navigation().anchored() || player.getCooldowns().isOnCooldown(player.getItemInHand(hand))) {
+        if (raft == null || !dev.raftocean.crew.CrewAccess.allowed(player,raft) || raft.navigation().anchored() || player.getCooldowns().isOnCooldown(player.getItemInHand(hand))) {
             return InteractionResult.FAIL;
         }
         if (level.isClientSide()) { return InteractionResult.SUCCESS; }

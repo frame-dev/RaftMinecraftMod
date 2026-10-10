@@ -17,7 +17,7 @@ public final class RaftStationMenus {
 
     public static boolean valid(RaftEntity raft, BlockPos pos, RaftPiece.Kind kind, Player player) {
         Vec3 center = raft.stationPosition(pos, kind);
-        return player.isAlive() && !raft.isRemoved() && player.level() == raft.level()
+        return dev.raftocean.crew.CrewAccess.allowed(player,raft) && player.isAlive() && !raft.isRemoved() && player.level() == raft.level()
                 && center != null && player.position().distanceToSqr(center) <= 64;
     }
 

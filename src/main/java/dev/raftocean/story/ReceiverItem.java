@@ -29,11 +29,21 @@ public final class ReceiverItem extends Item {
             player.sendOverlayMessage(Component.translatable("raft_ocean.story.ocean_only"));return InteractionResult.FAIL;
         }
         int stage=player.getData(IslandContent.JOURNEY);
-        if(stage>=DESTINATIONS.length){player.sendSystemMessage(Component.translatable("raft_ocean.story.complete"));return InteractionResult.SUCCESS_SERVER;}
+        if(player.isShiftKeyDown()) {
+            if(!upgraded){player.sendOverlayMessage(Component.translatable("raft_ocean.exploration.upgrade"));return InteractionResult.FAIL;}
+            int channel=(player.getData(Exploration.CHANNEL)+2)%(Exploration.ROUTES.length+1)-1;
+            player.setData(Exploration.CHANNEL,channel);
+            player.sendSystemMessage(Component.translatable("raft_ocean.exploration.channel",
+                    channel<0?Component.translatable("raft_ocean.exploration.story"):Component.translatable("raft_ocean.island."+Exploration.ROUTES[channel])));
+        }
+        int branch=upgraded?player.getData(Exploration.CHANNEL):-1;
+        if(branch>=0)stage=DESTINATIONS.length+branch;
+        String destination=branch>=0?Exploration.ROUTES[branch]:stage<DESTINATIONS.length?DESTINATIONS[stage]:null;
+        if(destination==null){player.sendSystemMessage(Component.translatable("raft_ocean.story.complete"));return InteractionResult.SUCCESS_SERVER;}
         var origin=player.blockPosition();var signal=signals.get(player);
         if(signal==null || signal.level!=server || signal.stage!=stage || signal.until<server.getGameTime()
                 || signal.origin.distSqr(origin)>128*128) {
-            var tag=TagKey.create(Registries.STRUCTURE,Identifier.fromNamespaceAndPath("raft_ocean",DESTINATIONS[stage]));
+            var tag=TagKey.create(Registries.STRUCTURE,Identifier.fromNamespaceAndPath("raft_ocean",destination));
             BlockPos target=server.findNearestMapStructure(tag,origin,upgraded?6:3,false);
             if(target!=null){target=islandCenter(target);}
             signal=new Signal(server,stage,origin,server.getGameTime()+1200,target);signals.put(player,signal);
@@ -44,7 +54,7 @@ public final class ReceiverItem extends Item {
         var target=signal.target;int dx=target.getX()-origin.getX(),dz=target.getZ()-origin.getZ();
         int distance=(int)Math.round(Math.hypot(dx,dz));
         double bearing=dev.raftocean.navigation.RaftNavigation.normalize(Math.toDegrees(Math.atan2(-dx,dz)));
-        player.sendSystemMessage(Component.translatable("raft_ocean.story.signal",Component.translatable("raft_ocean.island."+DESTINATIONS[stage]),
+        player.sendSystemMessage(Component.translatable("raft_ocean.story.signal",Component.translatable("raft_ocean.island."+destination),
                 target.getX(),target.getZ(),distance,(int)Math.round(bearing)));
         return InteractionResult.SUCCESS_SERVER;
     }

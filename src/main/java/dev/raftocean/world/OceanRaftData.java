@@ -36,6 +36,9 @@ public final class OceanRaftData extends SavedData {
     public static OceanRaftData get(ServerLevel level) { return level.getDataStorage().computeIfAbsent(TYPE); }
     public Home home(UUID player) { return homes.get(player); }
     public int size() { return homes.size(); }
+    public UUID captain(UUID raft) {
+        return homes.entrySet().stream().filter(e->e.getValue().raft().equals(raft)).map(Map.Entry::getKey).findFirst().orElse(null);
+    }
     public Home sharedHome() {
         if(shared==null && !homes.isEmpty()){shared=homes.values().iterator().next();setDirty();}
         return shared;

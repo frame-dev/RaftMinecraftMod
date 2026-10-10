@@ -123,6 +123,7 @@ tasks.matching { it.name in ['runBootstrapSmoke', 'runOceanSmoke'] }.configureEa
                     && (log =~ /Raft Ocean: \d+ runtime crafting assertions passed\./).find()
                     && (log =~ /Raft Ocean: \d+ runtime station assertions passed\./).find()
                     && (log =~ /Raft Ocean: \d+ runtime research assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime crew\/rescue assertions passed\./).find()
                     && (log =~ /Raft Ocean: \d+ runtime salvage assertions passed\./).find()
                     && (log =~ /Raft Ocean: \d+ runtime survival assertions passed\./).find()
                     && (log =~ /Raft Ocean: \d+ runtime navigation assertions passed\./).find()

@@ -1,5 +1,7 @@
 # Raft Ocean
 
+Version 0.11.32 adds [underwater expeditions, branching islands and crew features](docs/EXPEDITIONS_AND_CREW.md): four flooded dive sites, three resource islands, original journals, optional receiver channels, saved crew roles, shared research and timed teammate rescue. New locations generate in unexplored Ocean World chunks; the story remains open-ended. Install 0.11.32 on every client and the server.
+
 Version 0.11.31 adds [optional mod compatibility](docs/MOD_COMPATIBILITY.md): shared crafting/research material tags, exported iron plates/copper wire, rare mod-resource ocean salvage, standard NeoForge energy item charging and lazy optional station adapter registration. Matching mod jars can be added to `compat-mods/` for development runs. Foreign moving machines require dedicated adapters; older Minecraft jars cannot load on 26.3.
 
 Version 0.11.30 adds [a disposable stone anchor and basic food grill](docs/STARTER_ANCHOR_AND_GRILL.md), both available before research. The anchor preserves the requested material cost through a stone-bundle recipe and is consumed when released. Floating crates and barrels now supply occasional cobblestone. Install 0.11.30 on all clients and the server.
