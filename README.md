@@ -1,5 +1,7 @@
 # Raft Ocean
 
+Version 0.11.30 adds [a disposable stone anchor and basic food grill](docs/STARTER_ANCHOR_AND_GRILL.md), both available before research. The anchor preserves the requested material cost through a stone-bundle recipe and is consumed when released. Floating crates and barrels now supply occasional cobblestone. Install 0.11.30 on all clients and the server.
+
 Version 0.11.29 [fixes starter survival progression](docs/STARTER_SURVIVAL.md). A basic wooden purifier needs no metal or research. Wet bricks dry on a Sun-Drying Rack in 150 sunny seconds; dry bricks unlock smelter research and craft the smelter without metal fittings. The existing metal purifier is now named Advanced Water Purifier. Install 0.11.29 on all clients and the server.
 
 Version 0.11.28 [fixes stale research crafting results and reviews the project](docs/PROJECT_REVIEW_0_11_28.md). Result pickup now rechecks research, and existing grids refresh when access changes. Build, bootstrap and ocean-world checks passed.

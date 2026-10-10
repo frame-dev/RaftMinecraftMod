@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "PSP",
+    "PCP",
+    " S "
+  ],
+  "key": {
+    "P": "#minecraft:planks",
+    "S": "raft_ocean:scrap",
+    "C": "minecraft:string"
+  },
+  "result": {
+    "id": "raft_ocean:raft_basic_grill"
+  }
+}

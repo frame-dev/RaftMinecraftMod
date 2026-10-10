@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "PSP",
+    " B "
+  ],
+  "key": {
+    "P": "#minecraft:planks",
+    "S": "raft_ocean:scrap",
+    "B": "raft_ocean:stone_anchor_bundle"
+  },
+  "result": {
+    "id": "raft_ocean:raft_disposable_anchor"
+  }
+}

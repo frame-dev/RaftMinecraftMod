@@ -3,7 +3,27 @@
 
 
 - Updated: 2026-10-10.
-- Latest: Raft Ocean 0.11.29; artifact build/libs/raft_ocean-0.11.29.jar.
+- Latest: Raft Ocean 0.11.30; artifact build/libs/raft_ocean-0.11.30.jar.
+  Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.30/API2.
+  Disposable Stone Anchor: exact cost4cobblestone/4string/2planks/1scrap,
+  using a stone bundle intermediate to fit native3x3 crafting. No research.
+  Lowering stops raft/debris; releasing consumes anchor; deployed state persists.
+  Used anchor cannot be reclaimed through hammer removal or foundation damage.
+  Basic Food Grill:4planks/2scrap/1string; plank-fueled campfire cooking, no
+  research/water/metal fittings. Native food filters, UI, animations and JEI links.
+  Crates/barrels offer2–4cobblestone per selected entry; original colored models.
+  Build/native server bootstrap passed:259199crafting,666research,848survival,
+  971construction assertions plus movement/collision/navigation/gameplay suites.
+  Packaged audits:1399recipes(133mod),132items,357blocks,577bilingual labels;
+  561models/64meshes surface-safe, old model envelopes preserved.
+  Guide docs/STARTER_ANCHOR_AND_GRILL.md;docs/crafting-audit-0.11.30.csv;
+  log build/starter-anchor-runtime.log. Finished1–10;current11;story open-ended.
+  Pending local new-station/JEI/co-op confirmation and previous movement/collision/
+  large-raft reports. Shark600s/bird300s retained. Release12 not started.
+  No new world needed. Install0.11.30 on all clients and server.
+
+- Retained: Raft Ocean 0.11.29; artifact build/libs/raft_ocean-0.11.29.jar.
   Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
   ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.29/API2.
   Basic wooden purifier and Sun-Drying Rack are craftable before research.

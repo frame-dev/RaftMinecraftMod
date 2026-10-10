@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "CSC",
+    "S S",
+    "CSC"
+  ],
+  "key": {
+    "C": "minecraft:cobblestone",
+    "S": "minecraft:string"
+  },
+  "result": {
+    "id": "raft_ocean:stone_anchor_bundle"
+  }
+}
