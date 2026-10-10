@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "raft_ocean:metal_plate",
+    "raft_ocean:metal_plate",
+    "raft_ocean:copper_wire",
+    "raft_ocean:copper_wire",
+    "minecraft:copper_ingot",
+    "minecraft:copper_ingot",
+    "minecraft:glass",
+    "raft_ocean:binding_paste"
+  ],
+  "result": {
+    "id": "raft_ocean:deepcycle_battery"
+  }
+}

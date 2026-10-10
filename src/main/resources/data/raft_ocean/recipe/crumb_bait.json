@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:bread"
+  ],
+  "result": {
+    "id": "raft_ocean:crumb_bait",
+    "count": 8
+  }
+}

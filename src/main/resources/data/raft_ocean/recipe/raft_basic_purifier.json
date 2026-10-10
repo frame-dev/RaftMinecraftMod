@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "PL",
+    "CP"
+  ],
+  "key": {
+    "P": "#minecraft:planks",
+    "L": "raft_ocean:drift_leaf",
+    "C": "#raft_ocean:bindings"
+  },
+  "result": {
+    "id": "raft_ocean:raft_basic_purifier"
+  }
+}

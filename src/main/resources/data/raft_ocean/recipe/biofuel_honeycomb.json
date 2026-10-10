@@ -1,0 +1,12 @@
+{
+  "type": "raft_ocean:biorefiner",
+  "ingredients": [
+    "#raft_ocean:biofuel_organics",
+    "minecraft:honeycomb"
+  ],
+  "result": {
+    "id": "raft_ocean:biofuel",
+    "count": 2
+  },
+  "duration": 600
+}

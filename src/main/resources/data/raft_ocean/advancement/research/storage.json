@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:raft_chest"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.storage"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.storage"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "raft_ocean:research/workshop",
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:chest_from_braces",
+      "raft_ocean:raft_barrel",
+      "raft_ocean:raft_barrel_from_materials",
+      "raft_ocean:raft_chest",
+      "raft_ocean:raft_chest_from_materials"
+    ]
+  }
+}

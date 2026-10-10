@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "raft_ocean:raft_half_wall",
+    "minecraft:stick"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_triangle_wall"
+  }
+}

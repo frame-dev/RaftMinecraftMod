@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "raft_ocean:plant_fiber",
+  "ingredients": [
+    "raft_ocean:drift_leaf"
+  ],
+  "result": {
+    "id": "raft_ocean:plant_fiber",
+    "count": 2
+  }
+}

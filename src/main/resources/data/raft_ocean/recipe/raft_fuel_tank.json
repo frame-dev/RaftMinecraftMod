@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "MMM",
+    "MBM",
+    "MMM"
+  ],
+  "key": {
+    "M": "raft_ocean:metal_plate",
+    "B": "raft_ocean:binding_paste"
+  },
+  "result": {
+    "id": "raft_ocean:raft_fuel_tank",
+    "count": 1
+  }
+}

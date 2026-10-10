@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "DWD",
+    "MCM",
+    "BBB"
+  ],
+  "key": {
+    "B": "raft_ocean:timber_brace",
+    "W": "raft_ocean:copper_wire",
+    "C": "#raft_ocean:bindings",
+    "D": "raft_ocean:fired_brick",
+    "M": "raft_ocean:metal_plate"
+  },
+  "result": {
+    "id": "raft_ocean:raft_purifier",
+    "count": 1
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:wheat",
+    "minecraft:wheat",
+    "raft_ocean:drift_leaf"
+  ],
+  "result": {
+    "id": "raft_ocean:binding_paste",
+    "count": 2
+  }
+}

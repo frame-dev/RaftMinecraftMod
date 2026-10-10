@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    " M ",
+    "MMM",
+    " M "
+  ],
+  "key": {
+    "M": "minecraft:copper_ingot"
+  },
+  "result": {
+    "id": "raft_ocean:raft_water_pipe",
+    "count": 4
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:cooked_salmon",
+    "minecraft:baked_potato",
+    "minecraft:dried_kelp",
+    "minecraft:bowl"
+  ],
+  "result": {
+    "id": "raft_ocean:reef_stew",
+    "count": 1
+  }
+}

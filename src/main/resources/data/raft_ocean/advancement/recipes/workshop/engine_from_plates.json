@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_material": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "raft_ocean:scrap",
+              "raft_ocean:plant_fiber",
+              "minecraft:wheat",
+              "minecraft:clay_ball",
+              "minecraft:oak_planks"
+            ]
+          }
+        ]
+      }
+    },
+    "has_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipes": "raft_ocean:engine_from_plates"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_material",
+      "has_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:engine_from_plates"
+    ]
+  }
+}

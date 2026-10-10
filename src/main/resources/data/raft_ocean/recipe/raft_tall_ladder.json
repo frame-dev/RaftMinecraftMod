@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "raft_ocean:raft_ladder",
+    "raft_ocean:raft_ladder",
+    "raft_ocean:cordage"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_tall_ladder"
+  }
+}

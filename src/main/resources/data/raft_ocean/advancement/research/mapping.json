@@ -1,0 +1,34 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:raft_cartography_table"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.mapping"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.mapping"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "raft_ocean:research/workshop",
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:raft_bookshelf",
+      "raft_ocean:raft_cartography_table",
+      "raft_ocean:raft_loom"
+    ]
+  }
+}

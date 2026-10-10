@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "raft_ocean:raft_crafting_table",
+    "raft_ocean:timber_brace",
+    "raft_ocean:timber_brace",
+    "raft_ocean:raft_floor"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_wide_crafting_table"
+  }
+}

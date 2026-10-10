@@ -1,0 +1,10 @@
+{
+  "type": "raft_ocean:drying_rack",
+  "ingredients": [
+    "raft_ocean:damp_brick"
+  ],
+  "result": {
+    "id": "raft_ocean:dried_brick"
+  },
+  "duration": 3000
+}

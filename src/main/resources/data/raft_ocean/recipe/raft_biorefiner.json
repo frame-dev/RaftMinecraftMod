@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "CMC",
+    "MBM",
+    "FFF"
+  ],
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "M": "raft_ocean:metal_plate",
+    "B": "minecraft:barrel",
+    "F": "raft_ocean:scrap_fasteners"
+  },
+  "result": {
+    "id": "raft_ocean:raft_biorefiner",
+    "count": 1
+  }
+}

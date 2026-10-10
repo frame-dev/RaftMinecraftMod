@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:ender_chest"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_ender_chest",
+    "count": 1
+  }
+}

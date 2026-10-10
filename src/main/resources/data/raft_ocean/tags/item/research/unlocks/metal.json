@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "raft_ocean:metal_plate",
+    "raft_ocean:reinforced_brace",
+    "raft_ocean:copper_wire"
+  ]
+}

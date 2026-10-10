@@ -1,0 +1,6 @@
+{
+  "type":"minecraft:crafting_shaped",
+  "pattern":["PP ","CS "," S "],
+  "key":{"P":"#minecraft:planks","S":"minecraft:stick","C":"#raft_ocean:bindings"},
+  "result":{"id":"raft_ocean:building_hammer"}
+}

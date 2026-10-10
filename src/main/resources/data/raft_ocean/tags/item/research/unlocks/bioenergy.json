@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "raft_ocean:biofuel",
+    "raft_ocean:raft_biorefiner",
+    "raft_ocean:raft_biofuel_generator",
+    "raft_ocean:raft_fuel_pipe",
+    "raft_ocean:raft_fuel_tank"
+  ]
+}

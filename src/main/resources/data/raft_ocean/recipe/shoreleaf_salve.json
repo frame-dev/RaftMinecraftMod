@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "raft_ocean:drift_leaf",
+    "minecraft:kelp",
+    "raft_ocean:binding_paste"
+  ],
+  "result": {
+    "id": "raft_ocean:shoreleaf_salve"
+  }
+}

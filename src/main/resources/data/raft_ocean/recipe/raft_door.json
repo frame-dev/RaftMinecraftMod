@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_door",
+  "pattern": [
+    "PP",
+    "BF",
+    "PP"
+  ],
+  "key": {
+    "B": "raft_ocean:timber_brace",
+    "F": "raft_ocean:scrap_fasteners",
+    "P": "#minecraft:planks"
+  },
+  "result": {
+    "id": "raft_ocean:raft_door",
+    "count": 1
+  }
+}

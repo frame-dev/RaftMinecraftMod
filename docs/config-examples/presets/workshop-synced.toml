@@ -1,0 +1,180 @@
+#WORLD follows Minecraft difficulty. Minecraft Peaceful always prevents hostile behavior.
+#Allowed Values: WORLD, PEACEFUL, EASY, NORMAL, HARD
+gameMode = "WORLD"
+
+[survival]
+	preparedMealBonuses = true
+	mealBonusTicks = 2400
+	# Hydration restored by one fresh-water cup.
+	drinkHydration = 6
+	# Hydration drain multiplier while sprinting.
+	sprintThirstMultiplier = 2
+	# Purifier speed multiplier, combined with processingSpeed.
+	purifierSpeed = 1.5
+	# Rain collector speed multiplier; still requires exposed rain.
+	rainCollectorSpeed = 1
+	# Grill speed multiplier, combined with processingSpeed.
+	grillSpeed = 1.5
+	# Smelter speed multiplier, combined with processingSpeed.
+	smelterSpeed = 1.5
+	# Cooking pot speed multiplier, combined with processingSpeed.
+	cookingPotSpeed = 1.5
+	# Small planter growth multiplier, combined with processingSpeed.
+	cropGrowthSpeed = 1.5
+	# Tree planter growth multiplier, combined with processingSpeed.
+	treeGrowthSpeed = 1.5
+	# Fuel duration multiplier for newly consumed survival-machine fuel; existing burning fuel is preserved.
+	machineFuelMultiplier = 1
+	# Minimum light for both planters; zero removes brightness requirement.
+	planterMinimumLight = 9
+	# Require both planters to be uncovered by raft pieces; brightness is checked separately.
+	plantersRequireOpenSky = true
+	thirstInPeaceful = true
+	#Enable hydration drain and dehydration damage.
+	thirstEnabled = true
+	#Ticks per thirst point; sprinting drains twice as fast.
+	# Default: 600
+	# Range: 100 ~ 12000
+	thirstPeriodTicks = 600
+	#Machine processing speed multiplier; fuel still burns in real ticks.
+	# Default: 1.0
+	# Range: 0.1 ~ 4.0
+	processingSpeed = 1.0
+
+[navigation]
+	# Engine fuel duration multiplier for newly consumed fuel.
+	engineFuelMultiplier = 1
+	# Engine thrust multiplier; zero stops engines without consuming fuel. Speed cap still applies.
+	engineThrustMultiplier = 1
+	# Sail thrust multiplier; speed cap and wind alignment still apply.
+	sailThrustMultiplier = 1
+	# Paddle impulse multiplier; zero disables strokes. Speed cap still applies.
+	paddleStrengthMultiplier = 1
+	#Foundation load per engine at full thrust (1-1024).
+	engineFoundationCapacity = 100
+	#Multiply saved raft current; zero disables natural drift.
+	# Default: 1.0
+	# Range: 0.0 ~ 3.0
+	currentMultiplier = 1.0
+	#Wind strength multiplier.
+	# Default: 1.0
+	# Range: 0.0 ~ 2.0
+	windMultiplier = 1.0
+	#Maximum requested horizontal blocks per tick.
+	# Default: 0.16
+	# Range: 0.02 ~ 0.2
+	maxSpeed = 0.16
+	#Maximum hull degrees per tick.
+	# Default: 0.75
+	# Range: 0.1 ~ 1.0
+	turnSpeed = 0.75
+
+[salvage]
+	#Spawn natural floating salvage.
+	enabled = true
+	#Time between salvage spawn batches.
+	# Default: 100
+	# Range: 20 ~ 12000
+	spawnIntervalTicks = 100
+	#Attempts per occupied raft and batch.
+	# Default: 4
+	# Range: 1 ~ 16
+	spawnAttempts = 4
+	#Maximum incoming salvage per raft.
+	# Default: 24
+	# Range: 1 ~ 128
+	perRaftCap = 24
+	#Maximum naturally spawned loaded salvage per dimension.
+	# Default: 128
+	# Range: 1 ~ 512
+	levelCap = 128
+	#Salvage lifetime, including elapsed time unloaded.
+	# Default: 6000
+	# Range: 600 ~ 24000
+	lifetimeTicks = 6000
+
+[creatures]
+	foundationBiteWindupTicks = 40
+	foundationBitePauseTicks = 12
+	sharkRetreatTicks = 55
+	sharkRepelCooldownTicks = 120
+	peacefulSharksPerRaft = 1
+	easySharksPerRaft = 1
+	normalSharksPerRaft = 1
+	hardSharksPerRaft = 2
+	foundationBitesPerAttack = 10
+	sharkRepelHits = 3
+	#Spawn creatures around occupied rafts on loaded terrain/water.
+	naturalSpawning = true
+	#Allow natural sharks and shark attacks.
+	sharks = true
+	#Allow natural crop pests and crop theft.
+	birds = true
+	#Spawn friendly grazers on suitable nearby land.
+	friendlyFauna = true
+	#Creature spawn/replacement interval.
+	# Default: 600
+	# Range: 100 ~ 12000
+	spawnIntervalTicks = 600
+	#Loaded mod creature cap per dimension; manual summons bypass it.
+	# Default: 32
+	# Range: 1 ~ 128
+	levelCap = 32
+	#Bite frequency multiplier; zero disables player and raft attacks.
+	# Default: 1.0
+	# Range: 0.0 ~ 4.0
+	sharkAggression = 1.0
+	#Hostile damage multiplier, in addition to vanilla difficulty.
+	# Default: 1.0
+	# Range: 0.0 ~ 4.0
+	damageMultiplier = 1.0
+	#Allow sharks to damage exposed foundations.
+	raftDamage = true
+	#Foundation damage per bite; each foundation has 100 health.
+	# Default: 10
+	# Range: 1 ~ 100
+	foundationBiteDamage = 10
+	#Base delay between raft attacks, divided by aggression.
+	# Default: 600
+	# Range: 100 ~ 12000
+	sharkBiteIntervalTicks = 600
+	#Minimum loaded seconds before the first and between raft attacks; not scaled by aggression.
+	# Default: 600
+	# Range: 0 ~ 3600
+	sharkRaftAttackDelaySeconds = 600
+	#Minimum loaded seconds before first crop theft and between thefts or interrupted approaches.
+	# Default: 300
+	# Range: 0 ~ 3600
+	birdCropTheftDelaySeconds = 300
+	#Delay between crop theft attempts.
+	# Default: 1200
+	# Range: 200 ~ 12000
+	birdTheftIntervalTicks = 1200
+	#Duration of a placed chum float.
+	# Default: 1200
+	# Range: 200 ~ 12000
+	baitDurationTicks = 1200
+	#Maximum loaded chum floats placed with the bait item per dimension.
+	# Default: 16
+	# Range: 1 ~ 64
+	baitCap = 16
+
+[building]
+	# Limit new structural pieces per raft; existing saves remain intact. Technical ceiling is 512.
+	pieceLimit = 512
+	#Maximum foundations placed per raft; lowering this preserves existing builds. Native save/network ceiling is 1024.
+	# Default: 1024
+	# Range: 9 ~ 1024
+	foundationLimit = 1024
+
+
+[multiplayer]
+	giveStarterSupplies = true
+	starterHammer = true
+	starterFoundations = 8
+	starterPlanks = 16
+	starterBread = 8
+	sharedStarterRaft = false
+
+[progression]
+	researchRequired = true

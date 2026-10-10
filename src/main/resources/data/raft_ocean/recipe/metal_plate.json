@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:iron_ingot",
+    "minecraft:iron_ingot",
+    "raft_ocean:scrap_fasteners"
+  ],
+  "result": {
+    "id": "raft_ocean:metal_plate",
+    "count": 2
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "ingredient": "raft_ocean:fish_skewer",
+  "result": {
+    "id": "raft_ocean:charred_fish_skewer"
+  },
+  "experience": 0,
+  "cookingtime": 400
+}

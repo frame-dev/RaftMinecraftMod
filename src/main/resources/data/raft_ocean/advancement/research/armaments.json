@@ -1,0 +1,39 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:metal_spear"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.armaments"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.armaments"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "raft_ocean:research/workshop",
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:broadhead_arrow",
+      "raft_ocean:broadhead_arrow_feathered",
+      "raft_ocean:metal_spear",
+      "raft_ocean:reef_laminated_bow",
+      "raft_ocean:reef_machete",
+      "raft_ocean:steel_arrow",
+      "raft_ocean:steel_arrow_feathered",
+      "raft_ocean:stormsteel_bow"
+    ]
+  }
+}

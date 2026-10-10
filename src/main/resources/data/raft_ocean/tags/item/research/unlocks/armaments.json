@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "raft_ocean:metal_spear",
+    "raft_ocean:reef_machete",
+    "raft_ocean:reef_laminated_bow",
+    "raft_ocean:stormsteel_bow",
+    "raft_ocean:steel_arrow",
+    "raft_ocean:broadhead_arrow"
+  ]
+}

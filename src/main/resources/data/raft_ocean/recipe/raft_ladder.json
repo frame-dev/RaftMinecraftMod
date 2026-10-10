@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_ladder",
+  "pattern": [
+    "S S",
+    "SCS",
+    "S S"
+  ],
+  "key": {
+    "C": "#raft_ocean:bindings",
+    "S": "minecraft:stick"
+  },
+  "result": {
+    "id": "raft_ocean:raft_ladder",
+    "count": 2
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:apple",
+    "minecraft:sugar",
+    "minecraft:wheat",
+    "minecraft:bowl"
+  ],
+  "result": {
+    "id": "raft_ocean:orchard_compote",
+    "count": 1
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "raft_ocean:timber_brace",
+    "raft_ocean:timber_brace",
+    "raft_ocean:metal_plate",
+    "raft_ocean:binding_paste"
+  ],
+  "result": {
+    "id": "raft_ocean:reinforced_brace",
+    "count": 2
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    " F ",
+    "RCR",
+    " B "
+  ],
+  "key": {
+    "F": "raft_ocean:scrap_fasteners",
+    "B": "raft_ocean:timber_brace",
+    "R": "raft_ocean:reinforced_brace",
+    "C": "#raft_ocean:bindings"
+  },
+  "result": {
+    "id": "raft_ocean:raft_steering_wheel",
+    "count": 1
+  }
+}

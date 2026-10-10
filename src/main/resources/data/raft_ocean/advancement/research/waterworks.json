@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:raft_water_pipe"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.waterworks"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.waterworks"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "raft_ocean:research/workshop",
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:raft_electric_purifier",
+      "raft_ocean:raft_sprinkler",
+      "raft_ocean:raft_water_pipe",
+      "raft_ocean:raft_water_tank"
+    ]
+  }
+}

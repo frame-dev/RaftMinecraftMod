@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "raft_ocean:metal_hook_head",
+  "ingredients": [
+    "raft_ocean:scrap_fasteners",
+    "raft_ocean:scrap_fasteners",
+    "minecraft:iron_nugget",
+    "minecraft:iron_nugget"
+  ],
+  "result": {
+    "id": "raft_ocean:metal_hook_head",
+    "count": 1
+  }
+}

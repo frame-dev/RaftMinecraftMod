@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "raft_ocean:timber_brace",
+  "ingredients": [
+    "#minecraft:planks",
+    "minecraft:stick"
+  ],
+  "result": {
+    "id": "raft_ocean:timber_brace",
+    "count": 2
+  }
+}

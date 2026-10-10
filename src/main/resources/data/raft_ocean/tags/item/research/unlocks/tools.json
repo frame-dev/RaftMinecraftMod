@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "raft_ocean:raft_smithing_table",
+    "raft_ocean:raft_grindstone",
+    "raft_ocean:raft_stonecutter"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "minecraft:leather",
+    "minecraft:leather",
+    "minecraft:glass",
+    "raft_ocean:cordage",
+    "raft_ocean:copper_wire"
+  ],
+  "result": {
+    "id": "raft_ocean:tidal_diving_hood"
+  }
+}

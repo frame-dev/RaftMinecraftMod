@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_planter",
+  "pattern": [
+    "PLP",
+    "BMB"
+  ],
+  "key": {
+    "B": "raft_ocean:timber_brace",
+    "L": "raft_ocean:planting_mix",
+    "M": "raft_ocean:woven_mesh",
+    "P": "#minecraft:planks"
+  },
+  "result": {
+    "id": "raft_ocean:raft_planter",
+    "count": 1
+  }
+}

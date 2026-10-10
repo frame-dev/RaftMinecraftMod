@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "raft_ocean:raft_chest",
+  "ingredients": [
+    "minecraft:chest"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_chest",
+    "count": 1
+  }
+}

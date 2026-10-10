@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:raft_rain_collector"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.rain"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.rain"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "raft_ocean:research/workshop",
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:raft_rain_collector"
+    ]
+  }
+}

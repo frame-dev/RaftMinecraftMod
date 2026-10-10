@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    " M ",
+    "MGM",
+    " M "
+  ],
+  "key": {
+    "M": "minecraft:iron_ingot",
+    "G": "raft_ocean:binding_paste"
+  },
+  "result": {
+    "id": "raft_ocean:raft_fuel_pipe",
+    "count": 4
+  }
+}

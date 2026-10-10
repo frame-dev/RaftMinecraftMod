@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "raft_ocean:cordage",
+  "ingredients": [
+    "raft_ocean:plant_fiber",
+    "raft_ocean:plant_fiber"
+  ],
+  "result": {
+    "id": "raft_ocean:cordage",
+    "count": 1
+  }
+}

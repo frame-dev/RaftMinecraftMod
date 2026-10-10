@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#raft_ocean:stew_fish",
+    "minecraft:stick"
+  ],
+  "result": {
+    "id": "raft_ocean:fish_skewer",
+    "count": 1
+  }
+}

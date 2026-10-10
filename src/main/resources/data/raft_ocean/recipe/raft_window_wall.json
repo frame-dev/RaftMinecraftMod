@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "raft_ocean:raft_wall",
+    "minecraft:glass_pane"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_window_wall"
+  }
+}

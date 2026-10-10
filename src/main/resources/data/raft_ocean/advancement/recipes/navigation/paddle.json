@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#minecraft:planks"
+          }
+        ]
+      }
+    },
+    "recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipes": "raft_ocean:paddle"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "planks",
+      "recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:paddle"
+    ]
+  }
+}

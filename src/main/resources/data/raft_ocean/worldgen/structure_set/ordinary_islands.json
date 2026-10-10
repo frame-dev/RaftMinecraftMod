@@ -1,0 +1,54 @@
+{
+  "structures": [
+    {
+      "structure": "raft_ocean:shell_sandbar",
+      "weight": 4
+    },
+    {
+      "structure": "raft_ocean:tidal_grove",
+      "weight": 4
+    },
+    {
+      "structure": "raft_ocean:flower_meadow",
+      "weight": 3
+    },
+    {
+      "structure": "raft_ocean:twin_cove",
+      "weight": 3
+    },
+    {
+      "structure": "raft_ocean:stone_rise",
+      "weight": 2
+    },
+    {
+      "structure": "raft_ocean:broadleaf_island",
+      "weight": 1
+    },
+    {
+      "structure": "raft_ocean:crescent_reef",
+      "weight": 3
+    },
+    {
+      "structure": "raft_ocean:split_grove",
+      "weight": 2
+    },
+    {
+      "structure": "raft_ocean:longshore",
+      "weight": 3
+    },
+    {
+      "structure": "raft_ocean:mossy_arch",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 6842193,
+    "spacing": 20,
+    "separation": 12,
+    "exclusion_zone": {
+      "other_set": "raft_ocean:islands",
+      "chunk_count": 6
+    }
+  }
+}

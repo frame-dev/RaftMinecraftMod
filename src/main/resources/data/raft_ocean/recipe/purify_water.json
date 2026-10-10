@@ -1,0 +1,11 @@
+{
+  "type": "raft_ocean:purifier",
+  "ingredients": [
+    "raft_ocean:salt_water_cup"
+  ],
+  "result": {
+    "id": "raft_ocean:fresh_water_cup"
+  },
+  "duration": 200,
+  "byproducts": []
+}

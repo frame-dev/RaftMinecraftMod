@@ -1,0 +1,9 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "raft_ocean:tidal_hood"
+      }
+    ]
+  }
+}

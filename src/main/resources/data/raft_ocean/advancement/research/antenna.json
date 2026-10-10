@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:antenna_upgrade"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.antenna"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.antenna"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "raft_ocean:research/workshop",
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:antenna_upgrade",
+      "raft_ocean:long_range_receiver"
+    ]
+  }
+}

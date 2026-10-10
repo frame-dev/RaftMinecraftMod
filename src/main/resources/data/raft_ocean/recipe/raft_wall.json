@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_wall",
+  "pattern": [
+    "PPP",
+    "BCB"
+  ],
+  "key": {
+    "B": "raft_ocean:timber_brace",
+    "C": "#raft_ocean:bindings",
+    "P": "#minecraft:planks"
+  },
+  "result": {
+    "id": "raft_ocean:raft_wall",
+    "count": 2
+  }
+}

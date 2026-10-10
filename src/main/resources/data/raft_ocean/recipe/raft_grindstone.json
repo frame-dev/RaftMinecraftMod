@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "raft_ocean:raft_grindstone",
+  "ingredients": [
+    "minecraft:grindstone"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_grindstone",
+    "count": 1
+  }
+}

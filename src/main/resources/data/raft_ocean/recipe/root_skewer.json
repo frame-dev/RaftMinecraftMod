@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:carrot",
+    "minecraft:potato",
+    "minecraft:stick"
+  ],
+  "result": {
+    "id": "raft_ocean:root_skewer",
+    "count": 1
+  }
+}

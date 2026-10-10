@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_sail",
+  "pattern": [
+    "MMM",
+    "BCB",
+    " B "
+  ],
+  "key": {
+    "B": "raft_ocean:timber_brace",
+    "C": "#raft_ocean:bindings",
+    "M": "raft_ocean:woven_mesh"
+  },
+  "result": {
+    "id": "raft_ocean:raft_sail",
+    "count": 1
+  }
+}

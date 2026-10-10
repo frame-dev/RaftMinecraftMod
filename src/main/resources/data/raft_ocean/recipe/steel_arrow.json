@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "raft_ocean:arrow_shaft",
+    "raft_ocean:arrow_shaft",
+    "raft_ocean:arrow_shaft",
+    "raft_ocean:arrow_shaft",
+    "minecraft:iron_ingot",
+    "raft_ocean:drift_leaf"
+  ],
+  "result": {
+    "id": "raft_ocean:steel_arrow",
+    "count": 4
+  }
+}

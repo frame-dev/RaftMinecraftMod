@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.raftocean.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "RaftCollisionMixin",
+    "RaftSpatialQueryMixin",
+    "RaftLadderMixin",
+    "RaftServerMovementMixin",
+    "RaftEnchantingMixin",
+    "RaftResearchMixin",
+    "RaftRecipeBookMixin",
+    "RaftCraftingTakeMixin",
+    "RaftCraftingClickMixin"
+  ],
+  "client": [
+    "RaftLocalPlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

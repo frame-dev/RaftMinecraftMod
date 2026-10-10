@@ -1,0 +1,145 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "material": "raft_ocean:block/tree_bark",
+    "particle": "raft_ocean:block/tree_bark"
+  },
+  "elements": [
+    {
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        13,
+        8,
+        13
+      ],
+      "faces": {
+        "up": {
+          "texture": "#material",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "down": {
+          "texture": "#material",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "north": {
+          "texture": "#material",
+          "uv": [
+            3,
+            8,
+            13,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#material",
+          "uv": [
+            3,
+            8,
+            13,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#material",
+          "uv": [
+            3,
+            8,
+            13,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#material",
+          "uv": [
+            3,
+            8,
+            13,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        8,
+        4
+      ],
+      "to": [
+        12,
+        16,
+        12
+      ],
+      "faces": {
+        "up": {
+          "texture": "#material",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ]
+        },
+        "down": {
+          "texture": "#material",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ]
+        },
+        "north": {
+          "texture": "#material",
+          "uv": [
+            4,
+            0,
+            12,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#material",
+          "uv": [
+            4,
+            0,
+            12,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#material",
+          "uv": [
+            4,
+            0,
+            12,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#material",
+          "uv": [
+            4,
+            0,
+            12,
+            8
+          ]
+        }
+      }
+    }
+  ]
+}

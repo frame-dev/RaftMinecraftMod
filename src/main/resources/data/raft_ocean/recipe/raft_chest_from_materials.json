@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_chest",
+  "pattern": [
+    "PPP",
+    "BFB",
+    "PPP"
+  ],
+  "key": {
+    "P": "#minecraft:planks",
+    "B": "raft_ocean:timber_brace",
+    "F": "raft_ocean:scrap_fasteners"
+  },
+  "result": {
+    "id": "raft_ocean:raft_chest",
+    "count": 1
+  }
+}

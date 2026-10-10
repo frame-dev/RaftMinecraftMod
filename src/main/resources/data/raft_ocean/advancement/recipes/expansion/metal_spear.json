@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipes": "raft_ocean:metal_spear"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:metal_spear"
+    ]
+  }
+}

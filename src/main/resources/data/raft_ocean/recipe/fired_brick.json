@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": "raft_ocean:damp_brick",
+  "result": {
+    "id": "raft_ocean:fired_brick"
+  },
+  "experience": 0,
+  "cookingtime": 400
+}

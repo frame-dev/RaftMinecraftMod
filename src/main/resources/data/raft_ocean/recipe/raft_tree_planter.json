@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_tree_planter",
+  "pattern": [
+    "BCB",
+    "PLP",
+    "BBB"
+  ],
+  "key": {
+    "B": "raft_ocean:timber_brace",
+    "C": "#raft_ocean:bindings",
+    "L": "raft_ocean:planting_mix",
+    "P": "#minecraft:planks"
+  },
+  "result": {
+    "id": "raft_ocean:raft_tree_planter",
+    "count": 1
+  }
+}

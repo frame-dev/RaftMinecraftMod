@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "RCR",
+    "PLP",
+    "BBB"
+  ],
+  "key": {
+    "B": "raft_ocean:timber_brace",
+    "P": "#minecraft:planks",
+    "L": "raft_ocean:planting_mix",
+    "C": "#raft_ocean:bindings",
+    "R": "raft_ocean:reinforced_brace"
+  },
+  "result": {
+    "id": "raft_ocean:raft_tree_planter",
+    "count": 1
+  }
+}

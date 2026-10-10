@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "raft_ocean:tidal_battery",
+    "raft_ocean:deepcycle_battery",
+    "raft_ocean:raft_power_cable",
+    "raft_ocean:raft_battery_charger"
+  ]
+}

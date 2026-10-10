@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:anvil"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_anvil",
+    "count": 1
+  }
+}

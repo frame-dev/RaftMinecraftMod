@@ -1,0 +1,51 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_material": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "raft_ocean:drift_leaf",
+              "raft_ocean:scrap",
+              "minecraft:string",
+              "raft_ocean:plant_fiber",
+              "raft_ocean:cordage",
+              "raft_ocean:timber_brace",
+              "minecraft:oak_planks"
+            ]
+          }
+        ]
+      }
+    },
+    "has_planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#minecraft:planks"
+          }
+        ]
+      }
+    },
+    "has_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipes": "raft_ocean:scrap_fasteners"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_material",
+      "has_planks",
+      "has_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:scrap_fasteners"
+    ]
+  }
+}

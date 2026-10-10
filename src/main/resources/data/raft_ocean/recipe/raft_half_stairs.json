@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:oak_slab",
+    "minecraft:oak_slab",
+    "raft_ocean:timber_brace"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_half_stairs"
+  }
+}

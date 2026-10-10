@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_pillar",
+  "pattern": [
+    "B",
+    "B",
+    "C"
+  ],
+  "key": {
+    "B": "raft_ocean:timber_brace",
+    "C": "#raft_ocean:bindings"
+  },
+  "result": {
+    "id": "raft_ocean:raft_pillar",
+    "count": 1
+  }
+}

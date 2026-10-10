@@ -1,0 +1,85 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "raft_ocean:sealed_note",
+          "weight": 1,
+          "modifier": [
+            {
+              "type": "minecraft:set_name",
+              "name": {
+                "text": "The Lantern Log"
+              }
+            },
+            {
+              "type": "minecraft:set_lore",
+              "mode": "replace_all",
+              "lore": [
+                {
+                  "text": "Day 12: the current still runs east."
+                },
+                {
+                  "text": "We left a lantern burning for the next traveler."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "raft_ocean:sealed_note",
+          "weight": 1,
+          "modifier": [
+            {
+              "type": "minecraft:set_name",
+              "name": {
+                "text": "A Letter to the Tide"
+              }
+            },
+            {
+              "type": "minecraft:set_lore",
+              "mode": "replace_all",
+              "lore": [
+                {
+                  "text": "Keep the dry timber above the spray."
+                },
+                {
+                  "text": "A small garden can outlast a long storm."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "raft_ocean:sealed_note",
+          "weight": 1,
+          "modifier": [
+            {
+              "type": "minecraft:set_name",
+              "name": {
+                "text": "The Quiet Watch"
+              }
+            },
+            {
+              "type": "minecraft:set_lore",
+              "mode": "replace_all",
+              "lore": [
+                {
+                  "text": "Three nights without a light on the horizon."
+                },
+                {
+                  "text": "Tomorrow we mend the nets and try again."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

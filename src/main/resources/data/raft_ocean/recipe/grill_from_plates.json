@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "MFM",
+    "BCB"
+  ],
+  "key": {
+    "M": "raft_ocean:metal_plate",
+    "F": "raft_ocean:scrap_fasteners",
+    "B": "raft_ocean:timber_brace",
+    "C": "#raft_ocean:bindings"
+  },
+  "result": {
+    "id": "raft_ocean:raft_grill",
+    "count": 1
+  }
+}

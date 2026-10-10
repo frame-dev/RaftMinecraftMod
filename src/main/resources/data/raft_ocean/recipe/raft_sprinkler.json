@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "MCM",
+    " W ",
+    "FBF"
+  ],
+  "key": {
+    "M": "minecraft:copper_ingot",
+    "C": "raft_ocean:raft_water_pipe",
+    "W": "raft_ocean:copper_wire",
+    "F": "raft_ocean:scrap_fasteners",
+    "B": "raft_ocean:timber_brace"
+  },
+  "result": {
+    "id": "raft_ocean:raft_sprinkler",
+    "count": 1
+  }
+}

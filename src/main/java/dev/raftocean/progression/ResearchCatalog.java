@@ -1,0 +1,61 @@
+package dev.raftocean.progression;
+/** Generated catalog. Keep IDs stable. */
+public final class ResearchCatalog {
+private ResearchCatalog() {}
+public record Material(String id,String item) {}
+public record Project(String id,int materials,int legacy) {}
+public static final Material[] MATERIALS = {
+new Material("scrap","raft_ocean:scrap"),
+new Material("iron","minecraft:iron_ingot"),
+new Material("soil","raft_ocean:planting_mix"),
+new Material("mesh","raft_ocean:woven_mesh"),
+new Material("canvas","raft_ocean:canvas_roll"),
+new Material("wire","raft_ocean:copper_wire"),
+new Material("fiber","raft_ocean:plant_fiber"),
+new Material("wood","#minecraft:planks"),
+new Material("stone","minecraft:cobblestone"),
+new Material("clay","minecraft:clay_ball"),
+new Material("brick","raft_ocean:fired_brick"),
+new Material("copper","minecraft:copper_ingot"),
+new Material("glass","minecraft:glass"),
+new Material("fuel","#minecraft:coals"),
+new Material("rope","raft_ocean:cordage"),
+new Material("fasteners","raft_ocean:scrap_fasteners"),
+new Material("plate","raft_ocean:metal_plate"),
+new Material("kelp","minecraft:kelp"),
+new Material("leather","minecraft:leather"),
+new Material("paste","raft_ocean:binding_paste"),
+};
+public static final Project[] PROJECTS = {
+new Project("workshop",16513,0),
+new Project("metal",3,1),
+new Project("farming",16516,2),
+new Project("textiles",72,3),
+new Project("navigation",16528,4),
+new Project("electrical",69664,5),
+new Project("fasteners",257,0),
+new Project("grill",257,0),
+new Project("smelter",1536,0),
+new Project("anchor",81922,1),
+new Project("hook",49154,1),
+new Project("pot",66052,2),
+new Project("wheel",49280,4),
+new Project("engine",100352,4),
+new Project("antenna",34,5),
+new Project("purifier",5632,-1),
+new Project("rain",4232,-1),
+new Project("bed",16528,-1),
+new Project("storage",32896,-1),
+new Project("planter",132,-1),
+new Project("bait",131136,-1),
+new Project("shelter",524432,-1),
+new Project("tools",262274,-1),
+new Project("mapping",4288,-1),
+new Project("bioenergy",77824,-1),
+new Project("waterworks",69760,-1),
+new Project("power",71712,-1),
+new Project("diving",409600,-1),
+new Project("armaments",278530,-1),
+new Project("provisions",131264,-1),
+};
+}

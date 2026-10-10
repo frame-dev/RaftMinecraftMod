@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:tidal_battery"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.power"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.power"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "raft_ocean:research/workshop",
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:deepcycle_battery",
+      "raft_ocean:raft_battery_charger",
+      "raft_ocean:raft_power_cable",
+      "raft_ocean:tidal_battery"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "raft_ocean:scrap_fasteners",
+  "ingredients": [
+    "raft_ocean:scrap"
+  ],
+  "result": {
+    "id": "raft_ocean:scrap_fasteners",
+    "count": 4
+  }
+}

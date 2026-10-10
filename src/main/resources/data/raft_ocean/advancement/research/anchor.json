@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:raft_anchor"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.anchor"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.anchor"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "raft_ocean:research/workshop",
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:anchor_from_plates",
+      "raft_ocean:raft_anchor"
+    ]
+  }
+}

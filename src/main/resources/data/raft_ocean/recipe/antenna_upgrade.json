@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " I ",
+    " I ",
+    "FWF"
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "F": "raft_ocean:scrap_fasteners",
+    "W": "raft_ocean:woven_mesh"
+  },
+  "result": {
+    "id": "raft_ocean:antenna_upgrade"
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "wood": "raft_ocean:block/fine_wood",
+    "dark": "raft_ocean:block/fine_darkwood",
+    "metal": "raft_ocean:block/fine_metal",
+    "bronze": "raft_ocean:block/fine_bronze",
+    "teal": "raft_ocean:block/fine_teal",
+    "coral": "raft_ocean:block/fine_coral",
+    "linen": "raft_ocean:block/fine_linen",
+    "particle": "raft_ocean:block/fine_wood"
+  },
+  "elements": [
+    {
+      "from": [
+        7.75,
+        1,
+        7.75
+      ],
+      "to": [
+        8.25,
+        13,
+        8.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#wood"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#wood"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#wood"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#wood"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#wood"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#wood"
+        }
+      }
+    }
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        0,
+        0,
+        -35
+      ],
+      "translation": [
+        0.8504473540878531,
+        1.214564693579673,
+        0
+      ],
+      "scale": [
+        1.482709714328909,
+        1.482709714328909,
+        1.482709714328909
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        0,
+        -35
+      ],
+      "scale": [
+        0.7,
+        0.7,
+        0.7
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        0,
+        -35
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
+    }
+  }
+}

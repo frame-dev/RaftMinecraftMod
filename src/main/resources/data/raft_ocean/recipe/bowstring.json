@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "raft_ocean:cordage",
+    "raft_ocean:cordage",
+    "raft_ocean:binding_paste"
+  ],
+  "result": {
+    "id": "raft_ocean:bowstring",
+    "count": 2
+  }
+}

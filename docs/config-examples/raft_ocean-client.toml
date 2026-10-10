@@ -1,0 +1,5 @@
+navigationHud = true
+thirstHud = true
+
+# Cosmetic effects only; water, food and crops stay visible.
+machineEffectDistance = 32

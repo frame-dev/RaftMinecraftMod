@@ -1,0 +1,35 @@
+package dev.raftocean.api;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Optional;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
+
+/** API v2: register on both logical sides during common setup, using enqueueWork. */
+public final class RaftBuildables {
+    public static final int API_VERSION=2;
+    private static final Map<String,RaftMachineBehavior> MACHINES=new LinkedHashMap<>();
+    private static final Map<String,RaftBuildable> TYPES=new LinkedHashMap<>();
+    private RaftBuildables() { }
+    public static synchronized void register(RaftBuildable type) {
+        if(TYPES.putIfAbsent(type.id().toString(),type)!=null) {
+            throw new IllegalArgumentException("Duplicate raft buildable: "+type.id());
+        }
+    }
+    public static synchronized void register(RaftBuildable type,RaftMachineBehavior behavior) {
+        java.util.Objects.requireNonNull(behavior);
+        if(behavior.slots()<9 || behavior.slots()>54 || behavior.slots()%9!=0 || behavior.tickInterval()<1 || behavior.tickInterval()>1200)
+            throw new IllegalArgumentException("Invalid machine inventory/tick interval: "+type.id());
+        register(type);MACHINES.put(type.id().toString(),behavior);
+    }
+    public static synchronized Optional<RaftMachineBehavior> machine(String id) { return Optional.ofNullable(MACHINES.get(id)); }
+    public static synchronized Optional<RaftBuildable> find(String id) { return Optional.ofNullable(TYPES.get(id)); }
+    public static synchronized Optional<RaftBuildable> forItem(ItemStack stack) {
+        return TYPES.values().stream().filter(type->stack.is(type.item().get())).findFirst();
+    }
+    public static synchronized Map<Identifier,RaftBuildable> definitions() {
+        var copy=new LinkedHashMap<Identifier,RaftBuildable>();TYPES.values().forEach(type->copy.put(type.id(),type));
+        return Map.copyOf(copy);
+    }
+}

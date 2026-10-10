@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:baited_fishing_rod"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.bait"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.bait"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "raft_ocean:research/workshop",
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:baited_fishing_rod"
+    ]
+  }
+}

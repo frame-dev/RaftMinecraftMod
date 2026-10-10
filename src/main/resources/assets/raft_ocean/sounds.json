@@ -1,0 +1,26 @@
+{
+  "cup_fill": {
+    "subtitle": "subtitles.raft_ocean.cup_fill",
+    "sounds": [
+      {
+        "name": "raft_ocean:cup_fill"
+      }
+    ]
+  },
+  "cup_drink": {
+    "subtitle": "subtitles.raft_ocean.cup_drink",
+    "sounds": [
+      {
+        "name": "raft_ocean:cup_drink"
+      }
+    ]
+  },
+  "hook_cast": {
+    "subtitle": "subtitles.raft_ocean.hook_cast",
+    "sounds": [
+      {
+        "name": "raft_ocean:hook_cast"
+      }
+    ]
+  }
+}

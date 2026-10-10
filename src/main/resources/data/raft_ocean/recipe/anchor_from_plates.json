@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    " C ",
+    "MRM",
+    " B "
+  ],
+  "key": {
+    "M": "raft_ocean:metal_plate",
+    "B": "raft_ocean:timber_brace",
+    "R": "raft_ocean:reinforced_brace",
+    "C": "#raft_ocean:bindings"
+  },
+  "result": {
+    "id": "raft_ocean:raft_anchor",
+    "count": 1
+  }
+}

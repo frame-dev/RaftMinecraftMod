@@ -1,0 +1,10 @@
+{
+  "type": "raft_ocean:island",
+  "template": "raft_ocean:islands/tidal_grove",
+  "biomes": [
+    "minecraft:ocean"
+  ],
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none"
+}

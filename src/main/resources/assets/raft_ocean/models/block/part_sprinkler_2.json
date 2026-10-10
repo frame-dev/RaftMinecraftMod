@@ -1,0 +1,85 @@
+{
+  "textures": {
+    "metal": "raft_ocean:block/fine_metal",
+    "wood": "raft_ocean:block/fine_wood",
+    "bronze": "raft_ocean:block/fine_bronze",
+    "teal": "raft_ocean:block/fine_teal",
+    "coral": "raft_ocean:block/fine_coral",
+    "navy": "raft_ocean:block/fine_navy",
+    "rubber": "raft_ocean:block/fine_rubber",
+    "linen": "raft_ocean:block/fine_linen",
+    "water": "raft_ocean:block/model_water",
+    "green": "raft_ocean:block/model_green",
+    "particle": "raft_ocean:block/fine_metal"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#teal",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#teal",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#teal",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#teal",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#teal",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#teal",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    }
+  ]
+}

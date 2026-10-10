@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "MWM",
+    "FRF",
+    "MMM"
+  ],
+  "key": {
+    "M": "raft_ocean:metal_plate",
+    "F": "raft_ocean:scrap_fasteners",
+    "R": "raft_ocean:reinforced_brace",
+    "W": "raft_ocean:copper_wire"
+  },
+  "result": {
+    "id": "raft_ocean:raft_engine",
+    "count": 1
+  }
+}

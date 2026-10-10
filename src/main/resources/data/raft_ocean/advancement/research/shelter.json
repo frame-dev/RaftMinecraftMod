@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:raft_roof"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.shelter"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.shelter"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "raft_ocean:research/workshop",
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:raft_corner_wall",
+      "raft_ocean:raft_curved_wall",
+      "raft_ocean:raft_roof",
+      "raft_ocean:roof_from_canvas"
+    ]
+  }
+}

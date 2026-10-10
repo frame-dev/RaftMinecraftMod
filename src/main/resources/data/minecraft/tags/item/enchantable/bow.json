@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "raft_ocean:driftwood_bow",
+    "raft_ocean:reef_laminated_bow",
+    "raft_ocean:stormsteel_bow"
+  ]
+}

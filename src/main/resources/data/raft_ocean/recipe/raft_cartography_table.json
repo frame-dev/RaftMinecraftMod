@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "raft_ocean:raft_cartography_table",
+  "ingredients": [
+    "minecraft:cartography_table"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_cartography_table",
+    "count": 1
+  }
+}

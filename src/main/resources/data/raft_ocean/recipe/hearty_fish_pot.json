@@ -1,0 +1,18 @@
+{
+  "type": "raft_ocean:cooking_pot",
+  "ingredients": [
+    "minecraft:cooked_cod",
+    "minecraft:potato",
+    "raft_ocean:fresh_water_cup",
+    "minecraft:bowl"
+  ],
+  "result": {
+    "id": "raft_ocean:hearty_fish_pot"
+  },
+  "duration": 600,
+  "byproducts": [
+    {
+      "id": "raft_ocean:empty_cup"
+    }
+  ]
+}

@@ -1,0 +1,232 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.147'
+    id 'idea'
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = mod_id
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+java.withSourcesJar()
+
+tasks.named('wrapper', Wrapper).configure {
+    gradleVersion = '9.2.1'
+    distributionType = Wrapper.DistributionType.BIN
+    distributionSha256Sum = '72f44c9f8ebcb1af43838f45ee5c4aa9c5444898b3468ab3f4af7b6076c5bc3f'
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+    exclude '**/*.bbmodel', '**/.cache/**'
+}
+
+neoForge {
+    version = project.neo_version
+
+    runs {
+        client {
+            client()
+            gameDirectory = project.file('run/client')
+        }
+        server {
+            server()
+            gameDirectory = project.file('run/server')
+            programArgument '--nogui'
+        }
+        bootstrapSmoke {
+            server()
+            gameDirectory = project.file('build/bootstrap-smoke')
+            programArgument '--nogui'
+            systemProperty 'raftOcean.carrySmoke', 'true'
+        }
+        oceanSmoke {
+            server()
+            gameDirectory = project.file('build/ocean-smoke')
+            programArgument '--nogui'
+            systemProperty 'raftOcean.oceanSmoke', 'true'
+        }
+        configureEach {
+            logLevel = org.slf4j.event.Level.INFO
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
+    var replaceProperties = [
+        minecraft_version_range: minecraft_version_range,
+        neo_version: neo_version,
+        mod_id: mod_id,
+        mod_name: mod_name,
+        mod_license: mod_license,
+        mod_version: mod_version
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from 'src/main/templates'
+    into layout.buildDirectory.dir('generated/sources/modMetadata')
+}
+
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+def processedModMetadata = layout.buildDirectory.file('resources/main/META-INF/neoforge.mods.toml')
+def expectedModId = mod_id.toString()
+def expectedModVersion = mod_version.toString()
+def expectedModLicense = mod_license.toString()
+def verifyModMetadata = tasks.register('verifyModMetadata') {
+    group = 'verification'
+    description = 'Checks the processed mod metadata before packaging or launching.'
+    dependsOn tasks.named('processResources')
+    inputs.file processedModMetadata
+    doLast {
+        def metadata = processedModMetadata.get().asFile.getText('UTF-8')
+        if (!metadata.contains('license="' + expectedModLicense + '"')
+                || !metadata.contains('modId="' + expectedModId + '"')
+                || !metadata.contains('version="' + expectedModVersion + '"')
+                || metadata.contains('${')) {
+            throw new GradleException('Built mod metadata is empty, incomplete, or stale. Run gradlew.bat processResources --rerun-tasks, then relaunch through Gradle.')
+        }
+    }
+}
+tasks.matching { it.name in ['runClient', 'runServer', 'runBootstrapSmoke', 'runOceanSmoke', 'jar'] }.configureEach {
+    dependsOn verifyModMetadata
+}
+
+// Minecraft can catch a server-thread exception and still exit with code zero.
+// Require the check's completion message, not just a successful JavaExec process.
+tasks.matching { it.name in ['runBootstrapSmoke', 'runOceanSmoke'] }.configureEach {
+    def oceanRun = name == 'runOceanSmoke'
+    def checkLog = layout.projectDirectory.file(oceanRun
+            ? 'build/ocean-smoke/logs/latest.log' : 'build/bootstrap-smoke/logs/latest.log')
+    doLast {
+        def log = checkLog.asFile.exists() ? checkLog.asFile.getText('UTF-8') : ''
+        def finished = oceanRun
+                ? (log =~ /Raft Ocean: \d+ runtime ocean-world assertions passed\./).find()
+                : (log =~ /Raft Ocean: \d+ runtime carry assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime collision assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ native movement validation assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime construction assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime building expansion\/API assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime machine API assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime coastal utility assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime crafting assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime station assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime research assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime salvage assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime survival assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime navigation assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime creature\/config assertions passed\./).find()
+        if (!finished || log.contains('Encountered an unexpected exception')) {
+            throw new GradleException('The isolated server checks failed or did not finish. Inspect ' + checkLog.asFile)
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+// Development launches read these directories live. Refuse destructive output
+// updates while this project's Gradle client is running, before any writer starts.
+def clientArgsMarker = layout.buildDirectory.file('moddev/clientRunVmArgs.txt').get().asFile.absolutePath.replace('\\','/').toLowerCase()
+def clientProgramMarker = layout.buildDirectory.file('moddev/clientRunProgramArgs.txt').get().asFile.absolutePath.replace('\\','/').toLowerCase()
+def guardClientOutputs = tasks.register('guardClientOutputs') {
+    doLast {
+        boolean liveClient = false
+        // ProcessHandle does not reliably expose arguments on Windows. Query the
+        // native process table there, restricting results to Java game processes.
+        if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+            def script = 'Get-CimInstance Win32_Process -Filter "Name = \'java.exe\' OR Name = \'javaw.exe\'" | Select-Object -ExpandProperty CommandLine'
+            def query = new ProcessBuilder('powershell.exe', '-NoProfile', '-NonInteractive', '-EncodedCommand',
+                    script.getBytes('UTF-16LE').encodeBase64().toString())
+                    .redirectErrorStream(true).start()
+            def lines = query.inputStream.getText('UTF-8').replace('\\','/').replaceAll('/+', '/').toLowerCase()
+            if (query.waitFor() != 0) { throw new GradleException('Cannot check running development clients: ' + lines) }
+            liveClient = lines.contains(clientArgsMarker) || lines.contains(clientProgramMarker)
+        } else {
+        def processes = java.lang.ProcessHandle.allProcesses()
+        try {
+            liveClient = processes.anyMatch { process ->
+                def args = process.info().arguments().orElse(new String[0]).join(' ').replace('\\','/').replaceAll('/+', '/').toLowerCase()
+                args.contains(clientArgsMarker) || args.contains(clientProgramMarker)
+            }
+        } finally { processes.close() }
+        }
+        if (liveClient) {
+            throw new GradleException('Close this project\'s development Minecraft client before rebuilding or cleaning. Its live class files must stay intact. Then rebuild and launch runClient again.')
+        }
+    }
+}
+tasks.matching { it.name in ['compileJava','processResources','clean'] }.configureEach {
+    dependsOn guardClientOutputs
+}
+
+// Keep the standalone geometry checks separate from future JUnit/game tests.
+sourceSets.create('raftContactChecks') {
+    compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+    runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+}
+
+def raftContactTest = tasks.register('raftContactTest', JavaExec) {
+    group = 'verification'
+    description = 'Checks swept raft landing, bobbing contact, jump detach, and deck edges.'
+    classpath = sourceSets.raftContactChecks.runtimeClasspath
+    mainClass = 'dev.raftocean.entity.RaftContactTest'
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+tasks.named('check') {
+    dependsOn raftContactTest
+    dependsOn verifyModMetadata
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
+
+// Optional testing mod: installed only in the development client's mods folder.
+repositories {
+    maven {
+        url = 'https://maven.blamejared.com/'
+        content {
+            includeGroup 'mezz.jei'
+            includeGroup 'net.mezzdev.config'
+        }
+    }
+}
+configurations { jeiClient { canBeConsumed = false; canBeResolved = true; transitive = false } }
+dependencies {
+    jeiClient "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+}
+
+def modelAssetCheck = tasks.register('modelAssetCheck', JavaExec) {
+    group = 'verification'
+    description = 'Parses custom models with the pinned native Minecraft model parser.'
+    classpath = sourceSets.raftContactChecks.runtimeClasspath
+    mainClass = 'dev.raftocean.entity.ModelAssetCheck'
+    javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(25) }
+}
+tasks.named('check') { dependsOn modelAssetCheck }
+def installClientJei = tasks.register('installClientJei', Copy) {
+    group = 'development'
+    description = 'Installs the pinned optional JEI build into run/client/mods.'
+    from configurations.jeiClient
+    into layout.projectDirectory.dir('run/client/mods')
+}
+tasks.named('runClient').configure { dependsOn installClientJei }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "raft_ocean:arrow_shaft",
+    "raft_ocean:arrow_shaft",
+    "raft_ocean:arrow_shaft",
+    "raft_ocean:arrow_shaft",
+    "raft_ocean:scrap",
+    "minecraft:feather"
+  ],
+  "result": {
+    "id": "raft_ocean:scrap_arrow",
+    "count": 4
+  }
+}

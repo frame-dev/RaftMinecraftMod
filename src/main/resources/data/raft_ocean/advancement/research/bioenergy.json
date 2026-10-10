@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:biofuel"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.bioenergy"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.bioenergy"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "raft_ocean:research/workshop",
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:raft_biofuel_generator",
+      "raft_ocean:raft_biorefiner",
+      "raft_ocean:raft_fuel_pipe",
+      "raft_ocean:raft_fuel_tank"
+    ]
+  }
+}

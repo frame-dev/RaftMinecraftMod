@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    " T ",
+    "TCT",
+    "BBB"
+  ],
+  "key": {
+    "B": "raft_ocean:timber_brace",
+    "T": "raft_ocean:canvas_roll",
+    "C": "#raft_ocean:bindings"
+  },
+  "result": {
+    "id": "raft_ocean:raft_roof",
+    "count": 2
+  }
+}

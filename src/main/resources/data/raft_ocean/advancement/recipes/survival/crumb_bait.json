@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bread": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:bread"
+          }
+        ]
+      }
+    },
+    "has_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipes": "raft_ocean:crumb_bait"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_bread",
+      "has_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:crumb_bait"
+    ]
+  }
+}

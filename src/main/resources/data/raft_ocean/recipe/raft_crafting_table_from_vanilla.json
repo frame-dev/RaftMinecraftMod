@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "raft_ocean:raft_crafting_table",
+  "ingredients": [
+    "minecraft:crafting_table"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_crafting_table",
+    "count": 1
+  }
+}

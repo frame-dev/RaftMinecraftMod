@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " F ",
+    " B ",
+    " C "
+  ],
+  "key": {
+    "F": "raft_ocean:scrap_fasteners",
+    "B": "raft_ocean:timber_brace",
+    "C": "#raft_ocean:bindings"
+  },
+  "result": {
+    "id": "raft_ocean:timber_spear"
+  }
+}

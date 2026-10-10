@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "raft_ocean:raft_roof",
+    "raft_ocean:raft_curved_wall",
+    "raft_ocean:raft_corner_wall"
+  ]
+}

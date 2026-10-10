@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_rain_collector",
+  "pattern": [
+    "CMC",
+    "BFB"
+  ],
+  "key": {
+    "B": "raft_ocean:timber_brace",
+    "C": "#raft_ocean:bindings",
+    "F": "raft_ocean:scrap_fasteners",
+    "M": "raft_ocean:woven_mesh"
+  },
+  "result": {
+    "id": "raft_ocean:raft_rain_collector",
+    "count": 1
+  }
+}

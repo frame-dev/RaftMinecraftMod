@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_roof",
+  "pattern": [
+    "PPP",
+    "CMC"
+  ],
+  "key": {
+    "C": "#raft_ocean:bindings",
+    "M": "raft_ocean:woven_mesh",
+    "P": "#minecraft:planks"
+  },
+  "result": {
+    "id": "raft_ocean:raft_roof",
+    "count": 2
+  }
+}

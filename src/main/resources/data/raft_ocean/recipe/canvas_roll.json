@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "raft_ocean:woven_mesh",
+    "raft_ocean:plant_fiber",
+    "raft_ocean:plant_fiber",
+    "raft_ocean:plant_fiber"
+  ],
+  "result": {
+    "id": "raft_ocean:canvas_roll",
+    "count": 1
+  }
+}

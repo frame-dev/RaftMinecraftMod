@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "M M",
+    "MMM",
+    " B "
+  ],
+  "key": {
+    "M": "raft_ocean:metal_plate",
+    "B": "raft_ocean:timber_brace"
+  },
+  "result": {
+    "id": "raft_ocean:raft_cooking_pot",
+    "count": 1
+  }
+}

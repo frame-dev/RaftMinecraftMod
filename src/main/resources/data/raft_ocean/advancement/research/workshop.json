@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:raft_collection_net"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.workshop"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.workshop"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "background": "minecraft:block/oak_planks"
+  },
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:net_from_braces",
+      "raft_ocean:raft_collection_net"
+    ]
+  }
+}

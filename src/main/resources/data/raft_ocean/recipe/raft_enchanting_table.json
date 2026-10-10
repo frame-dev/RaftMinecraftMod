@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:enchanting_table"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_enchanting_table",
+    "count": 1
+  }
+}

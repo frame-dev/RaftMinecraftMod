@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "MWM",
+    "IEI",
+    "FFF"
+  ],
+  "key": {
+    "M": "raft_ocean:metal_plate",
+    "W": "raft_ocean:copper_wire",
+    "I": "minecraft:iron_ingot",
+    "E": "raft_ocean:raft_engine",
+    "F": "raft_ocean:scrap_fasteners"
+  },
+  "result": {
+    "id": "raft_ocean:raft_biofuel_generator",
+    "count": 1
+  }
+}

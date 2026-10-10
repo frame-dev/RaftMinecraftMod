@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "raft_ocean:reef_laminated_bow",
+    "raft_ocean:metal_plate",
+    "raft_ocean:metal_plate",
+    "raft_ocean:copper_wire",
+    "raft_ocean:bowstring"
+  ],
+  "result": {
+    "id": "raft_ocean:stormsteel_bow"
+  }
+}

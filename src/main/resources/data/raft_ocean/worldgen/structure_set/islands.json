@@ -1,0 +1,38 @@
+{
+  "structures": [
+    {
+      "structure": "raft_ocean:drift_atoll",
+      "weight": 3
+    },
+    {
+      "structure": "raft_ocean:glasswatch",
+      "weight": 1
+    },
+    {
+      "structure": "raft_ocean:garden_relay",
+      "weight": 1
+    },
+    {
+      "structure": "raft_ocean:echo_vault",
+      "weight": 1
+    },
+    {
+      "structure": "raft_ocean:ember_beacon",
+      "weight": 1
+    },
+    {
+      "structure": "raft_ocean:tideworks_haven",
+      "weight": 1
+    },
+    {
+      "structure": "raft_ocean:starfall_archive",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1947362,
+    "spacing": 32,
+    "separation": 16
+  }
+}

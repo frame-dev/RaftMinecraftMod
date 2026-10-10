@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_stairs",
+  "pattern": [
+    "P  ",
+    "PP ",
+    "BBP"
+  ],
+  "key": {
+    "B": "raft_ocean:timber_brace",
+    "P": "#minecraft:planks"
+  },
+  "result": {
+    "id": "raft_ocean:raft_stairs",
+    "count": 1
+  }
+}

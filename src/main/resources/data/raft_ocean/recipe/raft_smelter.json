@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "DDD",
+    "D D",
+    "PDP"
+  ],
+  "key": {
+    "D": "raft_ocean:dried_brick",
+    "P": "#minecraft:planks"
+  },
+  "result": {
+    "id": "raft_ocean:raft_smelter"
+  }
+}

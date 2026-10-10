@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#raft_ocean:stew_fish",
+    "minecraft:wheat",
+    "minecraft:brown_mushroom",
+    "minecraft:dried_kelp",
+    "minecraft:cooked_cod"
+  ]
+}

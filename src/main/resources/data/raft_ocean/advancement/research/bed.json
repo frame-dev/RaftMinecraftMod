@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:raft_bed"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.bed"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.bed"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "raft_ocean:research/workshop",
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:bed_from_canvas",
+      "raft_ocean:raft_bed"
+    ]
+  }
+}

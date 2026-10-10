@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_half_wall",
+  "pattern": [
+    "PPP",
+    " C "
+  ],
+  "key": {
+    "C": "#raft_ocean:bindings",
+    "P": "#minecraft:planks"
+  },
+  "result": {
+    "id": "raft_ocean:raft_half_wall",
+    "count": 2
+  }
+}

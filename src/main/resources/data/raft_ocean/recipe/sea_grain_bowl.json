@@ -1,0 +1,18 @@
+{
+  "type": "raft_ocean:cooking_pot",
+  "ingredients": [
+    "minecraft:dried_kelp",
+    "minecraft:beetroot",
+    "raft_ocean:fresh_water_cup",
+    "minecraft:bowl"
+  ],
+  "result": {
+    "id": "raft_ocean:sea_grain_bowl"
+  },
+  "duration": 400,
+  "byproducts": [
+    {
+      "id": "raft_ocean:empty_cup"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "FFF",
+    "IWI",
+    "BBB"
+  ],
+  "key": {
+    "F": "raft_ocean:scrap_fasteners",
+    "I": "minecraft:iron_ingot",
+    "W": "raft_ocean:woven_mesh",
+    "B": "raft_ocean:timber_brace"
+  },
+  "result": {
+    "id": "raft_ocean:radio_receiver"
+  }
+}

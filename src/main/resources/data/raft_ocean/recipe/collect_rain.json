@@ -1,0 +1,11 @@
+{
+  "type": "raft_ocean:rain_collector",
+  "ingredients": [
+    "raft_ocean:empty_cup"
+  ],
+  "result": {
+    "id": "raft_ocean:fresh_water_cup"
+  },
+  "duration": 200,
+  "byproducts": []
+}

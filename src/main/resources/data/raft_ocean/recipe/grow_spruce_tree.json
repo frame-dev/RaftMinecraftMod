@@ -1,0 +1,19 @@
+{
+  "type": "raft_ocean:tree_planter",
+  "ingredients": [
+    "minecraft:spruce_sapling",
+    "raft_ocean:planting_mix",
+    "raft_ocean:fresh_water_cup"
+  ],
+  "result": {
+    "id": "minecraft:spruce_log",
+    "count": 6
+  },
+  "duration": 3600,
+  "byproducts": [
+    {
+      "id": "minecraft:spruce_sapling",
+      "count": 2
+    }
+  ]
+}

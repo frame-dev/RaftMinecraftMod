@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "raft_ocean:metal_plate",
+    "raft_ocean:metal_plate",
+    "raft_ocean:copper_wire",
+    "raft_ocean:copper_wire",
+    "raft_ocean:scrap_fasteners",
+    "minecraft:glass",
+    "raft_ocean:timber_brace"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_battery_charger"
+  }
+}

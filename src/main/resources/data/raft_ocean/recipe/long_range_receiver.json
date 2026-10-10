@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "raft_ocean:radio_receiver",
+    "raft_ocean:antenna_upgrade"
+  ],
+  "result": {
+    "id": "raft_ocean:long_range_receiver"
+  }
+}

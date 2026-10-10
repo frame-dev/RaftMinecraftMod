@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "raft_ocean:grappling_hook",
+    "raft_ocean:metal_hook_head",
+    "#raft_ocean:bindings"
+  ],
+  "result": {
+    "id": "raft_ocean:reinforced_hook",
+    "count": 1
+  }
+}

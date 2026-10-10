@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "raft_ocean:woven_mesh",
+  "pattern": [
+    "CCC",
+    "CCC",
+    "CCC"
+  ],
+  "key": {
+    "C": "#raft_ocean:bindings"
+  },
+  "result": {
+    "id": "raft_ocean:woven_mesh",
+    "count": 1
+  }
+}

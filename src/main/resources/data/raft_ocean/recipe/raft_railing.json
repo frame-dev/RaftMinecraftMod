@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_railing",
+  "pattern": [
+    "SSS",
+    "BCB"
+  ],
+  "key": {
+    "B": "raft_ocean:timber_brace",
+    "C": "#raft_ocean:bindings",
+    "S": "minecraft:stick"
+  },
+  "result": {
+    "id": "raft_ocean:raft_railing",
+    "count": 2
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "raft_ocean:raft_stairs",
+    "raft_ocean:raft_stairs",
+    "raft_ocean:timber_brace"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_wide_stairs"
+  }
+}

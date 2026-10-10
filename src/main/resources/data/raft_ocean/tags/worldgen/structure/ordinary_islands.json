@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "raft_ocean:shell_sandbar",
+    "raft_ocean:tidal_grove",
+    "raft_ocean:flower_meadow",
+    "raft_ocean:twin_cove",
+    "raft_ocean:stone_rise",
+    "raft_ocean:broadleaf_island",
+    "raft_ocean:crescent_reef",
+    "raft_ocean:split_grove",
+    "raft_ocean:longshore",
+    "raft_ocean:mossy_arch"
+  ]
+}

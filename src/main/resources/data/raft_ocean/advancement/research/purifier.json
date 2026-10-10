@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "id": "raft_ocean:raft_purifier"
+    },
+    "title": {
+      "translate": "raft_ocean.research.topic.purifier"
+    },
+    "description": {
+      "translate": "raft_ocean.research.description.purifier"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "raft_ocean:research/workshop",
+  "criteria": {
+    "learned": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "learned"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:purifier_from_bricks",
+      "raft_ocean:raft_purifier"
+    ]
+  }
+}

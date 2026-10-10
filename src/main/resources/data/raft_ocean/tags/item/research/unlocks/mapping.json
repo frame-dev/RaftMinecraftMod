@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "raft_ocean:raft_cartography_table",
+    "raft_ocean:raft_loom",
+    "raft_ocean:raft_bookshelf"
+  ]
+}

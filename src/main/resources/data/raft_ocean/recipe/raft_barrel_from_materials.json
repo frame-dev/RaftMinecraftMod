@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "raft_ocean:raft_barrel",
+  "pattern": [
+    "BFB",
+    "PMP",
+    "BCB"
+  ],
+  "key": {
+    "P": "#minecraft:planks",
+    "B": "raft_ocean:timber_brace",
+    "F": "raft_ocean:scrap_fasteners",
+    "M": "raft_ocean:woven_mesh",
+    "C": "#raft_ocean:bindings"
+  },
+  "result": {
+    "id": "raft_ocean:raft_barrel",
+    "count": 1
+  }
+}

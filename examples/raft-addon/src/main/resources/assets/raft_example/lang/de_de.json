@@ -1,0 +1,9 @@
+{
+  "block.raft_example.work_crate": "Breite Arbeitskiste",
+  "raft_example.crate.message": "Die Addon-Interaktion funktioniert auf diesem beweglichen Floß.",
+  "block.raft_example.kelp_dryer": "Seetangtrockner",
+  "block.raft_example.kelp_dryer_active": "Aktiver Seetangtrockner",
+  "raft_example.dryer.slots": "Fach 1: Seetang | Fach 2: getrockneter Seetang | Fach 3: Stöcke. Schleichen + Klick pausiert.",
+  "raft_example.dryer.paused": "Trockner pausiert",
+  "raft_example.dryer.running": "Trockner eingeschaltet"
+}

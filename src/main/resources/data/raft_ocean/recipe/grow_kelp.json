@@ -1,0 +1,22 @@
+{
+  "type": "raft_ocean:planter",
+  "ingredients": [
+    "minecraft:kelp",
+    "raft_ocean:planting_mix",
+    "raft_ocean:fresh_water_cup"
+  ],
+  "result": {
+    "id": "minecraft:kelp",
+    "count": 2
+  },
+  "duration": 2400,
+  "byproducts": [
+    {
+      "id": "minecraft:kelp",
+      "count": 1
+    },
+    {
+      "id": "raft_ocean:empty_cup"
+    }
+  ]
+}

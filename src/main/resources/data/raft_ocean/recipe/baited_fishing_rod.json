@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " SC",
+    " SC",
+    "S C"
+  ],
+  "key": {
+    "S": "minecraft:stick",
+    "C": "#raft_ocean:bindings"
+  },
+  "result": {
+    "id": "raft_ocean:baited_fishing_rod",
+    "count": 1
+  }
+}

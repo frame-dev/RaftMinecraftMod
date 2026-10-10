@@ -1,0 +1,18 @@
+{
+  "type": "raft_ocean:cooking_pot",
+  "ingredients": [
+    "minecraft:brown_mushroom",
+    "minecraft:potato",
+    "raft_ocean:fresh_water_cup",
+    "minecraft:bowl"
+  ],
+  "result": {
+    "id": "raft_ocean:mushroom_chowder"
+  },
+  "duration": 500,
+  "byproducts": [
+    {
+      "id": "raft_ocean:empty_cup"
+    }
+  ]
+}

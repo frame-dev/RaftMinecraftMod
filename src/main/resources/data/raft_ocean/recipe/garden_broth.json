@@ -1,0 +1,18 @@
+{
+  "type": "raft_ocean:cooking_pot",
+  "ingredients": [
+    "minecraft:wheat",
+    "minecraft:carrot",
+    "raft_ocean:fresh_water_cup",
+    "minecraft:bowl"
+  ],
+  "result": {
+    "id": "raft_ocean:garden_broth"
+  },
+  "duration": 400,
+  "byproducts": [
+    {
+      "id": "raft_ocean:empty_cup"
+    }
+  ]
+}

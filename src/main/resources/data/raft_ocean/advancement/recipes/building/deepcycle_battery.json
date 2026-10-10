@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_wire": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "raft_ocean:copper_wire"
+          }
+        ]
+      }
+    },
+    "has_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipes": "raft_ocean:deepcycle_battery"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_wire",
+      "has_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "raft_ocean:deepcycle_battery"
+    ]
+  }
+}

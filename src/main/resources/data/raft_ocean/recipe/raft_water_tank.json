@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "MMM",
+    "MBM",
+    "MMM"
+  ],
+  "key": {
+    "M": "minecraft:copper_ingot",
+    "B": "raft_ocean:timber_brace"
+  },
+  "result": {
+    "id": "raft_ocean:raft_water_tank",
+    "count": 1
+  }
+}

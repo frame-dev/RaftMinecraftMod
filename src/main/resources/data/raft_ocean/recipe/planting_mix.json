@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "raft_ocean:drift_leaf",
+    "raft_ocean:drift_leaf",
+    "raft_ocean:drift_leaf",
+    "raft_ocean:drift_leaf"
+  ],
+  "result": {
+    "id": "raft_ocean:planting_mix",
+    "count": 4
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    " W ",
+    "WLW",
+    " W "
+  ],
+  "key": {
+    "W": "raft_ocean:copper_wire",
+    "L": "raft_ocean:cordage"
+  },
+  "result": {
+    "id": "raft_ocean:raft_power_cable",
+    "count": 4
+  }
+}
