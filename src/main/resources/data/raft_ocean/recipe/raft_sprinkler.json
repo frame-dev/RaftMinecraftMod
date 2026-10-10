@@ -7,9 +7,9 @@
     "FBF"
   ],
   "key": {
-    "M": "minecraft:copper_ingot",
+    "M": "#raft_ocean:compat/copper_ingots",
     "C": "raft_ocean:raft_water_pipe",
-    "W": "raft_ocean:copper_wire",
+    "W": "#raft_ocean:compat/copper_wires",
     "F": "raft_ocean:scrap_fasteners",
     "B": "raft_ocean:timber_brace"
   },

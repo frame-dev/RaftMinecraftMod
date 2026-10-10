@@ -89,8 +89,7 @@ public final class SurvivalMenu extends AbstractContainerMenu {
     public int fuel() { return data.get(1); }
     public int energy() { return data.get(6); }
     public int batteryPercent(int slot) {
-        var stack=storage.getItem(slot);int capacity=dev.raftocean.survival.Batteries.capacity(stack);
-        return capacity==0?0:dev.raftocean.survival.Batteries.charge(stack)*100/capacity;
+        return dev.raftocean.compat.EnergyItems.percent(storage.getItem(slot));
     }
     public int waterCapacity() { return dev.raftocean.survival.Automation.waterCapacity(kind); }
     public int rawWater() { return data.get(3); }
@@ -109,7 +108,7 @@ public final class SurvivalMenu extends AbstractContainerMenu {
             case "damp_brick" -> stack.is(dev.raftocean.survival.CraftingExpansion.item("damp_brick"));
             case "organic" -> inTag(stack,"biofuel_organics");
             case "catalyst" -> stack.is(Items.HONEYCOMB) || stack.is(Items.SUGAR);
-            case "battery" -> dev.raftocean.survival.Batteries.capacity(stack)>0;
+            case "battery" -> kind==RaftPiece.Kind.BATTERY_CHARGER?dev.raftocean.compat.EnergyItems.compatible(stack):dev.raftocean.survival.Batteries.capacity(stack)>0;
             case "biofuel" -> stack.is(dev.raftocean.survival.Automation.BIOFUEL.get());
             case "fluid_cup" -> stack.is(SurvivalContent.EMPTY_CUP.get()) || stack.is(SurvivalContent.FRESH_WATER.get());
             case "fuel" -> stack.has(DataComponents.COOKING_FUEL);

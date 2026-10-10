@@ -9,7 +9,7 @@
   "key": {
     "P": "#minecraft:planks",
     "S": "raft_ocean:scrap",
-    "C": "minecraft:string"
+    "C": "#raft_ocean:compat/string"
   },
   "result": {
     "id": "raft_ocean:raft_basic_grill"

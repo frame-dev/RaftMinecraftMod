@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    "minecraft:leather",
-    "minecraft:leather",
-    "minecraft:glass",
+    "#raft_ocean:compat/leather",
+    "#raft_ocean:compat/leather",
+    "#raft_ocean:compat/glass",
     "raft_ocean:cordage",
-    "raft_ocean:copper_wire"
+    "#raft_ocean:compat/copper_wires"
   ],
   "result": {
     "id": "raft_ocean:tidal_diving_hood"

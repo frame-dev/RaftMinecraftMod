@@ -7,7 +7,7 @@
   ],
   "key": {
     "P": "#minecraft:planks",
-    "S": "minecraft:stick"
+    "S": "#raft_ocean:compat/sticks"
   },
   "result": {
     "id": "raft_ocean:grappling_hook",

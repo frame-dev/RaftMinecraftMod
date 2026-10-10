@@ -3,7 +3,31 @@
 
 
 - Updated: 2026-10-10.
-- Latest: Raft Ocean 0.11.30; artifact build/libs/raft_ocean-0.11.30.jar.
+- Latest: Raft Ocean 0.11.31; artifact build/libs/raft_ocean-0.11.31.jar.
+  Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.31/API2.
+  Optional integration:12shared material tags across56crafting recipes and
+  research samples; raft iron plates/copper wire exported to common c:tags.
+  Crates/barrels have10%bonus optional raw-metal salvage (eight common tags).
+  Raft batteries expose current transactional NeoForge item energy capability;
+  charger accepts foreign single energy items and spends only accepted FE,
+  supports both sockets, pause, full/rejecting ports and large percent displays.
+  compatibility.energyItems toggles external support; native battery use retained.
+  API registerOptional defers adapter suppliers until a named mod is loaded.
+  compat-mods/*.jar optionally included in development client/server/check runs.
+  Build/bootstrap passed:259199crafting,666research,857survival assertions,
+  plus movement/collision/navigation/API suites. All1399craft recipes audited.
+  Packaged audits passed:132items,357blocks,578bilingual keys;561models/64meshes
+  surface-safe with unchanged prior model envelopes. Native transaction rollback,
+  external charge/extraction, rejecting/rate-limited ports and missing mods tested.
+  Guide docs/MOD_COMPATIBILITY.md;docs/crafting-audit-0.11.31.csv;
+  log build/mod-compatibility-runtime.log. Finished1–10;current11;story open-ended.
+  Limits: actual Mekanism/Thermal/Create jar tests pending; matching26.3releases
+  not verified; their moving block-entity/chemical/kinetic adapters not included.
+  Previous live JEI/co-op/movement/collision/large-raft confirmation still pending.
+  Shark600s/bird300s retained. Release12 not started. Install0.11.31 everywhere.
+
+- Retained: Raft Ocean 0.11.30; artifact build/libs/raft_ocean-0.11.30.jar.
   Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
   ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.30/API2.
   Disposable Stone Anchor: exact cost4cobblestone/4string/2planks/1scrap,

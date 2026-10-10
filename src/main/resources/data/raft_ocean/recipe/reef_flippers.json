@@ -2,8 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    "minecraft:leather",
-    "minecraft:leather",
+    "#raft_ocean:compat/leather",
+    "#raft_ocean:compat/leather",
     "raft_ocean:canvas_roll",
     "raft_ocean:binding_paste"
   ],

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    "minecraft:copper_ingot",
+    "#raft_ocean:compat/copper_ingots",
     "raft_ocean:plant_fiber"
   ],
   "result": {

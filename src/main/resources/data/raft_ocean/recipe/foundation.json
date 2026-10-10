@@ -1,6 +1,15 @@
 {
-  "type":"minecraft:crafting_shaped",
-  "pattern":["PPP"," S "],
-  "key":{"P":"#minecraft:planks","S":"minecraft:stick"},
-  "result":{"id":"raft_ocean:foundation","count":2}
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    " S "
+  ],
+  "key": {
+    "P": "#minecraft:planks",
+    "S": "#raft_ocean:compat/sticks"
+  },
+  "result": {
+    "id": "raft_ocean:foundation",
+    "count": 2
+  }
 }

@@ -7,7 +7,7 @@
     " W "
   ],
   "key": {
-    "W": "raft_ocean:copper_wire",
+    "W": "#raft_ocean:compat/copper_wires",
     "L": "raft_ocean:cordage"
   },
   "result": {

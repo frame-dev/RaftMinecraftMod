@@ -2,9 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    "minecraft:stick",
-    "minecraft:stick",
-    "minecraft:stick",
+    "#raft_ocean:compat/sticks",
+    "#raft_ocean:compat/sticks",
+    "#raft_ocean:compat/sticks",
     "raft_ocean:bowstring",
     "raft_ocean:binding_paste"
   ],

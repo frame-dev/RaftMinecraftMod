@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "raft_ocean:copper_wire"
+    "#raft_ocean:compat/copper_wires"
   ]
 }

@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     "#raft_ocean:stew_fish",
-    "minecraft:stick"
+    "#raft_ocean:compat/sticks"
   ],
   "result": {
     "id": "raft_ocean:fish_skewer",

@@ -7,8 +7,8 @@
     "CSC"
   ],
   "key": {
-    "C": "minecraft:cobblestone",
-    "S": "minecraft:string"
+    "C": "#raft_ocean:compat/cobblestone",
+    "S": "#raft_ocean:compat/string"
   },
   "result": {
     "id": "raft_ocean:stone_anchor_bundle"

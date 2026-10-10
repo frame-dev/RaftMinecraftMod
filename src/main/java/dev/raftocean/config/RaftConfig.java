@@ -85,6 +85,7 @@ public final class RaftConfig {
     public static final ModConfigSpec.DoubleValue PADDLE_THRUST = decimal("navigation.paddleStrengthMultiplier",1,0,3,"Paddle impulse multiplier; zero disables strokes. Speed cap still applies.");
     public static final ModConfigSpec.BooleanValue MEAL_BONUSES = bool("survival.preparedMealBonuses",true,"Prepared bowl meals grant temporary level-one bonuses; false leaves their ordinary nutrition unchanged.");
     public static final ModConfigSpec.IntValue MEAL_DURATION = integer("survival.mealBonusTicks",2400,200,12000,"Duration of prepared meal bonuses; repeat meals refresh rather than stack effect strength.");
+    public static final ModConfigSpec.BooleanValue ENERGY_ITEMS = bool("compatibility.energyItems",true,"Expose raft batteries through NeoForge energy capabilities and charge compatible single modded energy items in the raft charger. One charge unit equals one FE.");
     public static final ModConfigSpec SPEC = B.build();
     private static final ModConfigSpec.Builder C = new ModConfigSpec.Builder();
     public static final ModConfigSpec.BooleanValue NAV_HUD = C.translation("raft_ocean.config.navigationHud").define("navigationHud",true);

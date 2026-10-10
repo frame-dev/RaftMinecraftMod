@@ -194,6 +194,22 @@
           ]
         }
       ]
+    },
+    {
+      "name": "raft_ocean:mod_resources",
+      "rolls": 1,
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.1
+      },
+      "entries": [
+        {
+          "type": "minecraft:tag",
+          "items": "#raft_ocean:compat/ocean_resources",
+          "expand": true,
+          "weight": 1
+        }
+      ]
     }
   ]
 }

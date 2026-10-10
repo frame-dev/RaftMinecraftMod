@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    "raft_ocean:metal_plate",
-    "raft_ocean:metal_plate",
-    "raft_ocean:copper_wire",
-    "raft_ocean:copper_wire",
-    "minecraft:copper_ingot",
-    "minecraft:copper_ingot",
-    "minecraft:glass",
+    "#raft_ocean:compat/iron_plates",
+    "#raft_ocean:compat/iron_plates",
+    "#raft_ocean:compat/copper_wires",
+    "#raft_ocean:compat/copper_wires",
+    "#raft_ocean:compat/copper_ingots",
+    "#raft_ocean:compat/copper_ingots",
+    "#raft_ocean:compat/glass",
     "raft_ocean:binding_paste"
   ],
   "result": {

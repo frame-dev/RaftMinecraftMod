@@ -7,7 +7,7 @@
     "BBB"
   ],
   "key": {
-    "M": "raft_ocean:metal_plate",
+    "M": "#raft_ocean:compat/iron_plates",
     "B": "raft_ocean:timber_brace",
     "D": "raft_ocean:fired_brick"
   },

@@ -7,7 +7,7 @@
     "MMM"
   ],
   "key": {
-    "M": "minecraft:copper_ingot",
+    "M": "#raft_ocean:compat/copper_ingots",
     "B": "raft_ocean:timber_brace"
   },
   "result": {

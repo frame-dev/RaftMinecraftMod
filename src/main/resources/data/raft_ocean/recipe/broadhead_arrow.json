@@ -6,7 +6,7 @@
     "raft_ocean:arrow_shaft",
     "raft_ocean:arrow_shaft",
     "raft_ocean:arrow_shaft",
-    "raft_ocean:metal_plate",
+    "#raft_ocean:compat/iron_plates",
     "raft_ocean:drift_leaf"
   ],
   "result": {

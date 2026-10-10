@@ -42,6 +42,7 @@ public final class RaftOcean {
         dev.raftocean.survival.ProcessingRecipe.SERIALIZERS.register(modEventBus);
         dev.raftocean.menu.SurvivalMenu.TYPES.register(modEventBus);
         dev.raftocean.menu.NavigationMenu.TYPES.register(modEventBus);
+        modEventBus.addListener(dev.raftocean.compat.EnergyItems::register);
         modEventBus.addListener(this::onCommonSetup);
         modEventBus.addListener(dev.raftocean.network.RaftMovementSync::register);
         NeoForge.EVENT_BUS.addListener(this::onServerStarting);

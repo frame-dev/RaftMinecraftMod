@@ -575,5 +575,6 @@
   "block.raft_ocean.part_basic_grill_3": "Basic Food Grill",
   "block.raft_ocean.part_basic_grill_4": "Basic Food Grill",
   "item.raft_ocean.stone_anchor_bundle": "Stone Anchor Bundle",
-  "raft_ocean.nav.discard_anchor": "Release & discard"
+  "raft_ocean.nav.discard_anchor": "Release & discard",
+  "raft_ocean.config.compatibility.energyItems": "Mod energy item support"
 }

@@ -7,7 +7,7 @@
     "S C"
   ],
   "key": {
-    "S": "minecraft:stick",
+    "S": "#raft_ocean:compat/sticks",
     "C": "#raft_ocean:bindings"
   },
   "result": {

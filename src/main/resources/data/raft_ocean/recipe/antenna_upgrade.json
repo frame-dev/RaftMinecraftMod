@@ -7,7 +7,7 @@
     "FWF"
   ],
   "key": {
-    "I": "minecraft:iron_ingot",
+    "I": "#raft_ocean:compat/iron_ingots",
     "F": "raft_ocean:scrap_fasteners",
     "W": "raft_ocean:woven_mesh"
   },

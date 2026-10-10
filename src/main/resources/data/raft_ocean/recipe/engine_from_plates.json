@@ -7,10 +7,10 @@
     "MMM"
   ],
   "key": {
-    "M": "raft_ocean:metal_plate",
+    "M": "#raft_ocean:compat/iron_plates",
     "F": "raft_ocean:scrap_fasteners",
     "R": "raft_ocean:reinforced_brace",
-    "W": "raft_ocean:copper_wire"
+    "W": "#raft_ocean:compat/copper_wires"
   },
   "result": {
     "id": "raft_ocean:raft_engine",

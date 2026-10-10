@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:raw_materials/osmium",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/tin",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/lead",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/silver",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/nickel",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/zinc",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/aluminum",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/uranium",
+      "required": false
+    }
+  ]
+}

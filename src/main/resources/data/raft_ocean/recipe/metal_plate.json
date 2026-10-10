@@ -2,8 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    "minecraft:iron_ingot",
-    "minecraft:iron_ingot",
+    "#raft_ocean:compat/iron_ingots",
+    "#raft_ocean:compat/iron_ingots",
     "raft_ocean:scrap_fasteners"
   ],
   "result": {

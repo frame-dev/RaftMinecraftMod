@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "raft_ocean:copper_wire",
+    {
+      "id": "#c:wires/copper",
+      "required": false
+    }
+  ]
+}

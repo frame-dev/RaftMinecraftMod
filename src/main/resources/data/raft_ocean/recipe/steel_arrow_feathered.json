@@ -6,7 +6,7 @@
     "raft_ocean:arrow_shaft",
     "raft_ocean:arrow_shaft",
     "raft_ocean:arrow_shaft",
-    "minecraft:iron_ingot",
+    "#raft_ocean:compat/iron_ingots",
     "minecraft:feather"
   ],
   "result": {

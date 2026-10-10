@@ -7,7 +7,7 @@
     " M "
   ],
   "key": {
-    "M": "minecraft:copper_ingot"
+    "M": "#raft_ocean:compat/copper_ingots"
   },
   "result": {
     "id": "raft_ocean:raft_water_pipe",

@@ -4,7 +4,7 @@
   "group": "raft_ocean:timber_brace",
   "ingredients": [
     "#minecraft:planks",
-    "minecraft:stick"
+    "#raft_ocean:compat/sticks"
   ],
   "result": {
     "id": "raft_ocean:timber_brace",

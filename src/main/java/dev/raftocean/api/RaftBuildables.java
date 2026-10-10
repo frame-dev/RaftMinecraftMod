@@ -23,6 +23,14 @@ public final class RaftBuildables {
             throw new IllegalArgumentException("Invalid machine inventory/tick interval: "+type.id());
         register(type);MACHINES.put(type.id().toString(),behavior);
     }
+    /** Optional adapters must defer resolving foreign classes and registries until their mod is loaded. */
+    public static boolean registerOptional(String modId,java.util.function.Supplier<RaftBuildable> definition,
+            java.util.function.Supplier<RaftMachineBehavior> behavior) {
+        java.util.Objects.requireNonNull(definition);java.util.Objects.requireNonNull(behavior);
+        if(modId==null || !modId.matches("[a-z0-9_]+"))throw new IllegalArgumentException("Invalid mod ID");
+        if(!net.neoforged.fml.ModList.get().isLoaded(modId))return false;
+        register(definition.get(),behavior.get());return true;
+    }
     public static synchronized Optional<RaftMachineBehavior> machine(String id) { return Optional.ofNullable(MACHINES.get(id)); }
     public static synchronized Optional<RaftBuildable> find(String id) { return Optional.ofNullable(TYPES.get(id)); }
     public static synchronized Optional<RaftBuildable> forItem(ItemStack stack) {

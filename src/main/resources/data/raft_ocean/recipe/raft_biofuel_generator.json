@@ -7,9 +7,9 @@
     "FFF"
   ],
   "key": {
-    "M": "raft_ocean:metal_plate",
-    "W": "raft_ocean:copper_wire",
-    "I": "minecraft:iron_ingot",
+    "M": "#raft_ocean:compat/iron_plates",
+    "W": "#raft_ocean:compat/copper_wires",
+    "I": "#raft_ocean:compat/iron_ingots",
     "E": "raft_ocean:raft_engine",
     "F": "raft_ocean:scrap_fasteners"
   },

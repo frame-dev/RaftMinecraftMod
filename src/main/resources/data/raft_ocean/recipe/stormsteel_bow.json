@@ -3,9 +3,9 @@
   "category": "equipment",
   "ingredients": [
     "raft_ocean:reef_laminated_bow",
-    "raft_ocean:metal_plate",
-    "raft_ocean:metal_plate",
-    "raft_ocean:copper_wire",
+    "#raft_ocean:compat/iron_plates",
+    "#raft_ocean:compat/iron_plates",
+    "#raft_ocean:compat/copper_wires",
     "raft_ocean:bowstring"
   ],
   "result": {

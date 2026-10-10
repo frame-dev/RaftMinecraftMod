@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "minecraft:glass"
+    "#raft_ocean:compat/glass"
   ]
 }

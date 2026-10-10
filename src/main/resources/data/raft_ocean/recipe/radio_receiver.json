@@ -8,7 +8,7 @@
   ],
   "key": {
     "F": "raft_ocean:scrap_fasteners",
-    "I": "minecraft:iron_ingot",
+    "I": "#raft_ocean:compat/iron_ingots",
     "W": "raft_ocean:woven_mesh",
     "B": "raft_ocean:timber_brace"
   },

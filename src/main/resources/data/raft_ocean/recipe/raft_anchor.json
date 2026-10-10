@@ -11,7 +11,7 @@
     "B": "raft_ocean:timber_brace",
     "C": "#raft_ocean:bindings",
     "F": "raft_ocean:scrap_fasteners",
-    "I": "minecraft:iron_ingot"
+    "I": "#raft_ocean:compat/iron_ingots"
   },
   "result": {
     "id": "raft_ocean:raft_anchor",

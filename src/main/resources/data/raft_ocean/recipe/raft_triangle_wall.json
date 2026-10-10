@@ -3,7 +3,7 @@
   "category": "building",
   "ingredients": [
     "raft_ocean:raft_half_wall",
-    "minecraft:stick"
+    "#raft_ocean:compat/sticks"
   ],
   "result": {
     "id": "raft_ocean:raft_triangle_wall"

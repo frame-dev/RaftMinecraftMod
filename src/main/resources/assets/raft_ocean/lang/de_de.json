@@ -575,5 +575,6 @@
   "block.raft_ocean.part_basic_grill_3": "Einfacher Grill",
   "block.raft_ocean.part_basic_grill_4": "Einfacher Grill",
   "item.raft_ocean.stone_anchor_bundle": "Steinanker-Bündel",
-  "raft_ocean.nav.discard_anchor": "Lösen & wegwerfen"
+  "raft_ocean.nav.discard_anchor": "Lösen & wegwerfen",
+  "raft_ocean.config.compatibility.energyItems": "Energiegegenstände anderer Mods"
 }

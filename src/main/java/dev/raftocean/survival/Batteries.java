@@ -24,7 +24,9 @@ public final class Batteries {
         CustomData.update(DataComponents.CUSTOM_DATA,stack,tag -> tag.putInt("RaftBatteryCharge",Math.clamp(amount,0,capacity(stack))));
     }
     public static int missing(RaftStorage charger) {
-        int total=0;for(int slot=1;slot<=2;slot++)total+=capacity(charger.getItem(slot))-charge(charger.getItem(slot));return total;
+        long total=0;for(int slot=1;slot<=2;slot++) {
+            var stack=charger.getItem(slot);total+=capacity(stack)>0?capacity(stack)-charge(stack):dev.raftocean.compat.EnergyItems.missing(stack);
+        }return (int)Math.min(Integer.MAX_VALUE,total);
     }
     /** Preflight all sources so an underpowered processing step spends nothing. */
     public static boolean spend(List<RaftStorage> generators,RaftStorage consumer,int amount) {
@@ -39,6 +41,9 @@ public final class Batteries {
     }
     public static void tickCharger(RaftStorage charger,List<RaftStorage> generators,long second) {
         if(charger.paused)return;
+        if(dev.raftocean.compat.EnergyItems.foreign(charger.getItem(1)) || dev.raftocean.compat.EnergyItems.foreign(charger.getItem(2))) {
+            dev.raftocean.compat.EnergyItems.tick(charger,generators,second);return;
+        }
         int missing=missing(charger);
         if(missing==0){charger.status=capacity(charger.getItem(1))+capacity(charger.getItem(2))==0?"supplies":"full";updateProgress(charger);return;}
         int budget=Math.min(missing,RaftConfig.BATTERY_CHARGE_RATE.get());

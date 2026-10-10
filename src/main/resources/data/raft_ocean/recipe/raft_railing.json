@@ -9,7 +9,7 @@
   "key": {
     "B": "raft_ocean:timber_brace",
     "C": "#raft_ocean:bindings",
-    "S": "minecraft:stick"
+    "S": "#raft_ocean:compat/sticks"
   },
   "result": {
     "id": "raft_ocean:raft_railing",

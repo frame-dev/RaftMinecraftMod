@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "minecraft:iron_ingot"
+    "#raft_ocean:compat/iron_ingots"
   ]
 }

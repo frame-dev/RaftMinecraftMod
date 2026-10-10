@@ -5,8 +5,8 @@
   "ingredients": [
     "raft_ocean:scrap_fasteners",
     "raft_ocean:scrap_fasteners",
-    "minecraft:iron_nugget",
-    "minecraft:iron_nugget"
+    "#raft_ocean:compat/iron_nuggets",
+    "#raft_ocean:compat/iron_nuggets"
   ],
   "result": {
     "id": "raft_ocean:metal_hook_head",
