@@ -42,7 +42,8 @@ public final class OutpostIslandCheck {
                 BlockPos previous=null;
                 for(var element:entry.getValue().getAsJsonArray()) {
                     var cell=element.getAsJsonArray();var pos=new BlockPos(cell.get(0).getAsInt(),cell.get(1).getAsInt(),cell.get(2).getAsInt());
-                    require(lookup.containsKey(pos),"Authored route uses a native walkable surface: "+entry.getKey());
+                    require(lookup.containsKey(pos),"Authored route uses a native walkable surface: "
+                            +entry.getKey()+" at "+pos);
                     if(previous!=null)require(Math.abs(pos.getY()-previous.getY())<=1 && Math.abs(pos.getX()-previous.getX())+Math.abs(pos.getZ()-previous.getZ())==1,"Route has no gaps or two-block steps: "+entry.getKey());
                     previous=pos;
                 }

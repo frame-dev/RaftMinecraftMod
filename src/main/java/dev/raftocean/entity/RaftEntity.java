@@ -94,6 +94,9 @@ public final class RaftEntity extends Entity {
     private double currentX = 0.020;
     private double currentZ = 0.008;
     private long waveTicks;
+    private Vec3 collisionOrigin;
+    private float collisionYaw;
+    private List<AABB> worldCollisionCache;
     private final Map<Float, List<AABB>> colliderCache = new LinkedHashMap<>(4, .75F, true) {
         @Override protected boolean removeEldestEntry(Map.Entry<Float, List<AABB>> entry) { return size() > 4; }
     };
@@ -101,6 +104,7 @@ public final class RaftEntity extends Entity {
     public Vec3 toWorld(Vec3 local) { return RaftTransform.world(local, position(), getYRot()); }
     public Vec3 toLocal(Vec3 world) { return RaftTransform.local(world, position(), getYRot()); }
     public List<AABB> pieceBoxes(BlockPos pos, RaftPiece piece) { return structure.boxes(pos, piece); }
+    public List<AABB> pieceCollisionBoxes(BlockPos pos,RaftPiece piece) { return structure.collisionBoxes(pos,piece); }
     public List<AABB> collisionBoxesAt(Vec3 origin, float yaw) {
         List<AABB> rotatedColliders = colliderCache.get(yaw);
         if (rotatedColliders == null) {
@@ -222,7 +226,12 @@ public final class RaftEntity extends Entity {
     }
 
     public List<AABB> getCollisionBoxes() {
-        return collisionBoxesAt(position(), getYRot());
+        Vec3 origin=position();float yaw=getYRot();
+        if(worldCollisionCache==null || !origin.equals(collisionOrigin) || Float.compare(yaw,collisionYaw)!=0) {
+            worldCollisionCache=collisionBoxesAt(origin,yaw);
+            collisionOrigin=origin;collisionYaw=yaw;
+        }
+        return worldCollisionCache;
     }
 
     public List<AABB> getLocalBoxes() {
@@ -356,6 +365,7 @@ public final class RaftEntity extends Entity {
 
     private void rebuildLayout() {
         colliderCache.clear();
+        worldCollisionCache=null;
         blocks.clear();
         for (BlockPos pos : layout.cells()) {
             blocks.put(pos, foundationHealth(pos) < 60 ? dev.raftocean.creature.CreatureContent.DAMAGED_DECK.get().defaultBlockState() : ModContent.RAFT_DECK.get().defaultBlockState());
@@ -511,6 +521,9 @@ public final class RaftEntity extends Entity {
         return Math.abs(dx)>=Math.abs(dz)?(dx>=0?1:3):(dz>=0?2:0);
     }
     public Placement placement(Player player,ItemStack held,Pick pick) {
+        return placement(player,held,pick,0);
+    }
+    public Placement placement(Player player,ItemStack held,Pick pick,int rotationOffset) {
         if(pick==null){return null;}
         boolean foundation=held.is(ModContent.FOUNDATION.get());
         var kind=ModContent.structuralKind(held);
@@ -524,6 +537,7 @@ public final class RaftEntity extends Entity {
         }
         int edge=edgeRotation(snappingCell,hit);
         int rotation=Math.floorMod(Mth.floor((player.getYRot()-getYRot()+45)/90),4);
+        if(kind!=null && kind.rotatable()){rotation=Math.floorMod(rotation+rotationOffset,4);}
         BlockPos target=existing==null?selected.above():structure.attachment(snappingCell,existing,face,player.isShiftKeyDown(),hit.y);
         if(foundation || kind==RaftPiece.Kind.COLLECTION_NET && (existing==null || existing.kind()==RaftPiece.Kind.COLLECTION_NET && selected.getY()==0)) {
             if(existing!=null && !(existing.kind()==RaftPiece.Kind.COLLECTION_NET && selected.getY()==0)){
@@ -622,6 +636,25 @@ public final class RaftEntity extends Entity {
             player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable(repaired ? "raft_ocean.repair.done" : "raft_ocean.repair.help",foundationHealth(selected)));
             return repaired ? InteractionResult.SUCCESS_SERVER : InteractionResult.FAIL;
         }
+        if(held.is(ModContent.BUILDING_HAMMER.get()) && selectedPiece!=null && selectedPiece.kind().rotatable()) {
+            int rotation=Math.floorMod(selectedPiece.rotation()+1,4);
+            var rotated=selectedPiece.withRotation(rotation);
+            var boxes=structure.boxes(selected,rotated);
+            List<AABB> obstacles=new java.util.ArrayList<>();
+            blocks.keySet().forEach(cell->obstacles.add(cellBox(cell,Vec3.ZERO)));
+            structure.pieces().forEach((cell,piece)->{
+                if(!cell.equals(selected)){obstacles.addAll(structure.boxes(cell,piece));}
+            });
+            boolean clear=clearForPiece(boxes)
+                    && obstacles.stream().noneMatch(old->boxes.stream().anyMatch(box->old.intersects(box.deflate(1E-5))));
+            if(!clear || !structure.rotate(selected,rotation,layout)) {
+                player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("raft_ocean.build.rotate_blocked"));
+                return InteractionResult.FAIL;
+            }
+            publishLayout();
+            player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("raft_ocean.build.rotated",rotation*90));
+            return InteractionResult.SUCCESS_SERVER;
+        }
         if (!add && buildKind == null) {
             if(selectedPiece!=null && selectedPiece.kind()==RaftPiece.Kind.ADDON && !selectedPiece.addonId().isEmpty()) {
                 var result=selectedPiece.addon().interaction().use(this,selected,player,hand);
@@ -666,7 +699,7 @@ public final class RaftEntity extends Entity {
             publishLayout();
             return InteractionResult.SUCCESS_SERVER;
         }
-        Placement plan=placement(player,held,pick);
+        Placement plan=placement(player,held,pick,dev.raftocean.network.RaftBuildRotationSync.rotation((net.minecraft.server.level.ServerPlayer)player));
         if(plan==null || !plan.valid()){
             String reason=plan==null?"aim":plan.failure();
             player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("raft_ocean.build."+reason,

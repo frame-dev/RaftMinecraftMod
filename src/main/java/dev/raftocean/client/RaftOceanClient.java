@@ -7,19 +7,55 @@ import dev.raftocean.entity.RaftEntity;
 import dev.raftocean.entity.RaftPlayerSupport;
 import java.util.Comparator;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.KeyMapping;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 
 // NeoForge discovers this subscriber only on the physical client.
 @EventBusSubscriber(modid = RaftOcean.MOD_ID, value = Dist.CLIENT)
 public final class RaftOceanClient {
+    private static final KeyMapping.Category BUILD_CATEGORY = new KeyMapping.Category(
+            Identifier.fromNamespaceAndPath(RaftOcean.MOD_ID,"building"));
+    private static final KeyMapping ROTATE_BUILD = new KeyMapping(
+            "key.raft_ocean.rotate_build",InputConstants.KEY_R,BUILD_CATEGORY);
+
     private RaftOceanClient() {
+    }
+
+    @SubscribeEvent
+    public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
+        event.registerCategory(BUILD_CATEGORY);
+        event.register(ROTATE_BUILD);
+    }
+
+    @SubscribeEvent
+    public static void onClientTick(ClientTickEvent.Post event) {
+        var game=Minecraft.getInstance();
+        while(ROTATE_BUILD.consumeClick()) {
+            var player=game.player;
+            if(player==null || game.level==null || game.gui.screen()!=null){continue;}
+            var kind=ModContent.structuralKind(player.getMainHandItem());
+            if(kind==null){kind=ModContent.structuralKind(player.getOffhandItem());}
+            if(kind==null || !kind.rotatable()){continue;}
+            int rotation=dev.raftocean.client.render.RaftPlacementGhost.rotateBuild();
+            net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(
+                    new dev.raftocean.network.RaftBuildRotationPayload(rotation));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onClientLogout(net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent.LoggingOut event) {
+        dev.raftocean.client.render.RaftPlacementGhost.resetRotation();
     }
 
     @SubscribeEvent
@@ -57,7 +93,9 @@ public final class RaftOceanClient {
             var item=game.player.getMainHandItem();var offhand=game.player.getOffhandItem();
             if(!item.is(ModContent.FOUNDATION.get()) && ModContent.structuralKind(item)==null
                     && !offhand.is(ModContent.FOUNDATION.get()) && ModContent.structuralKind(offhand)==null){return;}
-            var label=Component.translatable(ghost.valid()?"raft_ocean.ghost.ready":"raft_ocean.ghost."+ghost.failure());
+            var label=ghost.valid() && ghost.piece()!=null && ghost.piece().kind().rotatable()
+                    ?Component.translatable("raft_ocean.ghost.ready.rotate",ghost.piece().rotation()*90)
+                    :Component.translatable(ghost.valid()?"raft_ocean.ghost.ready":"raft_ocean.ghost."+ghost.failure());
             int width=game.font.width(label),x=(graphics.guiWidth()-width)/2,y=graphics.guiHeight()/2+22;
             graphics.fill(x-5,y-3,x+width+5,y+12,0xBB102229);
             graphics.text(game.font,label,x,y,ghost.valid()?0xFF75E8BB:0xFFFF8D83);

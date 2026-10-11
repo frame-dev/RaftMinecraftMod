@@ -125,7 +125,7 @@ public final class NavigationCheck {
             require(left.x<0 && Math.abs(left.z)<1E-9 && engine.fuelTicks==reserve-1, "Released anchor resumes fuel and changes propulsion course"); checks++;
             driveMenu.clickMenuButton(player, 0);
             require(navigation.stroke(new Vec3(1,0,0)) && navigation.target(true).x>0, "Paddle creates impulse in looked-at direction"); checks++;
-            for (int i=0; i<160; i++) { navigation.target(true); }
+            for (int i=0; i<400; i++) { navigation.target(true); }
             require(navigation.target(true).length()<1E-7, "Paddle impulse decays rather than accelerating forever"); checks++;
             require(!navigation.stroke(new Vec3(0,1,0)), "Looking straight up cannot create an undefined horizontal impulse"); checks++;
             engine.enabled = true; engine.setItem(1,new ItemStack(Items.OAK_PLANKS, 2));

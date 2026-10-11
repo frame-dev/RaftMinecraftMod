@@ -13,5 +13,10 @@ public final class RaftRenderState extends EntityRenderState {
     public List<Vec3> lampSources=List.of();
     public dev.raftocean.entity.RaftEntity.Placement ghost;
     public record DeckCell(AABB localBox, MovingBlockRenderState block, Vec3 pivot,
-            float mountYaw, float turn, float spin, float flutter) { }
+            float mountYaw, float turn, float spin, float flutter, String variant) {
+        public DeckCell(AABB localBox, MovingBlockRenderState block, Vec3 pivot,
+                float mountYaw, float turn, float spin, float flutter) {
+            this(localBox, block, pivot, mountYaw, turn, spin, flutter, "");
+        }
+    }
 }

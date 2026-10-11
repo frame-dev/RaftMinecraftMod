@@ -6,4 +6,7 @@ version='1.1.1'
 group='example.raftaddon'
 java.toolchain.languageVersion=JavaLanguageVersion.of(25)
 neoForge { version='26.3.0.48-beta' }
-dependencies { implementation files('../../build/libs/raft_ocean-0.11.17.jar') }
+def raftProjectProperties = new Properties()
+file('../../gradle.properties').withInputStream { raftProjectProperties.load(it) }
+def raftProjectVersion = raftProjectProperties.getProperty('mod_version')
+dependencies { implementation files("../../build/libs/raft_ocean-${raftProjectVersion}.jar") }

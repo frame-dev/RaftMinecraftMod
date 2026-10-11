@@ -1,6 +1,6 @@
 # Raft Ocean
 
-Version 0.11.40 makes [every island type larger](docs/LARGER_ISLANDS.md): ordinary resource islands span 33–161 blocks, exploration islands 97, trading outposts 129, and story islands 113–193. Buildings, loot, puzzles and the open-ended story retain their scale and progression. Extra shores and vegetation expand the resource islands, and spacing checks account for the larger footprints. New sizes appear in newly generated terrain. Install 0.11.40 on every client and the server.
+Version 0.11.41 adds a [collision and model quality pass](docs/QUALITY_PASS.md): supported bed respawns at mattress height, separate seat/back and lamp/palm collision profiles, reusable collision geometry, an accurately rotating engine direction indicator, and refined engine/grill models with matching grill inventory icons. The [larger islands](docs/LARGER_ISLANDS.md), open-ended story and survival progression remain included. Install 0.11.41 on every client and the server.
 
 Version 0.11.38 adds [larger story islands with more exploration](docs/STORY_ISLAND_EXPLORATION.md): seven 81–129-block templates with irregular coastlines, coves, wooded slopes, tidal pools, new reefs and 28 optional side areas. Connected trails reach supply shelters, garden ruins, lookouts and stone grottoes. Main journals, puzzles and the open ending remain intact. New layouts appear in newly generated terrain. Install 0.11.38 on every client and the server.
 

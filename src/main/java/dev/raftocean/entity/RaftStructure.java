@@ -107,6 +107,22 @@ public final class RaftStructure {
         return candidate.add(pos,piece,layout);
     }
 
+    public boolean rotate(BlockPos pos, int rotation, RaftLayout layout) {
+        RaftPiece old=pieces.get(pos);
+        if(old==null || rotation<0 || rotation>3){return false;}
+        RaftPiece rotated=old.withRotation(rotation);
+        if(!inBounds(pos,rotated) || !validTableFootprint(pos,rotated)){return false;}
+        Set<BlockPos> occupied=occupied();
+        occupied.removeAll(old.occupiedCells(pos));
+        if(rotated.occupiedCells(pos).stream().anyMatch(cell->occupied.contains(cell) || layout.cells().contains(cell))){return false;}
+        pieces.put(pos,rotated);
+        if(!supportedBy(layout) || !floatsOn(layout)){
+            pieces.put(pos,old);
+            return false;
+        }
+        return true;
+    }
+
     /** Two perpendicular full wall faces share one saved corner piece and one support cell. */
     public boolean replaceWallCorner(BlockPos pos,RaftPiece corner,RaftLayout layout){
         var old=pieces.get(pos);

@@ -1,6 +1,6 @@
 # Raft Ocean API v2 example addon
 
-Requires Raft Ocean 0.11.17, Minecraft 26.3, NeoForge 26.3.0.48-beta and Java 25.
+Requires Raft Ocean API v2 (0.11.17 or later), Minecraft 26.3, NeoForge 26.3.0.48-beta and Java 25.
 This is a separate mod with original resources, a two-cell work crate and a
 one-cell kelp dryer. The dryer saves inventory, fuel, progress and pause state.
 
@@ -11,7 +11,8 @@ $env:JAVA_HOME='C:\Program Files\Zulu\zulu-25'
 .\gradlew.bat -p examples/raft-addon build --no-parallel
 ```
 
-The file dependency expects `../../build/libs/raft_ocean-0.11.17.jar`. If you
+Build the main mod first. The file dependency reads the current version from
+`../../gradle.properties` and expects its jar in `../../build/libs`. If you
 unpack this example elsewhere, update that dependency and use a Gradle 9.2.1
 wrapper. Output: `build/libs/raft-example-addon-1.1.1.jar`. Install both mod jars
 on client and dedicated server and restart. Sources jars are development files.

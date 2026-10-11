@@ -25,7 +25,7 @@ public final class RaftFurnitureCheck {
                 require(!structure.add(cell,new RaftPiece(RaftPiece.Kind.SHORT_PILLAR,0,false),layout),"Overlap refused throughout footprint");
             }
             require(RaftStructure.decode(structure.encode(),layout).pieces().equals(structure.pieces()),"Furniture rotation saves and loads");
-            require(structure.collisionBoxes(anchor,piece).size()==(kind==RaftPiece.Kind.WOVEN_RUG?0:kind==RaftPiece.Kind.CANVAS_CANOPY?piece.boxes(anchor).size():1),"Furniture preserves safe collision and open canopy interior");
+            require(structure.collisionBoxes(anchor,piece).size()==(kind==RaftPiece.Kind.WOVEN_RUG?0:kind==RaftPiece.Kind.CANVAS_CANOPY?piece.boxes(anchor).size():RaftFurniture.collision(kind).size()),"Furniture preserves physical profiles and open canopy interior");
             if(kind==RaftPiece.Kind.CANVAS_CANOPY) {
                 var bottom=piece.occupiedCells(anchor).stream().filter(p->p.getY()==anchor.getY()).toList();
                 double x=bottom.stream().mapToInt(BlockPos::getX).average().orElseThrow(),z=bottom.stream().mapToInt(BlockPos::getZ).average().orElseThrow();
@@ -51,11 +51,19 @@ public final class RaftFurnitureCheck {
                 player.setPos(raft.stationPosition(anchor,kind));
                 require(RaftBeds.use(raft,anchor,player).consumesAction(),"Larger bed supports native raft rest");
                 player.setData(SurvivalContent.BED_HOME,new RaftBeds.Home(raft.getUUID(),anchor));
-                require(RaftBeds.spawnPosition(player,raft)!=null,"Larger bed has a safe respawn position");
+                for(float yaw:new float[]{0,37,90,143,217,323}) {
+                    raft.setYRot(yaw);raft.refreshBounds();
+                    var spawn=RaftBeds.spawnPosition(player,raft);
+                    require(spawn!=null,"Larger bed has a safe respawn position");
+                    var body=player.getBoundingBox().move(spawn.subtract(player.position()));
+                    require(raft.getCollisionBoxes().stream().anyMatch(box->RaftContact.isSupported(body,box)),
+                            "Bed home lands on the mattress rather than floating at headboard height");
+                }
                 require(raft.removeStructuralPiece(anchor),"Larger bed can be reclaimed");
                 require(RaftBeds.spawnPosition(player,raft)==null,"Removed bed invalidates moving home");
             }finally{raft.discard();player.discard();}
         }
+        checks+=RaftFurnitureCollisionCheck.run(level);
         require(RaftFurniture.brightness(Vec3.ZERO,List.of())==0,"No lamps adds no light");
         require(RaftFurniture.brightness(Vec3.ZERO,List.of(Vec3.ZERO))==14,"Lamp maximum light");
         require(RaftFurniture.brightness(new Vec3(5,0,0),List.of(Vec3.ZERO))==9,"Lamp light attenuates");

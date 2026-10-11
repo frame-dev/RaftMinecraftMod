@@ -115,6 +115,19 @@ public final class RaftConstructionCheck {
             automationCell++;checks++;
         }
 
+        var rotatable=structure.pieces().entrySet().stream().filter(entry->entry.getValue().kind().rotatable()).findFirst().orElseThrow();
+        BlockPos rotatablePos=rotatable.getKey();
+        int originalRotation=rotatable.getValue().rotation();
+        int nextRotation=(originalRotation+1)%4;
+        require(structure.rotate(rotatablePos,nextRotation,layout)
+                && structure.pieces().get(rotatablePos).rotation()==nextRotation,"Machines and conduits rotate in place");
+        checks++;
+        require(RaftStructure.decode(structure.encode(),layout).pieces().get(rotatablePos).rotation()==nextRotation,
+                "Rotated machine and conduit directions persist");
+        checks++;
+        require(structure.rotate(rotatablePos,originalRotation,layout),"Rotatable fixture restores its original direction");
+        checks++;
+
         if(!layout.cells().contains(new BlockPos(9,0,0)))require(layout.add(new BlockPos(9,0,0)),"Connect expansion fixture");
         require(layout.add(new BlockPos(-6,0,-1)) && layout.add(new BlockPos(-6,0,0)),"Starter-machine fixture foundations");
         add(structure,layout,new BlockPos(-6,1,-1),RaftPiece.Kind.BASIC_PURIFIER,0,false);

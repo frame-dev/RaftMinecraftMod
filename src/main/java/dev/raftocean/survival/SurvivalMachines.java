@@ -177,11 +177,13 @@ public final class SurvivalMachines {
         int fuelSlot = kind == RaftPiece.Kind.COOKING_POT ? 3 : 1;
         if (inventory.fuelTicks == 0) {
             ItemStack fuel = inventory.getItem(fuelSlot);
+            // Biofuel burns exactly like coal.
+            ItemStack rated = fuel.is(dev.raftocean.survival.Automation.BIOFUEL.get()) ? new ItemStack(net.minecraft.world.item.Items.COAL) : fuel;
             var reader = new FuelReader(BlockPos.containing(raft.stationPosition(pos, kind)));
-            reader.setLevel(level); reader.setItem(1, fuel.copy());
-            int burn = reader.duration(level, fuel);
+            reader.setLevel(level); reader.setItem(1, rated.copy());
+            int burn = reader.duration(level, rated) * (rated == fuel ? 1 : dev.raftocean.survival.Automation.BIOFUEL_BURN_MULTIPLIER);
             var remainder = fuel.getCraftingRemainder();
-            float speed = reader.speed(level, fuel);
+            float speed = reader.speed(level, rated);
             if (burn <= 0 || remainder != null && fuel.getCount() != 1 || !Float.isFinite(speed) || speed <= 0) {
                 inventory.status = "fuel"; return 0;
             }

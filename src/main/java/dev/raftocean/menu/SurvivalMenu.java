@@ -111,7 +111,7 @@ public final class SurvivalMenu extends AbstractContainerMenu {
             case "battery" -> kind==RaftPiece.Kind.BATTERY_CHARGER?dev.raftocean.compat.EnergyItems.compatible(stack):dev.raftocean.survival.Batteries.capacity(stack)>0;
             case "biofuel" -> stack.is(dev.raftocean.survival.Automation.BIOFUEL.get());
             case "fluid_cup" -> stack.is(SurvivalContent.EMPTY_CUP.get()) || stack.is(SurvivalContent.FRESH_WATER.get());
-            case "fuel" -> stack.has(DataComponents.COOKING_FUEL);
+            case "fuel" -> stack.has(DataComponents.COOKING_FUEL) || stack.is(dev.raftocean.survival.Automation.BIOFUEL.get());
             case "cup" -> stack.is(SurvivalContent.EMPTY_CUP.get()) || kind.purifier() && stack.is(SurvivalContent.SALT_WATER.get());
             case "water" -> stack.is(SurvivalContent.FRESH_WATER.get());
             case "mix" -> stack.is(SurvivalContent.PLANTING_MIX.get());

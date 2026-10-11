@@ -77,9 +77,15 @@ public final class SurvivalScreen extends AbstractContainerScreen<SurvivalMenu> 
             if (!slot.isActive()) { continue; }
             boolean output = slot.index < 27 && menu.layout().containsKey(slot.index) && menu.layout().get(slot.index).output();
             int color = output ? accent() : 0xFF58767A;
-            graphics.fill(slot.x - 1, slot.y - 1, slot.x + 17, slot.y + 17, color);
+            graphics.fill(slot.x - (output ? 2 : 1), slot.y - (output ? 2 : 1),
+                    slot.x + 16 + (output ? 2 : 1), slot.y + 16 + (output ? 2 : 1), color);
             graphics.fill(slot.x, slot.y, slot.x + 16, slot.y + 16, 0xFF102229);
             graphics.fill(slot.x, slot.y, slot.x + 16, slot.y + 1, 0xFF09191F);
+            if (output) {
+                graphics.fill(slot.x + 16, slot.y + 6, slot.x + 18, slot.y + 10, color);
+                graphics.fill(slot.x + 18, slot.y + 5, slot.x + 20, slot.y + 7, color);
+                graphics.fill(slot.x + 18, slot.y + 9, slot.x + 20, slot.y + 11, color);
+            }
         }
         if (!menu.suppliesPage()) {
             // A segmented progress meter and distinct orange fuel meter never cover item slots.
@@ -130,7 +136,9 @@ public final class SurvivalScreen extends AbstractContainerScreen<SurvivalMenu> 
             int width=role.output()?46:34;
             if(font.width(text)>width){text=font.plainSubstrByWidth(text,width-6)+"…";}
             int x = Math.clamp(role.x() + 8 - font.width(text) / 2,12,239-font.width(text));
-            int y=role.y()+20+(role.output() && role.x()==218 && role.y()==44?10:0);
+            int outputRow = role.output() ? (int) menu.layout().values().stream()
+                    .filter(other -> other.output() && other.y() == role.y() && other.x() < role.x()).count() : 0;
+            int y=role.y()+20+outputRow*9;
             graphics.text(font, text, x, y, role.output() ? accent() : MUTED);
         }
         if (menu.kind() == RaftPiece.Kind.BIOFUEL_GENERATOR) { graphics.text(font,Component.translatable("raft_ocean.ui.energy",menu.energy()),65,69,LIGHT); }

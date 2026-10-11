@@ -35,7 +35,10 @@ public final class RaftMovementValidationCheck {
         var player=new WalkingPlayer(level);
         var handler=new Handler(level,player);int checks=0;
         try {
-            for(var kind:List.of(RaftPiece.Kind.CRAFTING_TABLE,RaftPiece.Kind.CHEST,RaftPiece.Kind.SPRINKLER,RaftPiece.Kind.BATTERY_CHARGER,RaftPiece.Kind.STAIRS)) {
+            for(var kind:List.of(RaftPiece.Kind.CRAFTING_TABLE,RaftPiece.Kind.CHEST,RaftPiece.Kind.SPRINKLER,
+                    RaftPiece.Kind.BATTERY_CHARGER,RaftPiece.Kind.STAIRS,RaftPiece.Kind.CABIN_BED,
+                    RaftPiece.Kind.DOUBLE_BED,RaftPiece.Kind.WOODEN_CHAIR,RaftPiece.Kind.SOFA,
+                    RaftPiece.Kind.POTTED_PALM,RaftPiece.Kind.FLOOR_LAMP,RaftPiece.Kind.WINDOW_WALL)) {
                 var structure=new RaftStructure();structure.add(new BlockPos(0,1,0),new RaftPiece(kind,0,false),RaftLayout.starter());
                 var seed=TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);seed.putString("Structure",structure.encode());
                 var raft=new RaftEntity(ModContent.RAFT.get(),level);raft.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),seed.buildResult()));
@@ -78,7 +81,10 @@ public final class RaftMovementValidationCheck {
                             Vec3 expected=RaftTransform.world(RaftTransform.local(raw,clientOrigin,clientYaw),serverOrigin,yaw);
                             var frame=new RaftMovementFrame(raft.getId(),clientOrigin,raw,clientYaw);
                             RaftMovementSync.accept(player,frame);int before=handler.corrections;
-                            handler.handleMovePlayer(new ServerboundMovePlayerPacket.Pos(raw,true,false));
+                            ServerboundMovePlayerPacket packet=step%2==0
+                                    ? new ServerboundMovePlayerPacket.Pos(raw,true,false)
+                                    : new ServerboundMovePlayerPacket.PosRot(raw,player.getYRot(),player.getXRot(),true,false);
+                            handler.handleMovePlayer(packet);
                             require(handler.corrections==before,"Native server teleported a legal walk near "+kind+" yaw="+yaw+" step="+step+" from="+start+" to="+expected);checks++;
                             require(player.position().distanceToSqr(start)<=2.25 && level.noCollision(player,player.getBoundingBox().deflate(1e-6)),"Native server failed to retain a legal walking position near "+kind+" yaw="+yaw+" step="+step+" expected="+expected+" got="+player.position());checks++;
                             handler.handleClientTickEnd(new ServerboundClientTickEndPacket());

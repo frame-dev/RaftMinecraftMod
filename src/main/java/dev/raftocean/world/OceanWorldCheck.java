@@ -52,8 +52,10 @@ public final class OceanWorldCheck {
             level.getChunk(sample[0] >> 4, sample[1] >> 4);
             require(level.getBlockState(new BlockPos(sample[0], -64, sample[1])).is(Blocks.BEDROCK), "Bedrock layer");
             require(level.getBlockState(new BlockPos(sample[0], 48, sample[1])).is(Blocks.SAND), "Sand seabed");
-            require(level.getBlockState(new BlockPos(sample[0], 49, sample[1])).is(Blocks.WATER), "Bottom water layer");
-            require(level.getBlockState(new BlockPos(sample[0], 62, sample[1])).is(Blocks.WATER), "Top water layer");
+            require(level.getFluidState(new BlockPos(sample[0], 49, sample[1])).is(net.minecraft.tags.FluidTags.WATER),
+                    "Bottom water layer remains flooded beneath ocean features");
+            require(level.getFluidState(new BlockPos(sample[0], 62, sample[1])).is(net.minecraft.tags.FluidTags.WATER),
+                    "Top water layer remains flooded beneath ocean features");
             require(level.getBlockState(new BlockPos(sample[0], 63, sample[1])).isAir(), "Air above sea");
             require(level.getBiome(new BlockPos(sample[0], 63, sample[1])).is(Biomes.OCEAN), "Ocean biome");
             require(Math.abs(dev.raftocean.salvage.DebrisSpawning.surface(level, sample[0] + .5, 63, sample[1] + .5) - (62 + 8.0 / 9)) < 1.0E-5,

@@ -6,7 +6,7 @@
         "type": "raft_ocean:ocean",
         "settings": {
           "biome": "minecraft:ocean",
-          "features": false,
+          "features": true,
           "lakes": false,
           "layers": [
             {"block": "minecraft:bedrock", "height": 1},

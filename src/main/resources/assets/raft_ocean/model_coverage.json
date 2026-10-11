@@ -986,6 +986,7 @@
     "chum_float": "CreatureRenderer"
   },
   "station_meshes": [
+    "station_display_basic_grill",
     "station_display_basic_purifier",
     "station_display_battery_charger",
     "station_display_biofuel_generator",
@@ -995,6 +996,7 @@
     "station_display_electric_purifier",
     "station_display_fuel_pipe",
     "station_display_fuel_tank",
+    "station_display_grill",
     "station_display_power_cable",
     "station_display_purifier",
     "station_display_rain_collector",

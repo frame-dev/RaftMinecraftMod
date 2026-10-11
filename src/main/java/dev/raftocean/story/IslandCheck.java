@@ -22,6 +22,8 @@ import java.util.*;
 /** Native generation, template loot, progression persistence, puzzle and placement-cap checks. */
 public final class IslandCheck {
     private static int checks;
+    private static final Set<Block> SEABED_STONE = Set.of(Blocks.STONE,Blocks.GRANITE,Blocks.DIORITE,Blocks.ANDESITE,
+            Blocks.COAL_ORE,Blocks.COPPER_ORE,Blocks.IRON_ORE);
     private static void check(boolean value,String message) { if(!value){throw new IllegalStateException(message);}checks++; }
     private static Identifier id(String path) { return Identifier.fromNamespaceAndPath("raft_ocean",path); }
     private IslandCheck() { }
@@ -75,15 +77,19 @@ public final class IslandCheck {
                 check(kelpState.is(Blocks.KELP) && kelpState.canSurvive(level,kelpPos)
                         && level.getFluidState(kelpPos).is(net.minecraft.tags.FluidTags.WATER),"Generated kelp is supported underwater and survives native placement: "+name);
                 check(Block.getDrops(kelpState,level,kelpPos,null).stream().anyMatch(stack->stack.is(Items.KELP)),"Native kelp harvest provides planter input: "+name);
-                check(level.getBlockState(new BlockPos(center.getX(),49,center.getZ())).is(Blocks.STONE),
-                        "Variable-size island is centered correctly and joins the seabed: "+name);
+                BlockPos islandBase = new BlockPos(center.getX(),49,center.getZ());
+                var baseBlock = level.getBlockState(islandBase).getBlock();
+                check(SEABED_STONE.contains(baseBlock),
+                        "Variable-size island is centered correctly and joins the seabed: "
+                                +name+" at "+islandBase+" (found "+baseBlock+")");
                 // Check a template surface outside the center chunk, including the large island footprint.
                 var sand=template.filterBlocks(BlockPos.ZERO,placement,Blocks.SAND,false);
                 var sample=sand.stream().filter(info->info.pos().getY()>=14)
                         .max(Comparator.comparingInt(info->Math.abs(info.pos().getX()-size/2)+Math.abs(info.pos().getZ()-size/2))).orElseThrow();
                 BlockPos shore=new BlockPos(center.getX()-size/2,49,center.getZ()-size/2).offset(sample.pos());
                 level.getChunk(shore.getX()>>4,shore.getZ()>>4);
-                check(level.getBlockState(shore).is(Blocks.SAND),"Island shoreline places across its variable chunk footprint: "+name);
+                check(level.getBlockState(shore).is(Blocks.SAND),"Island shoreline places across its variable chunk footprint: "
+                        +name+" at "+shore+" (found "+level.getBlockState(shore)+")");
                 if(variant>0){
                     check(!template.filterBlocks(BlockPos.ZERO,placement,Blocks.OAK_LOG).isEmpty()
                             || !template.filterBlocks(BlockPos.ZERO,placement,Blocks.BIRCH_LOG).isEmpty()
@@ -126,7 +132,8 @@ public final class IslandCheck {
                 int radius=(size+15)/32;
                 for(int x=cx-radius;x<=cx+radius;x++){for(int z=cz-radius;z<=cz+radius;z++){level.getChunk(x,z);}}
                 checks+=StoryExplorationCheck.run(level,name,target,size);
-                check(level.getBlockState(new BlockPos(target.getX(),49,target.getZ())).is(Blocks.STONE),"Island terrain connects to the seabed: "+name);
+                check(SEABED_STONE.contains(level.getBlockState(new BlockPos(target.getX(),49,target.getZ())).getBlock()),
+                        "Island terrain connects to the seabed after ocean geology features: "+name);
                 int chestY=stage<=1?73:stage==4?78:66,zOffset=stage<=1||stage==4?0:stage==2||stage==5?4:stage==3?7:8;
                 BlockPos chestPos=new BlockPos(target.getX(),chestY,target.getZ()+zOffset);
                 check(level.getBlockEntity(chestPos) instanceof ChestBlockEntity,"Native chunk generation places story chest: "+name);

@@ -65,6 +65,7 @@ public final class RaftOcean {
         modEventBus.addListener(dev.raftocean.compat.EnergyItems::register);
         modEventBus.addListener(this::onCommonSetup);
         modEventBus.addListener(dev.raftocean.network.RaftMovementSync::register);
+        modEventBus.addListener(dev.raftocean.network.RaftBuildRotationSync::register);
         NeoForge.EVENT_BUS.addListener(this::onServerStarting);
         NeoForge.EVENT_BUS.addListener(dev.raftocean.survival.Thirst::onTick);
         NeoForge.EVENT_BUS.addListener(dev.raftocean.progression.ResearchRecipes::onTick);

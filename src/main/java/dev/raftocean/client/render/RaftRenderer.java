@@ -130,13 +130,13 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
             float mount = piece.rotation() * 90;
             if(kind==RaftPiece.Kind.ENGINE){
                 float bearing=mount+entity.navigation().trim(pos);
-                var arrow=ModContent.MACHINE_WATER.get().defaultBlockState();
+                var arrow=ModContent.modelPart(RaftPiece.Kind.STEERING_WHEEL,1).defaultBlockState();
                 double top=boxes.stream().mapToDouble(box->box.maxY).max().orElse(baseY+1)+.015;
                 for(AABB part:java.util.List.of(new AABB(-.025,top,-.22,.025,top+.025,.19),
                         new AABB(-.12,top,.10,.12,top+.025,.18),new AABB(-.075,top,.18,.075,top+.025,.25),
                         new AABB(-.03,top,.25,.03,top+.025,.31))){
-                    add(entity,state,RaftTransform.bounds(part,bearing).move(pos.getX(),0,pos.getZ()),arrow,
-                            Vec3.ZERO,0,0,0,0);
+                    add(entity,state,part.move(pos.getX(),0,pos.getZ()),arrow,
+                            new Vec3(pos.getX(),top,pos.getZ()),0,bearing,0,0);
                 }
             }
             if(kind==RaftPiece.Kind.ADDON && !piece.addonId().isEmpty()) {
@@ -155,6 +155,10 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
                 var canonical=entity.pieceBoxes(pos,piece.withRotation(0));
                 AABB envelope=canonical.getFirst();
                 for(var part:canonical){envelope=envelope.minmax(part);}
+                if(kind.conduit()){
+                    addConduit(entity,state,pos,piece,envelope,ModContent.displayModel(kind).defaultBlockState(),new Vec3(pos.getX(),baseY,pos.getZ()));
+                    return;
+                }
                 add(entity,state,envelope,ModContent.displayModel(kind).defaultBlockState(),
                         new Vec3(pos.getX(),baseY,pos.getZ()),0,piece.rotation()*90,0,0);
                 return;
@@ -361,6 +365,45 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
 
     private void add(RaftEntity entity, RaftRenderState state, AABB box, BlockState visual,
             Vec3 pivot, float mount, float turn, float spin, float flutter) {
+        add(entity, state, box, visual, pivot, mount, turn, spin, flutter, "");
+    }
+
+    private void addConduit(RaftEntity entity, RaftRenderState state, BlockPos pos, RaftPiece piece, AABB box, BlockState visual, Vec3 pivot) {
+        var kind = piece.kind();
+        var network = kind == RaftPiece.Kind.POWER_CABLE ? dev.raftocean.survival.Automation.Network.POWER
+                : kind == RaftPiece.Kind.FUEL_PIPE ? dev.raftocean.survival.Automation.Network.FUEL
+                : dev.raftocean.survival.Automation.Network.WATER;
+        var joined = new java.util.HashSet<java.util.List<Integer>>();
+        int[][] sides = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        for (int[] side : sides) {
+            var other = entity.pieces().get(pos.offset(side[0], 0, side[1]));
+            if (other != null && dev.raftocean.survival.Automation.member(other.kind(), network)) { joined.add(java.util.List.of(side[0], side[1])); }
+        }
+        int turns = piece.rotation();
+        String variant = "";
+        boolean straight = joined.isEmpty() || joined.size() == 1
+                || joined.size() == 2 && joined.contains(java.util.List.of(1, 0)) == joined.contains(java.util.List.of(-1, 0));
+        if (straight) {
+            if (!joined.isEmpty()) { turns = joined.stream().anyMatch(side -> side.get(0) != 0) ? 0 : 1; }
+        } else {
+            variant = joined.size() == 4 ? "_cross" : joined.size() == 3 ? "_tee" : "_corner";
+            java.util.List<int[]> canonical = joined.size() == 4 ? java.util.List.of(sides)
+                    : joined.size() == 3 ? java.util.List.of(sides[0], sides[1], sides[2]) : java.util.List.of(sides[0], sides[2]);
+            for (int turn = 0; turn < 4; turn++) {
+                final int quarter = turn;
+                var rotated = new java.util.HashSet<java.util.List<Integer>>();
+                for (int[] side : canonical) {
+                    Vec3 direction = RaftTransform.rotate(new Vec3(side[0], 0, side[1]), quarter * 90);
+                    rotated.add(java.util.List.of((int) Math.round(direction.x), (int) Math.round(direction.z)));
+                }
+                if (rotated.equals(joined)) { turns = turn; break; }
+            }
+        }
+        add(entity, state, box, visual, pivot, 0, turns * 90, 0, 0, variant);
+    }
+
+    private void add(RaftEntity entity, RaftRenderState state, AABB box, BlockState visual,
+            Vec3 pivot, float mount, float turn, float spin, float flutter, String variant) {
         MovingBlockRenderState block = new RaftLampLight(state.lampSources);
         Vec3 world = RaftTransform.world(box.getCenter(), new Vec3(state.x, state.y, state.z), state.hullYaw);
         BlockPos worldPos = BlockPos.containing(world);
@@ -368,7 +411,7 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
         if (entity.level() instanceof ClientLevel level) {
             block.biome = level.getBiome(worldPos); block.cardinalLighting = level.cardinalLighting(); block.lightEngine = level.getLightEngine();
         }
-        state.cells.add(new RaftRenderState.DeckCell(box, block, pivot, mount, turn, spin, flutter));
+        state.cells.add(new RaftRenderState.DeckCell(box, block, pivot, mount, turn, spin, flutter, variant));
     }
 
     @Override public void submit(RaftRenderState state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
@@ -396,7 +439,7 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
             pose.translate(box.minX, box.minY, box.minZ);
             pose.scale((float)box.getXsize(), (float)box.getYsize(), (float)box.getZsize());
             var visualId=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(cell.block().blockState.getBlock());
-            String meshName="station_"+visualId.getPath();
+            String meshName="station_"+visualId.getPath()+cell.variant();
             if(visualId.getNamespace().equals("raft_ocean") && EntityMeshes.hasMesh(meshName)){
                 int lamp=dev.raftocean.entity.RaftFurniture.brightness(RaftTransform.world(box.getCenter(),new Vec3(state.x,state.y,state.z),state.hullYaw),state.lampSources);
                 int lit=net.minecraft.util.LightCoordsUtil.pack(Math.max(net.minecraft.util.LightCoordsUtil.block(state.lightCoords),lamp),net.minecraft.util.LightCoordsUtil.sky(state.lightCoords));

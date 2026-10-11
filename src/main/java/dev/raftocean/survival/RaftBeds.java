@@ -57,8 +57,13 @@ public final class RaftBeds {
         Vec3 center = bedCenter(raft,home.cell());
         if (center == null) { return null; }
         var piece=raft.pieces().get(home.cell());
-        double top=raft.pieceBoxes(home.cell(),piece).stream().mapToDouble(box->box.maxY).max().orElse(RaftEntity.DECK_HEIGHT);
-        Vec3 target = new Vec3(center.x,raft.getY()+top+dev.raftocean.entity.RaftContact.CLEARANCE,center.z);
+        var footprint=player.getBoundingBox().move(center.subtract(player.position()));
+        double top=raft.pieceCollisionBoxes(home.cell(),piece).stream()
+                .flatMap(box->dev.raftocean.entity.RaftTransform.colliders(box,raft.getYRot()).stream())
+                .map(box->box.move(raft.position())).filter(box->dev.raftocean.entity.RaftContact.overlapsDeck(footprint,box))
+                .mapToDouble(box->box.maxY).max().orElse(Double.NaN);
+        if(!Double.isFinite(top))return null;
+        Vec3 target = new Vec3(center.x,top+dev.raftocean.entity.RaftContact.CLEARANCE,center.z);
         var body = player.getBoundingBox().move(target.subtract(player.position()));
         return player.level().noCollision(player, body) && raft.getCollisionBoxes().stream().noneMatch(body::intersects) ? target : null;
     }

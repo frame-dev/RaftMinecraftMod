@@ -14,22 +14,34 @@ public final class RaftPlacementGhost {
     private RaftPlacementGhost() { }
     public static RaftEntity.Placement last;
     public static long tick=-1;
+    private static int rotationOffset;
+    public static int rotateBuild() { rotationOffset=(rotationOffset+1)&3;return rotationOffset; }
+    public static int rotationOffset() { return rotationOffset; }
+    public static void resetRotation() { rotationOffset=0; }
     public static RaftEntity.Placement extract(RaftEntity raft){
         var game=Minecraft.getInstance();var player=game.player;
         if(player==null || game.gui.screen()!=null || !(game.hitResult instanceof EntityHitResult hit) || hit.getEntity()!=raft){return null;}
         var pick=raft.pick(player);
-        var plan=raft.placement(player,player.getMainHandItem(),pick);
+        var plan=raft.placement(player,player.getMainHandItem(),pick,rotationOffset);
         // Vanilla tries the main hand first. A station/door consumes that interaction before the offhand.
         if(plan==null && player.getMainHandItem().isEmpty() && pick!=null && (pick.piece()==null
                 || !pick.piece().kind().station() && pick.piece().kind()!=dev.raftocean.entity.RaftPiece.Kind.DOOR)){
-            plan=raft.placement(player,player.getOffhandItem(),pick);
+            plan=raft.placement(player,player.getOffhandItem(),pick,rotationOffset);
         }
         last=plan;tick=game.level.getGameTime();return plan;
     }
     public static void submit(RaftEntity.Placement plan,PoseStack pose,SubmitNodeCollector collector){
         if(plan==null){return;}
         int color=plan.valid()?0x6639E6AA:0x88F16B67;
-        var boxes=plan.boxes().stream().map(box->box.inflate(.003)).toList();
+        var boxes=new java.util.ArrayList<>(plan.boxes().stream().map(box->box.inflate(.003)).toList());
+        if(plan.piece()!=null && plan.piece().kind().conduit()) {
+            var cell=plan.cell();
+            double y=dev.raftocean.entity.RaftEntity.DECK_HEIGHT+cell.getY()-1;
+            boolean alongX=plan.piece().rotation()%2==0;
+            boxes.add(alongX
+                    ?new AABB(cell.getX()-.5,y+.04,cell.getZ()-.0625,cell.getX()+.5,y+.09,cell.getZ()+.0625).inflate(.003)
+                    :new AABB(cell.getX()-.0625,y+.04,cell.getZ()-.5,cell.getX()+.0625,y+.09,cell.getZ()+.5).inflate(.003));
+        }
         collector.submitCustomGeometry(pose,RenderTypes.debugQuads(),(frame,buffer)->{
             for(AABB box:boxes){box(frame,buffer,box,color);}
         });

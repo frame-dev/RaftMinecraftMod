@@ -58,8 +58,8 @@ public final class RaftNavigation {
     public boolean stroke(Vec3 look) {
         Vec3 horizontal = new Vec3(look.x, 0, look.z);
         if (dev.raftocean.config.RaftConfig.PADDLE_THRUST.get()==0 || anchored() || horizontal.lengthSqr() < .0001) { return false; }
-        double scale = Math.clamp(Math.sqrt(108 / raft.getMass()), .25, 1);
-        paddle = cap(paddle.add(horizontal.normalize().scale(.06 * scale * dev.raftocean.config.RaftConfig.PADDLE_THRUST.get())), .09 * dev.raftocean.config.RaftConfig.PADDLE_THRUST.get());
+        double scale = Math.clamp(Math.sqrt(216 / raft.getMass()), .4, 1);
+        paddle = cap(paddle.add(horizontal.normalize().scale(.14 * scale * dev.raftocean.config.RaftConfig.PADDLE_THRUST.get())), .22 * dev.raftocean.config.RaftConfig.PADDLE_THRUST.get());
         return true;
     }
     private static Vec3 cap(Vec3 vector, double maximum) {
@@ -93,7 +93,7 @@ public final class RaftNavigation {
         }
         Vec3 current = new Vec3(raft.getCurrentX(), 0, raft.getCurrentZ()).scale(dev.raftocean.config.RaftConfig.CURRENT.get());
         Vec3 result = anchored ? Vec3.ZERO : cap(current.add(thrust).add(paddle), dev.raftocean.config.RaftConfig.MAX_SPEED.get());
-        paddle = anchored || !afloat ? Vec3.ZERO : paddle.scale(.90);
+        paddle = anchored || !afloat ? Vec3.ZERO : paddle.scale(.94);
         if (raft.tickCount % 20 == 0) { sync(); }
         return result;
     }
@@ -104,8 +104,10 @@ public final class RaftNavigation {
             var reader = new FuelReader(BlockPos.containing(raft.stationPosition(pos, RaftPiece.Kind.ENGINE)));
             reader.setLevel(level); reader.setItem(1, stack.copy());
             boolean biofuel = stack.is(dev.raftocean.survival.Automation.BIOFUEL.get());
-            int duration = biofuel ? dev.raftocean.config.RaftConfig.BIOFUEL_ENGINE_TICKS.get() : reader.duration(level, stack);
-            float speed = biofuel ? 1 : reader.speed(level, stack);
+            // Biofuel is a coal-equivalent fuel: same burn time and engine speed.
+            ItemStack rated = biofuel ? new ItemStack(net.minecraft.world.item.Items.COAL) : stack;
+            int duration = reader.duration(level, rated) * (biofuel ? dev.raftocean.survival.Automation.BIOFUEL_BURN_MULTIPLIER : 1);
+            float speed = reader.speed(level, rated);
             var remainder = stack.getCraftingRemainder();
             if (duration <= 0 || !Float.isFinite(speed) || speed <= 0 || remainder != null && stack.getCount() != 1) { return false; }
             storage.fuelCapacity = storage.fuelTicks = Math.clamp((int)(duration * dev.raftocean.config.RaftConfig.ENGINE_FUEL.get()),1,200000);

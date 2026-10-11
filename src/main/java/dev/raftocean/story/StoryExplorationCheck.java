@@ -12,6 +12,11 @@ import net.minecraft.world.Container;
 public final class StoryExplorationCheck {
     private StoryExplorationCheck() { }
 
+    private static boolean clearForWalking(ServerLevel level,BlockPos pos) {
+        var state=level.getBlockState(pos);
+        return state.isAir() || state.getCollisionShape(level,pos).isEmpty() && state.getFluidState().isEmpty();
+    }
+
     public static int run(ServerLevel level,String name,BlockPos center,int size) {
         JsonObject catalog;
         try(var stream=StoryExplorationCheck.class.getResourceAsStream("/data/raft_ocean/story_island_exploration.json")) {
@@ -43,8 +48,10 @@ public final class StoryExplorationCheck {
         for(var value:island.getAsJsonArray("trails")) {
             var cell=value.getAsJsonArray();
             var floor=origin.offset(cell.get(0).getAsInt(),cell.get(1).getAsInt(),cell.get(2).getAsInt());
-            if(!level.getBlockState(floor.above()).isAir() || !level.getBlockState(floor.above(2)).isAir())
-                throw new IllegalStateException("Generated exploration trail obstructed: "+name+" "+floor);
+            if(!clearForWalking(level,floor.above()) || !clearForWalking(level,floor.above(2)))
+                throw new IllegalStateException("Generated exploration trail obstructed: "+name+" "+floor
+                        +" at center "+center+" (headroom "+level.getBlockState(floor.above())
+                        +", "+level.getBlockState(floor.above(2))+")");
             if(level.getBlockState(floor).isAir() || !level.getFluidState(floor).isEmpty())
                 throw new IllegalStateException("Generated exploration trail lacks dry support: "+name+" "+floor);
             checks++;

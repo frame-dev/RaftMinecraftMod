@@ -40,6 +40,7 @@ public record RaftPiece(Kind kind, int rotation, boolean open, String addonId, b
         public boolean conduit() { return this == WATER_PIPE || this == FUEL_PIPE || this == POWER_CABLE; }
         public boolean automation() { return this == WATER_TANK || this == FUEL_TANK || this == BIOREFINER
                 || this == BIOFUEL_GENERATOR || this == ELECTRIC_PURIFIER || this == SPRINKLER || this == BATTERY_CHARGER; }
+        public boolean rotatable() { return machine() || conduit(); }
         public boolean navigation() { return this == SAIL || this == STEERING_WHEEL || this == ENGINE || anchor(); }
         public boolean storage() { return this == CHEST || this == BARREL || this == COLLECTION_NET || machine() || navigation(); }
         public boolean station() {
@@ -308,9 +309,9 @@ public record RaftPiece(Kind kind, int rotation, boolean open, String addonId, b
         if(kind==Kind.WOVEN_RUG) { return List.of(); }
         if(kind==Kind.CANVAS_CANOPY) { return geometry; }
         if(kind.furniture()) {
-            // Continuous furniture bodies avoid catching feet between decorative legs.
-            AABB collider=geometry.getFirst();for(var box:geometry)collider=collider.minmax(box);
-            return List.of(collider);
+            double baseY=RaftEntity.DECK_HEIGHT+pos.getY()-1;
+            return RaftFurniture.collision(kind).stream().map(this::rotate)
+                    .map(box->box.move(pos.getX(),baseY,pos.getZ())).toList();
         }
         if (kind == Kind.COLLECTION_NET) {
             double y = geometry.getFirst().minY;

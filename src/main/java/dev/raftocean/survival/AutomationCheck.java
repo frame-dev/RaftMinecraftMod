@@ -75,7 +75,7 @@ public final class AutomationCheck {
             require(raft.storage(c).cleanWater==1 && generator.energy>=0 && generator.fuelTicks>0,"Connected generator powers real water purification");checks++;
             require(motor.getItem(1).is(Automation.BIOFUEL.get()),"Fuel network supplies engine");checks++;
             motor.enabled=true;raft.navigation().target(true);
-            require(motor.fuelCapacity==RaftConfig.BIOFUEL_ENGINE_TICKS.get() && motor.fuelTicks==motor.fuelCapacity-1,"Engine burns configured biofuel duration");checks++;
+            require(motor.fuelCapacity==Math.clamp((int)(3200*RaftConfig.ENGINE_FUEL.get()),1,200000) && motor.fuelTicks==motor.fuelCapacity-1,"Engine burns biofuel like coal");checks++;
             reservoir.cleanWater=64;generator.energy=1700;
             var saved=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());raft.saveWithoutId(saved);
             var restored=new RaftEntity(ModContent.RAFT.get(),level);entities.add(restored);

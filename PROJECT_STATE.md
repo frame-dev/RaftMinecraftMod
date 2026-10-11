@@ -3,7 +3,40 @@
 
 
 - Updated: 2026-10-11.
-- Latest: Raft Ocean 0.11.40; artifact build/libs/raft_ocean-0.11.40.jar.
+- Latest: Raft Ocean 0.11.41; artifact build/libs/raft_ocean-0.11.41.jar.
+  Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.41/API2.
+  Milestone11 quality pass: eight data-driven furniture collision profiles
+  replace whole-model solid envelopes for beds/seats/lamps/potted palms.
+  Low continuous mattresses/seats retain separate boards/backs/arms;
+  palm pot/trunk remain physical while decorative fronds are visual.
+  Bed homes choose supported mattress surfaces at all tested rotations.
+  Cached immutable world collision lists refresh on move/turn/rebuild;
+  native tests cover support, exact carry and removal/cache invalidation.
+  Engine arrow rotates actual geometry without inflated diagonal bounds.
+  Original chamfered engine hood/fuel cap/service trim/cooling pipe and
+  open wood/metal grill meshes; grill item/static models share the new design
+  and retain verified slot fit. Existing material textures are reused.
+  Addon example reads current main-project version rather than fixed0.11.17;
+  example compile/package against0.11.41 passed (API2 retained).
+  Build/bootstrap/fresh-ocean checks passed with clean saves/shutdowns.
+  2904native packet movement checks across12piece kinds;3638construction
+  checks;262811crafting checks;5111fresh-ocean checks. Native model parser
+  accepted952models/45566elements,165GUI fits,18797fill/mount checks,
+  66meshes/12837quads. Packaged1035model surface audit passed,687bilingual
+  keys,153mod recipes(63in2x2,90in3x3),1419loaded crafting rows; research,
+  story/preservation/route/model coverage audits passed. Jar/source copies
+  verified by matching hashes. Logs build/quality-pass-verified.log and
+  build/quality-pass-addon.log; guide docs/QUALITY_PASS.md;
+  diagnostic preview build/refined-models-preview.png.
+  All enlarged island templates and open-ended story retained; existing
+  furniture saves require no reset. Finished1–10;current11;release12pending.
+  No failing automated checks remain. Live visual quality, real network
+  delay/co-op/performance and third-party packs still require local tests;
+  older reported movement/collision/tabletop issues need user confirmation.
+  Shark600s/bird300s/Peaceful retained. Install0.11.41 on every client/server.
+
+- Retained: Raft Ocean 0.11.40; artifact build/libs/raft_ocean-0.11.40.jar.
   Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
   ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.40/API2.
   All27native templates enlarged. Ten ordinary resource islands33–161blocks,

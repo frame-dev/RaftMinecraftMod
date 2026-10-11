@@ -21,7 +21,7 @@ public final class PaddleItem extends Item {
         if (level.isClientSide()) { return InteractionResult.SUCCESS; }
         if (!raft.navigation().stroke(player.getLookAngle())) { return InteractionResult.FAIL; }
         player.getItemInHand(hand).hurtAndBreak(1, player, hand);
-        player.getCooldowns().addCooldown(player.getItemInHand(hand), 12);
+        player.getCooldowns().addCooldown(player.getItemInHand(hand), 8);
         return InteractionResult.SUCCESS_SERVER;
     }
 }

@@ -15,6 +15,8 @@ import net.neoforged.neoforge.registries.DeferredItem;
 public final class Automation {
     public static final int ENERGY_CAPACITY = 2000;
     public static final DeferredItem<Item> BIOFUEL = ModContent.ITEMS.registerSimpleItem("biofuel");
+    /** Biofuel burns like coal in every fuel slot, but twice as long. */
+    public static final int BIOFUEL_BURN_MULTIPLIER = 2;
     private static final Comparator<BlockPos> ORDER = Comparator.comparingInt((BlockPos p)->p.getY())
             .thenComparingInt(BlockPos::getX).thenComparingInt(BlockPos::getZ);
     public static void initialize() { }
@@ -29,7 +31,7 @@ public final class Automation {
                 default -> false;
             };
             case FUEL -> kind == RaftPiece.Kind.FUEL_PIPE || kind == RaftPiece.Kind.FUEL_TANK
-                    || kind == RaftPiece.Kind.ENGINE || kind == RaftPiece.Kind.BIOFUEL_GENERATOR
+                    || kind == RaftPiece.Kind.ENGINE || kind == RaftPiece.Kind.BIOFUEL_GENERATOR || kind == RaftPiece.Kind.BIOREFINER
                     || kind == RaftPiece.Kind.BATTERY_CHARGER;
             case POWER -> kind == RaftPiece.Kind.POWER_CABLE || kind == RaftPiece.Kind.BIOFUEL_GENERATOR
                     || kind == RaftPiece.Kind.ELECTRIC_PURIFIER || kind == RaftPiece.Kind.SPRINKLER
@@ -85,6 +87,13 @@ public final class Automation {
                 return !receiver.paused && (fuel.isEmpty() || fuel.is(BIOFUEL.get()) && fuel.getCount()<fuel.getMaxStackSize());
             }).toList(),second);
             Set<BlockPos> supplied=new HashSet<>();
+            for(var source:group) {
+                if(pieces.get(source).kind()!=RaftPiece.Kind.BIOREFINER || raft.storage(source).paused){continue;}
+                var refinery=raft.storage(source);
+                for(var target:group) {
+                    if(pieces.get(target).kind()==RaftPiece.Kind.FUEL_TANK && transferFuel(refinery,2,raft.storage(target),0)){break;}
+                }
+            }
             for(var source:group) {
                 if(pieces.get(source).kind()!=RaftPiece.Kind.FUEL_TANK || raft.storage(source).paused){continue;}
                 var tank=raft.storage(source);
@@ -178,12 +187,13 @@ public final class Automation {
         if(source==target || source.paused || target.paused || source.cleanWater<=0 || target.cleanWater>=capacity){return 0;}
         source.cleanWater--;target.cleanWater++;source.setChanged();target.setChanged();return 1;
     }
-    public static boolean transferFuel(RaftStorage source,RaftStorage target,int slot) {
-        ItemStack fuel=source.getItem(0),destination=target.getItem(slot);
+    public static boolean transferFuel(RaftStorage source,RaftStorage target,int slot) { return transferFuel(source,0,target,slot); }
+    public static boolean transferFuel(RaftStorage source,int sourceSlot,RaftStorage target,int slot) {
+        ItemStack fuel=source.getItem(sourceSlot),destination=target.getItem(slot);
         if(source==target || source.paused || target.paused || !fuel.is(BIOFUEL.get()) || !destination.isEmpty()
                 && (!ItemStack.isSameItemSameComponents(fuel,destination) || destination.getCount()>=destination.getMaxStackSize())){return false;}
         if(destination.isEmpty()){target.setItem(slot,fuel.copyWithCount(1));}else{destination.grow(1);}
-        source.removeItem(0,1);source.setChanged();target.setChanged();return true;
+        source.removeItem(sourceSlot,1);source.setChanged();target.setChanged();return true;
     }
     public static boolean spend(List<RaftStorage> generators,int amount) {
         if(amount<=0 || generators.stream().filter(g->!g.paused).mapToLong(g->g.energy).sum()<amount){return false;}
