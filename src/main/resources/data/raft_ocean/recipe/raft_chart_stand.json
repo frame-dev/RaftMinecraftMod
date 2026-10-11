@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:oak_planks",
+    "minecraft:paper",
+    "minecraft:stick",
+    "minecraft:stick",
+    "raft_ocean:scrap_fasteners"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_chart_stand"
+  }
+}

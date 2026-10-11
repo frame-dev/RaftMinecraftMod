@@ -6,6 +6,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class RaftConfig {
     public enum Mode { WORLD, PEACEFUL, EASY, NORMAL, HARD }
     private static final ModConfigSpec.Builder B = new ModConfigSpec.Builder();
+    public static final ModConfigSpec.BooleanValue OUTPOST_TRADING=bool("trading.enabled",true,"Allow island barter counters. Disabling closes trade access without removing generated islands.");
+    public static final ModConfigSpec.IntValue OUTPOST_RESTOCK=integer("trading.restockSeconds",1200,60,86400,"World gameplay seconds between outpost stock refreshes, applied on the next opening. Stock is shared and saved per counter.");
     public static final ModConfigSpec.BooleanValue AUTOMATION = bool("automation.enabled",true,"Run connected raft water, fuel and electrical networks.");
     public static final ModConfigSpec.IntValue BIOFUEL_ENGINE_TICKS = integer("automation.biofuelEngineTicks",6000,20,200000,"Engine burn ticks per biofuel canister, before engineFuelMultiplier.");
     public static final ModConfigSpec.IntValue GENERATOR_ENERGY = integer("automation.energyPerBiofuel",2000,20,20000,"Energy generated per biofuel canister; stored energy capacity is 2000.");

@@ -71,7 +71,7 @@ public final class OutpostTrading implements Merchant {
     @Override public boolean stillValid(Player player) {
         return customer==player && player.isAlive() && !player.isSpectator() && player.level()==level
                 && dev.raftocean.config.RaftConfig.OUTPOST_TRADING.get() && !dev.raftocean.crew.CrewRescue.downed(player)
-                && level.getBlockState(pos).is(POST.get()) && player.position().distanceToSqr(pos.getCenter())<=64;
+                && level.getBlockState(pos).is(POST.get()) && player.position().distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(pos))<=64;
     }
     public static void onStop(net.neoforged.neoforge.event.server.ServerStoppedEvent event){ACTIVE.clear();}
 }

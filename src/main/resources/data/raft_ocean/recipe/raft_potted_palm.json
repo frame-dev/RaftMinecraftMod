@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:sand",
+    "raft_ocean:drift_leaf",
+    "minecraft:stick",
+    "raft_ocean:scrap"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_potted_palm"
+  }
+}

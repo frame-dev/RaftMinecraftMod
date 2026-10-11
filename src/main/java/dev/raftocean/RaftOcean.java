@@ -15,12 +15,18 @@ import org.slf4j.Logger;
 public final class RaftOcean {
     public static final String MOD_ID = "raft_ocean";
     public static final Logger LOGGER = LogUtils.getLogger();
+    private static int smokeShutdownTicks = -1;
 
     public RaftOcean(IEventBus modEventBus, net.neoforged.fml.ModContainer container) {
+        if(Boolean.getBoolean("raftOcean.oceanSmoke") || Boolean.getBoolean("raftOcean.carrySmoke")) {
+            NeoForge.EVENT_BUS.addListener(RaftOcean::finishSmoke);
+        }
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SYNCED, dev.raftocean.config.RaftConfig.SPEC);
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.CLIENT, dev.raftocean.config.RaftConfig.CLIENT_SPEC);
         dev.raftocean.story.IslandContent.register(modEventBus);
         dev.raftocean.story.Exploration.initialize();
+        dev.raftocean.trading.OutpostTrading.initialize();
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.trading.OutpostTrading::onStop);
         dev.raftocean.crew.CrewRescue.initialize();
         NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewAccess::onLogin);
         NeoForge.EVENT_BUS.addListener(dev.raftocean.crew.CrewAccess::onTick);
@@ -114,6 +120,7 @@ public final class RaftOcean {
                 int researchChecks=dev.raftocean.progression.ResearchCheck.run(event.getServer().overworld());
                 LOGGER.info("Raft Ocean: {} runtime research assertions passed.", researchChecks);
                 LOGGER.info("Raft Ocean: {} runtime crew/rescue assertions passed.",dev.raftocean.crew.CrewCheck.run(event.getServer().overworld()));
+                LOGGER.info("Raft Ocean: {} runtime outpost trading assertions passed.",dev.raftocean.trading.OutpostCheck.run(event.getServer().overworld()));
                 int salvageChecks = dev.raftocean.salvage.SalvageCheck.run(event.getServer().overworld());
                 LOGGER.info("Raft Ocean: {} runtime salvage assertions passed.", salvageChecks);
                 int survivalChecks = dev.raftocean.survival.SurvivalCheck.run(event.getServer().overworld());
@@ -123,7 +130,7 @@ public final class RaftOcean {
                 int creatureChecks=dev.raftocean.creature.CreatureCheck.run(event.getServer().overworld());
                 LOGGER.info("Raft Ocean: {} runtime creature/config assertions passed.", creatureChecks);
             } finally {
-                event.getServer().halt(false);
+                smokeShutdownTicks = 40;
             }
         }
         if (Boolean.getBoolean("raftOcean.oceanSmoke")) {
@@ -132,8 +139,13 @@ public final class RaftOcean {
                 int assertions = dev.raftocean.world.OceanWorldCheck.run(event.getServer().overworld());
                 LOGGER.info("Raft Ocean: {} runtime ocean-world assertions passed.", assertions);
             } finally {
-                event.getServer().halt(false);
+                smokeShutdownTicks = 40;
             }
         }
+    }
+
+    private static void finishSmoke(net.neoforged.neoforge.event.tick.ServerTickEvent.Post event) {
+        // Let queued generation and lighting work drain before the test server saves.
+        if(smokeShutdownTicks > 0 && --smokeShutdownTicks == 0)event.getServer().halt(false);
     }
 }

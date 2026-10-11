@@ -47,6 +47,13 @@ public final class RaftStructure {
     }
 
     private double mountingOffset(BlockPos pos, RaftPiece piece) {
+        var support=ownerAt(pos.below());
+        if(piece.kind().tableDecoration() && support!=null && support.getValue().kind().tableSurface()>=0) {
+            var table=support.getValue();var anchor=support.getKey();
+            double top=RaftEntity.DECK_HEIGHT+anchor.getY()-1+mountingOffset(anchor,table)+table.kind().tableSurface();
+            double base=piece.boxes(pos).stream().mapToDouble(box->box.minY).min().orElseThrow();
+            return top-base;
+        }
         RaftPiece below = pieceAt(pos.below());
         return floorMounted(piece) && below != null && below.kind().floor() ? -.875 : 0;
     }
@@ -57,6 +64,16 @@ public final class RaftStructure {
     }
 
     public RaftPiece pieceAt(BlockPos pos) { return pieces.entrySet().stream().filter(e->e.getValue().occupiedCells(e.getKey()).contains(pos)).map(Map.Entry::getValue).findFirst().orElse(null); }
+    private Map.Entry<BlockPos,RaftPiece> ownerAt(BlockPos pos) { return pieces.entrySet().stream().filter(e->e.getValue().occupiedCells(e.getKey()).contains(pos)).findFirst().orElse(null); }
+    public boolean isTableMount(BlockPos pos,RaftPiece piece) { var support=ownerAt(pos.below());return piece.kind().tableDecoration() && support!=null && support.getValue().kind().tableSurface()>=0; }
+    private static boolean needsBottomSupport(RaftPiece piece) { return piece.tableMounted() || piece.width()*piece.depth()>1 && floorMounted(piece); }
+    private boolean validTableFootprint(BlockPos pos,RaftPiece piece) {
+        if(!piece.tableMounted() && !isTableMount(pos,piece))return true;
+        var bottoms=piece.occupiedCells(pos).stream().filter(cell->cell.getY()==pos.getY()).toList();
+        var table=bottoms.stream().map(cell->ownerAt(cell.below())).filter(e->e!=null && e.getValue().kind().tableSurface()>=0).findFirst().orElse(null);
+        if(table==null)return !piece.tableMounted();
+        return bottoms.stream().allMatch(cell->{var owner=ownerAt(cell.below());return owner!=null && owner.getKey().equals(table.getKey());});
+    }
 
     private static boolean floorMounted(RaftPiece piece) {
         if(piece.kind()==RaftPiece.Kind.ADDON && !piece.addonId().isEmpty())return piece.addon().floorMounted();
@@ -64,15 +81,17 @@ public final class RaftStructure {
                 || piece.kind()==RaftPiece.Kind.ARCHWAY || piece.kind() == RaftPiece.Kind.WALL || piece.kind() == RaftPiece.Kind.CORNER_WALL
                 || piece.kind() == RaftPiece.Kind.CURVED_WALL || piece.kind() == RaftPiece.Kind.DOOR
                 || piece.kind() == RaftPiece.Kind.RAILING || piece.kind() == RaftPiece.Kind.HALF_WALL
-                || piece.kind().conduit() || piece.kind().station() || piece.kind() == RaftPiece.Kind.WIND_STREAMER || piece.kind()==RaftPiece.Kind.BOOKSHELF;
+                || piece.kind().conduit() || piece.kind().station() || piece.kind().furniture() || piece.kind() == RaftPiece.Kind.WIND_STREAMER || piece.kind()==RaftPiece.Kind.BOOKSHELF;
     }
 
     public boolean add(BlockPos pos, RaftPiece piece, RaftLayout layout) {
+        if(isTableMount(pos,piece))piece=piece.onTable();
         int limit=dev.raftocean.config.RaftConfig.SPEC.isLoaded()?dev.raftocean.config.RaftConfig.PIECE_LIMIT.get():MAX_PIECES;
         if (pieces.size() >= limit || !inBounds(pos, piece) || layout.cells().contains(pos)) { return false; }
         Set<BlockPos> occupied = occupied();
         for(var cell:piece.occupiedCells(pos))if(occupied.contains(cell) || layout.cells().contains(cell))return false;
-        if(piece.width()*piece.depth()>1 && floorMounted(piece)) {
+        if(!validTableFootprint(pos,piece))return false;
+        if(needsBottomSupport(piece)) {
             for(var cell:piece.occupiedCells(pos))if(cell.getY()==pos.getY()
                     && !occupied.contains(cell.below()) && !layout.cells().contains(cell.below()))return false;
         }
@@ -132,7 +151,7 @@ public final class RaftStructure {
                 neighbors(pos).stream().filter(all::contains).filter(p->!visited.contains(p)).forEach(queue::addLast);
             }
             for(var entry:new LinkedHashMap<>(pieces).entrySet()) {
-                if(!visited.contains(entry.getKey()) || entry.getValue().width()*entry.getValue().depth()>1 && floorMounted(entry.getValue())
+                if(!visited.contains(entry.getKey()) || !validTableFootprint(entry.getKey(),entry.getValue()) || needsBottomSupport(entry.getValue())
                         && entry.getValue().occupiedCells(entry.getKey()).stream().filter(cell->cell.getY()==entry.getKey().getY()).anyMatch(cell->!all.contains(cell.below()))) { removed.put(entry.getKey(),pieces.remove(entry.getKey()));changed=true; }
             }
             if(!floatsOn(layout) && !pieces.isEmpty()) {
@@ -159,7 +178,8 @@ public final class RaftStructure {
         Set<BlockPos> occupied = occupied();
         for(var entry:pieces.entrySet()) {
             var piece=entry.getValue();
-            if(piece.width()*piece.depth()>1 && floorMounted(piece)) {
+            if(!validTableFootprint(entry.getKey(),piece))return false;
+            if(needsBottomSupport(piece)) {
                 for(var cell:piece.occupiedCells(entry.getKey()))if(cell.getY()==entry.getKey().getY()
                         && !occupied.contains(cell.below()) && !layout.cells().contains(cell.below()))return false;
             }
@@ -189,7 +209,7 @@ public final class RaftStructure {
         return pieces.entrySet().stream().sorted(Map.Entry.comparingByKey())
                 .map(e -> e.getKey().getX() + "," + e.getKey().getY() + "," + e.getKey().getZ()
                         + "," + e.getValue().kind().name() + "," + e.getValue().rotation()
-                        + "," + (e.getValue().open() ? 1 : 0) + (e.getValue().addonId().isEmpty()?"":","+e.getValue().addonId())).collect(Collectors.joining(";"));
+                        + "," + (e.getValue().open() ? 1 : 0) + (e.getValue().tableMounted()?",tabletop":e.getValue().addonId().isEmpty()?"":","+e.getValue().addonId())).collect(Collectors.joining(";"));
     }
 
     public static RaftStructure decode(String encoded, RaftLayout layout) {
@@ -202,7 +222,8 @@ public final class RaftStructure {
                 throw new IllegalArgumentException("Invalid structural record");
             }
             BlockPos pos = new BlockPos(Integer.parseInt(fields[0]), Integer.parseInt(fields[1]), Integer.parseInt(fields[2]));
-            RaftPiece piece = new RaftPiece(RaftPiece.Kind.valueOf(fields[3]), Integer.parseInt(fields[4]), fields[5].equals("1"),fields.length==7?fields[6]:"");
+            var kind=RaftPiece.Kind.valueOf(fields[3]);boolean tabletop=fields.length==7 && kind!=RaftPiece.Kind.ADDON && fields[6].equals("tabletop");
+            RaftPiece piece = new RaftPiece(kind, Integer.parseInt(fields[4]), fields[5].equals("1"),fields.length==7 && !tabletop?fields[6]:"",tabletop);
             if (!inBounds(pos, piece) || result.pieces.size() >= MAX_PIECES || result.pieces.putIfAbsent(pos, piece) != null) {
                 throw new IllegalArgumentException("Invalid structural cell");
             }

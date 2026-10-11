@@ -30,7 +30,7 @@ public final class RaftStationCheck {
         int checks = 0;
         BlockPos pos = new BlockPos(1, 1, 0);
         for (RaftPiece.Kind kind : RaftPiece.Kind.values()) {
-            if (!kind.station() || kind == RaftPiece.Kind.RESEARCH_TABLE || kind == RaftPiece.Kind.CRAFTING_TABLE || kind==RaftPiece.Kind.WIDE_CRAFTING_TABLE || kind == RaftPiece.Kind.COLLECTION_NET || kind.machine() || kind.navigation() || kind == RaftPiece.Kind.BED) { continue; }
+            if (!kind.station() || kind == RaftPiece.Kind.RESEARCH_TABLE || kind == RaftPiece.Kind.CRAFTING_TABLE || kind==RaftPiece.Kind.WIDE_CRAFTING_TABLE || kind == RaftPiece.Kind.COLLECTION_NET || kind.machine() || kind.navigation() || kind.bed()) { continue; }
             ItemStack vanilla = new ItemStack(ModContent.vanillaStation(kind));
             require(ModContent.structuralKind(vanilla) == kind, "Direct vanilla placement " + kind);
             checks++;

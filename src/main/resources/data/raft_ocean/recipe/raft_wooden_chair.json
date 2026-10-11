@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:oak_planks",
+    "minecraft:oak_planks",
+    "minecraft:stick",
+    "raft_ocean:canvas_roll"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_wooden_chair"
+  }
+}

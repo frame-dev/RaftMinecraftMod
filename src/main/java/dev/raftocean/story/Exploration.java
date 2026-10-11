@@ -16,9 +16,9 @@ import net.neoforged.neoforge.registries.DeferredItem;
 /** Optional branches deliberately never complete or advance the main journey. */
 public final class Exploration {
     public static final String[] ROUTES={"kelp_observatory","basalt_refuge","orchard_cove",
-            "broken_keel","coral_grotto","drowned_court","chart_vault"};
+            "broken_keel","coral_grotto","drowned_court","chart_vault","merchant_harbor","lantern_market"};
     public static final DeferredHolder<AttachmentType<?>,AttachmentType<Integer>> CHANNEL=SurvivalContent.ATTACHMENTS.register(
-            "exploration_channel",()->AttachmentType.builder(()->-1).serialize(Codec.intRange(-1,6).fieldOf("channel")).copyOnDeath().build());
+            "exploration_channel",()->AttachmentType.builder(()->-1).serialize(Codec.intRange(-1,8).fieldOf("channel")).copyOnDeath().build());
     public static final DeferredHolder<AttachmentType<?>,AttachmentType<Integer>> DISCOVERIES=SurvivalContent.ATTACHMENTS.register(
             "exploration_logs",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,7).fieldOf("logs")).copyOnDeath().build());
     public static final DeferredItem<Item> SURVEY=log("survey_log",0);

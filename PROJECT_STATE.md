@@ -3,7 +3,222 @@
 
 
 - Updated: 2026-10-11.
-- Latest: Raft Ocean 0.11.32; artifact build/libs/raft_ocean-0.11.32.jar.
+- Latest: Raft Ocean 0.11.40; artifact build/libs/raft_ocean-0.11.40.jar.
+  Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.40/API2.
+  All27native templates enlarged. Ten ordinary resource islands33–161blocks,
+  DriftAtoll65, three exploration islands97, two trading islands129,
+  underwater site footprints65. Resource land area grows roughly3–4times;
+  original453379non-story cells preserved exactly, extra coast vegetation
+  and harvestable shallows. Story sizes113/145/145/145/161/193/193,
+  seven authored concave shapes,28side sites,2003connected branchtrailcells,
+  153576authored core blocks preserved. Story remains open-ended and rare.
+  Cross-pool spacing uses both larger template widths and a water margin.
+  Original buildings/counters/loot/puzzles retain their size and position
+  relative to the island center. Generation remains native/chunk bounded.
+  Fresh ocean check passed5105assertions and saves/closes cleanly after
+  deferring smoke-only shutdown40ticks; task now rejects shutdown errors.
+  Bootstrap build and all raft/movement/building/machine/crafting/survival,
+  research/crew/trading/navigation/creature regression checks also passed;
+  clean shutdown verified for both isolated servers. Published jar/source
+  copies verified by matching hashes. Bootstrap log
+  build/larger-islands-bootstrap-verified.log.
+  Packaged story/model/localization/research checks and source geometry,
+  route clearance and preservation audits passed. Guides
+  docs/LARGER_ISLANDS.md; tools/enlarge_islands.py (idempotent ordinary
+  enlargement), tools/story_island_exploration.py (story size table),
+  tools/generate_outposts.py reapplies enlargement after base generation.
+  Log build/larger-islands-clean-verified.log;
+  diagnostic geometry preview build/all-islands-preview.png.
+  Finished1–10;current11;release12pending. Existing chunks do not resize.
+  Live appearance/performance/pacing/co-op and earlier raft collision,
+  movement/tabletop/large-raft/third-party jar confirmation remain pending.
+  Shark600s/bird300s/Peaceful retained. Install0.11.40 on every client/server.
+
+- Retained: Raft Ocean 0.11.39; artifact build/libs/raft_ocean-0.11.39.jar.
+  Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.39/API2.
+  Seven data-driven concave story outlines replace radial oval terrain:
+  Radio crooked headland,Glasswatch hooked peninsula,Garden branching coast,
+  Echo split cliff lobes,Ember broken ridge,Tideworks forked harbor headlands,
+  Starfall jagged stepped promontory. Shape-aware beaches/slopes and
+  constrained side-site pads; narrow exposed headlands have fewer new trees.
+  Same81–129block bounds,height48,rare placement,journals and open ending.
+  All28side sites retained;1568connected branch-trail cells,130new trees,
+  153576non-water authored core cells preserved. Corrected side-pad grading
+  to remove a raised boardwalk obstruction at Garden Relay's shelter.
+  Source entrance checks plus native generated entrance/loot checks retained.
+  Build/fresh-world smoke passed4040runtime assertions; packaged concavity,
+  connected trails,lore,models,coverage/localization and preservation audits
+  passed. Existing ordinary island variants/placement JSON unchanged.
+  Guide docs/ISLAND_SHAPES.md;
+  profiles data/raft_ocean/story_island_shapes.json;
+  generator tools/story_island_exploration.py(revision2);
+  log build/island-shapes-verified.log;preview build/island-shapes-preview.png.
+  Finished1–10;current11;release12notstarted. Story remains open-ended.
+  Limits: repeated story copies share their authored shape; new chunks only.
+  Live appearance/pacing/co-op, earlier raft collision/movement/tabletop
+  visuals/large-raft and third-party jar confirmation remain pending.
+  Shark600s/bird300s/Peaceful retained. Install0.11.39 on every client/server.
+
+- Retained: Raft Ocean 0.11.38; artifact build/libs/raft_ocean-0.11.38.jar.
+  Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.38/API2.
+  Seven expanded story templates:Radio81,Glasswatch97,Garden97,Echo97,
+  Ember113,Tideworks129,Starfall129; all height48. Original landmarks retain
+  center-relative positions. Natural uneven outer shores/coves/slopes,
+  woodland and new reefs; water-only old edges graded into tidal pools.
+  28optional side sites:4perisland(shelter,garden ruin,lookout,rock grotto).
+  New side supplies loot table; no story-key or journal shortcuts.
+  1516connected clear branch-trail cells; ordered main landing routes stored
+  separately. 153576non-water authored core cells retained exactly, including
+  original loot/puzzles/crops/kelp. 133new trees; resource shallows expanded.
+  Conservative8chunk story clearance for ordinary/optional/outpost islands;
+  same rare48/24story placement and weights from0.11.37. Other placement JSON
+  unchanged, but exclusions reduce overlap with large story footprints.
+  Build and fresh-seed Ocean World run passed3856runtime assertions:
+  generated side entrances/loot/trails, seven journals, puzzle/progression,
+  optional exploration and outposts. Packaged geometry/lore/labels/model
+  coverage checks pass. Live appearance, pacing and multiplayer pending.
+  Existing generated chunks unchanged; boundary layouts can contain old parts.
+  Repeated copies of one story island use its fixed expanded template.
+  Guide docs/STORY_ISLAND_EXPLORATION.md;
+  generator tools/story_island_exploration.py;
+  catalog data/raft_ocean/story_island_exploration.json;
+  verifier tools/verify_story_exploration.py;
+  log build/story-exploration-release.log; preview build/story-exploration-preview.png.
+  Finished1–10;current11;release12notstarted. Story remains open-ended.
+  Earlier raft collision/movement, tabletop visuals, large-raft and actual
+  third-party mod jar confirmation pending. Shark600s/bird300s/Peaceful retained.
+  Install0.11.38 on every client/server.
+
+- Retained: Raft Ocean 0.11.37; artifact build/libs/raft_ocean-0.11.37.jar.
+  Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.37/API2.
+  Story structure spacing48/separation24(previous32/16), atoll weight7
+  (previous3), seven story weights1. Theoretical story candidate density
+  reduced68.3%; other worldgen JSON and island pools unchanged. New terrain
+  only; existing generated islands retained. Receiver ranges unchanged.
+  Seven matching expanded English/German journals for Radio Tower,
+  Glasswatch,Garden Relay,Echo Vault,Ember Beacon,Tideworks Haven,Starfall.
+  Recurring cup/seed tin/watch notes/ledger, distinctive crew voices,
+  resolved supply-boat thread and unresolved eastern transmission.
+  Fixed old six-entry text versus seven journal-stage mismatch; both bunker
+  clues preserved. Journal mechanics/saved stages unchanged. Canonical lore
+  restored by model, base-island and story generators. No new final island.
+  Build and fresh Ocean World checks passed:2025runtime assertions including
+  native story generation/loot, seven-stage save/progression, optional
+  exploration and outposts. Updated stale optional-exploration test from
+  hardcoded6 to actual completed destination count7. Packaged story,
+  custom-model, exact native coverage, localization and research audits pass.
+  All shared models/textures/templates unchanged from0.11.36.
+  Guide docs/STORY_REVISION.md; log build/story-0.11.37-verified.log;
+  verifier tools/verify_story_assets.py; narrative tools/story_lore.py.
+  Finished1–10;current11;release12notstarted. Story remains open-ended.
+  Live voyage pacing, journal display and multiplayer playtest pending.
+  Earlier raft collision/movement, tabletop visuals, large-raft and actual
+  third-party jars remain pending. Shark600s/bird300s/Peaceful retained.
+  Install0.11.37 on every client/server.
+
+- Retained: Raft Ocean 0.11.36; artifact build/libs/raft_ocean-0.11.36.jar.
+  Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.36/API2.
+  New 1x1Cabin Side Table and 2x1Wide Display Table;20furnishings total.
+  Six native tabletop decorations:Table Lamp,Book Stack,Ceramic Vase,
+  Potted Palm,Chart Stand,Flower Box. Existing dining/coffee tables cleared
+  of fixed props; cloth runners retained. Decorations mount to physical
+  tabletop height, including upper floors, rotate/move with raft and save.
+  One ornament per tile; flower box requires both tiles of one aligned table.
+  Support removal blocked until decorations removed; destroyed support prunes
+  dependent ornaments. Explicit saved tabletop marker preserves legacy saves.
+  Build/bootstrap passed:3491construction,262811crafting,425collision,
+  1210movement,729carry,666research,44crew,41trading,857survival,
+  130navigation and593creature/config assertions. All1419loaded recipes
+  audited,153mod recipes. Native model coverage156items,779blocks,7renderers.
+  Packaged1035models/64meshes surface-safe;685bilingual keys. Existing model
+  envelopes preserved except intentional coffee/dining table icon changes.
+  Model regeneration now restores canonical open-ended story journal text.
+  Guide docs/TABLETOP_DECORATIONS.md; log build/tabletop-release.log;
+  docs/crafting-audit-0.11.36.csv. Finished1–10;current11;release12notstarted.
+  Limits: six native tabletop decoration types only; no free positioning or
+  arbitrary vanilla blocks. Live visuals/co-op/save-reload playtest pending.
+  Earlier live movement/collision, large-raft and third-party jars pending.
+  Story open-ended; Shark600s/bird300s and Peaceful retained.
+  Install0.11.36 on every client/server.
+
+- Retained: Raft Ocean 0.11.35; artifact build/libs/raft_ocean-0.11.35.jar.
+  Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.35/API2.
+  Eight original decorations:2x1Deck Bench/Coffee Table/Flower Box,
+  Book Stack,Ceramic Vase,Chart Stand,2x1Nautical Screen(height2),
+  2x2Canvas Canopy(height3). Colorful custom models, fitted GUI icons,
+  bilingual names, recipes and recipe-book unlocks;18furnishings total.
+  Footprints/picking/geometry share catalog; complete supports and one-piece
+  removal retained. Canopy uses separate post/roof colliders with walkable
+  headroom; other furniture uses continuous bodies. Existing models preserved.
+  Build/bootstrap passed:2136construction checks; crafting and existing
+  movement/collision/carry/research/crew/trading/survival/navigation suites passed.
+  All1417loaded crafting recipes audited;153custom3Ditems,757blocks,
+  7renderers,676bilingual keys;1000models/64meshes surface-safe.
+  Guide docs/DECK_DECORATIONS.md; generator tools/generate_furniture.py;
+  log build/decorations-runtime.log;docs/crafting-audit-0.11.35.csv.
+  Finished1–10;current11;release12notstarted. Story open-ended.
+  Limits: new items decorative; no sitting/growth/chart-navigation behavior.
+  Canopy reserves its full volume, so other buildables cannot go underneath.
+  Live visuals and multiplayer playtest pending. Earlier movement/collision,
+  co-op, large-raft and actual third-party mod jar confirmation remain pending.
+  Shark600s/bird300s,Peaceful,previous furniture and API2 retained.
+  Install0.11.35 on every client/server.
+
+- Retained: Raft Ocean 0.11.34; artifact build/libs/raft_ocean-0.11.34.jar.
+  Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.34/API2.
+  Ten original furnishings:1x2Cabin Bed,2x2Double Bed,Floor/Table Lamps,
+  Wooden Chair,2x1Dining Table/Sofa/Shelf,2x2Woven Rug,Potted Palm.
+  Shared geometry catalog drives models/picking/collision; rotated footprints
+  reserve every cell and require complete supports. One item/owner/removal.
+  Continuous furniture colliders; rug has no collision. Compact bed retained.
+  Both larger beds support moving home, safe respawn and cooperative timed rest.
+  Lamps illuminate raft-rendered surfaces while moving; visual light only,
+  no world light blocks, crop-growth or mob-spawn changes. Always lit.
+  Ten unique recipes, fitted inventory models, English/German names.
+  Build/bootstrap passed:1588construction,261069crafting,862survival,
+  666research,44crew/rescue,41trading; ocean2008checks passed.
+  Packaged1453Ditems,554blocks,7renderers,652bilingual keys;
+  781models/64meshes surface-safe; previous model envelopes preserved.
+  Guide docs/CABIN_FURNITURE.md; generator tools/generate_furniture.py;
+  logs build/furniture-bootstrap.log and build/furniture-final.log;
+  docs/crafting-audit-0.11.34.csv. Finished1–10;current11;release12notstarted.
+  Limits: chairs/sofa/shelf/palm decorative; no sitting or lying animation.
+  Client lighting/appearance and two-player bed playtest pending. Earlier live
+  raft movement/collision, large-raft and third-party jar checks remain pending.
+  Story open-ended; Shark600s/bird300s and Peaceful retained.
+  Install0.11.34 on every client/server.
+
+- Retained: Raft Ocean 0.11.33; artifact build/libs/raft_ocean-0.11.33.jar.
+  Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.33/API2.
+  Merchant Harbor and Lantern Market: original coastal market structures,
+  counter model, native merchant UI,20data-driven fish/salvage/gold trades.
+  Seeds/decorations/equipment and optional journals; stock shared and saved,
+  one customer per counter, restock on next opening after configured interval.
+  trading.enabled true;trading.restockSeconds1200(range60–86400).
+  Receiver cycles9optional destinations then main story; story open-ended.
+  Old ocean generator settings gain outpost set; only new chunks affected.
+  Twenty-one land islands gain clear coastal routes, stairs and lights;
+  authored loot/puzzles/trunks/underwater resources preserved.
+  Build/bootstrap/ocean checks and packaged crafting/model/localization audits
+  passed;135custom items,358blocks,7renderers,622bilingual keys.
+  Native trading41checks; ocean2014; crafting259199; research666; crew44.
+  Route audit573clear cells,461771protected landmark/resource cells preserved.
+  Guide docs/TRADING_OUTPOSTS.md; logs build/outpost-runtime.log;
+  docs/crafting-audit-0.11.33.csv. Finished1–10;current11;release12notstarted.
+  Limits: counters have no NPC; existing chunks unchanged. Client visual and
+  two-player trading confirmation pending. Earlier live co-op/movement/collision,
+  large-raft and actual third-party jar confirmation remain pending.
+  Shark600s/bird300s,Peaceful and API2 retained. Install0.11.33 everywhere.
+
+- Retained: Raft Ocean 0.11.32; artifact build/libs/raft_ocean-0.11.32.jar.
   Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
   ModDevGradle2.0.147, Gradle9.2.1, JEI31.9.0.58. Protocol11.32/API2.
   Seven new native expeditions: Kelp Observatory, Basalt Refuge, Orchard Cove;

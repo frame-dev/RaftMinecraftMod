@@ -122,10 +122,10 @@ public final class RaftConstructionCheck {
         require(layout.add(new BlockPos(-6,0,1)) && layout.add(new BlockPos(-7,0,0)),"Additional starter foundations");
         add(structure,layout,new BlockPos(-6,1,1),RaftPiece.Kind.BASIC_GRILL,0,false);
         add(structure,layout,new BlockPos(-7,1,0),RaftPiece.Kind.DISPOSABLE_ANCHOR,0,false);
-        int expansionCell=10;
+        for(int x=9;x<=30;x++)for(int z=0;z<=11;z++)if(!layout.cells().contains(new BlockPos(x,0,z)))require(layout.add(new BlockPos(x,0,z)),"Connect furniture fixture foundations");
+        int expansionCell=0;
         for(var kind:RaftPiece.Kind.values())if(kind.ordinal()>RaftPiece.Kind.BATTERY_CHARGER.ordinal() && kind!=RaftPiece.Kind.ADDON && !kind.machine() && kind!=RaftPiece.Kind.DISPOSABLE_ANCHOR) {
-            for(int x=expansionCell;x<Math.min(expansionCell+3,33);x++)require(layout.add(new BlockPos(x,0,0)),"Expansion fixture foundation");
-            add(structure,layout,new BlockPos(expansionCell,1,0),kind,0,false);expansionCell+=3;
+            add(structure,layout,new BlockPos(10+expansionCell%7*3,1,expansionCell/7*3),kind,0,false);expansionCell++;
         }
         var reporter = new ProblemReporter.Collector();
         var seed = TagValueOutput.createWithContext(reporter, level.registryAccess());
@@ -176,7 +176,7 @@ public final class RaftConstructionCheck {
             checks++;
             previousWave = wave;
         }
-        return checks+RaftClearanceCheck.run(level)+RaftBuildingUpgradeCheck.run(level);
+        return checks+RaftClearanceCheck.run(level)+RaftBuildingUpgradeCheck.run(level)+RaftFurnitureCheck.run(level)+RaftTabletopCheck.run(level);
     }
 
     private static void add(RaftStructure structure, RaftLayout layout, BlockPos pos,

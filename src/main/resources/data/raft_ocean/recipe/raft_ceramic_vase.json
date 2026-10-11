@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:clay_ball",
+    "minecraft:clay_ball",
+    "minecraft:clay_ball",
+    "minecraft:poppy",
+    "raft_ocean:drift_leaf"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_ceramic_vase"
+  }
+}

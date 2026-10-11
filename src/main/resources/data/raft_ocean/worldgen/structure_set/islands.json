@@ -2,7 +2,11 @@
   "structures": [
     {
       "structure": "raft_ocean:drift_atoll",
-      "weight": 3
+      "weight": 7
+    },
+    {
+      "structure": "raft_ocean:radio_tower",
+      "weight": 1
     },
     {
       "structure": "raft_ocean:glasswatch",
@@ -32,7 +36,7 @@
   "placement": {
     "type": "minecraft:random_spread",
     "salt": 1947362,
-    "spacing": 32,
-    "separation": 16
+    "spacing": 48,
+    "separation": 24
   }
 }

@@ -30,7 +30,8 @@ public final class RaftBeds {
                 UUIDUtil.CODEC.fieldOf("raft").forGetter(Home::raft), BlockPos.CODEC.fieldOf("cell").forGetter(Home::cell)).apply(i, Home::new));
     }
     public static InteractionResult use(RaftEntity raft, BlockPos pos, Player user) {
-        if (!(user instanceof ServerPlayer player) || !dev.raftocean.menu.RaftStationMenus.valid(raft, pos, RaftPiece.Kind.BED, player) || player.isSpectator()) { return InteractionResult.FAIL; }
+        var piece=raft.pieces().get(pos);
+        if (!(user instanceof ServerPlayer player) || piece==null || !piece.kind().bed() || !dev.raftocean.menu.RaftStationMenus.valid(raft, pos, piece.kind(), player) || player.isSpectator()) { return InteractionResult.FAIL; }
         if (OceanSpawn.isOcean(player.level())) {
             player.setData(SurvivalContent.BED_HOME, new Home(raft.getUUID(), pos.immutable()));
             OceanRaftData.get(player.level()).remember(player.getUUID(), raft.getUUID(), raft.position());
@@ -53,9 +54,11 @@ public final class RaftBeds {
     public static Vec3 spawnPosition(ServerPlayer player, RaftEntity raft) {
         Home home = player.getData(SurvivalContent.BED_HOME);
         if (!home.raft().equals(raft.getUUID())) { return null; }
-        Vec3 center = raft.stationPosition(home.cell(), RaftPiece.Kind.BED);
+        Vec3 center = bedCenter(raft,home.cell());
         if (center == null) { return null; }
-        Vec3 target = center.add(0, .23, 0);
+        var piece=raft.pieces().get(home.cell());
+        double top=raft.pieceBoxes(home.cell(),piece).stream().mapToDouble(box->box.maxY).max().orElse(RaftEntity.DECK_HEIGHT);
+        Vec3 target = new Vec3(center.x,raft.getY()+top+dev.raftocean.entity.RaftContact.CLEARANCE,center.z);
         var body = player.getBoundingBox().move(target.subtract(player.position()));
         return player.level().noCollision(player, body) && raft.getCollisionBoxes().stream().noneMatch(body::intersects) ? target : null;
     }
@@ -87,9 +90,13 @@ public final class RaftBeds {
         }
     }
     private static boolean valid(ServerPlayer player, Rest rest) {
-        Vec3 center = rest.raft.stationPosition(rest.pos, RaftPiece.Kind.BED);
+        Vec3 center = bedCenter(rest.raft,rest.pos);
         return dev.raftocean.crew.CrewAccess.allowed(player,rest.raft) && player.isAlive() && player.level().players().contains(player) && !player.isSpectator() && !rest.raft.isRemoved() && player.level() == rest.raft.level()
                 && center != null && center.distanceToSqr(player.position()) <= 9 && player.getHealth() >= rest.health;
     }
     private record Rest(RaftEntity raft, BlockPos pos, long since, float health) { }
+    private static Vec3 bedCenter(RaftEntity raft,BlockPos pos) {
+        var piece=raft.pieces().get(pos);
+        return piece!=null && piece.kind().bed()?raft.stationPosition(pos,piece.kind()):null;
+    }
 }

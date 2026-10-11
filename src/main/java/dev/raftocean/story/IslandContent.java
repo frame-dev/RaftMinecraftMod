@@ -21,12 +21,13 @@ public final class IslandContent {
     public static final DeferredItem<Item> ANTENNA = ModContent.ITEMS.registerSimpleItem("antenna_upgrade");
     public static final DeferredItem<Item> LONG_RECEIVER = ModContent.ITEMS.registerItem("long_range_receiver",p->new ReceiverItem(p.stacksTo(1),true));
     public static final DeferredItem<Item> KEY = ModContent.ITEMS.registerSimpleItem("relay_key",p->p.stacksTo(16));
-    public static final DeferredItem<Item> WATCH_LOG = ModContent.ITEMS.registerItem("watch_log",p->new JournalItem(p.stacksTo(1),0));
-    public static final DeferredItem<Item> GARDEN_LOG = ModContent.ITEMS.registerItem("garden_log",p->new JournalItem(p.stacksTo(1),1));
-    public static final DeferredItem<Item> VAULT_LOG = ModContent.ITEMS.registerItem("vault_log",p->new JournalItem(p.stacksTo(1),2));
-    public static final DeferredItem<Item> BEACON_LOG = ModContent.ITEMS.registerItem("beacon_log",p->new JournalItem(p.stacksTo(1),3));
-    public static final DeferredItem<Item> HAVEN_LOG = ModContent.ITEMS.registerItem("haven_log",p->new JournalItem(p.stacksTo(1),4));
-    public static final DeferredItem<Item> STARFALL_LOG = ModContent.ITEMS.registerItem("starfall_log",p->new JournalItem(p.stacksTo(1),5));
+    public static final DeferredItem<Item> RADIO_LOG = ModContent.ITEMS.registerItem("radio_log",p->new JournalItem(p.stacksTo(1),0));
+    public static final DeferredItem<Item> WATCH_LOG = ModContent.ITEMS.registerItem("watch_log",p->new JournalItem(p.stacksTo(1),1));
+    public static final DeferredItem<Item> GARDEN_LOG = ModContent.ITEMS.registerItem("garden_log",p->new JournalItem(p.stacksTo(1),2));
+    public static final DeferredItem<Item> VAULT_LOG = ModContent.ITEMS.registerItem("vault_log",p->new JournalItem(p.stacksTo(1),3));
+    public static final DeferredItem<Item> BEACON_LOG = ModContent.ITEMS.registerItem("beacon_log",p->new JournalItem(p.stacksTo(1),4));
+    public static final DeferredItem<Item> HAVEN_LOG = ModContent.ITEMS.registerItem("haven_log",p->new JournalItem(p.stacksTo(1),5));
+    public static final DeferredItem<Item> STARFALL_LOG = ModContent.ITEMS.registerItem("starfall_log",p->new JournalItem(p.stacksTo(1),6));
     public static final DeferredBlock<SealedHatchBlock> HATCH = ModContent.BLOCKS.registerBlock("sealed_hatch",SealedHatchBlock::new,
             p->p.strength(-1,3600000));
     public static void register(net.neoforged.bus.api.IEventBus bus) { TYPES.register(bus);PIECES.register(bus); }

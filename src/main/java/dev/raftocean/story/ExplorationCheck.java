@@ -26,8 +26,8 @@ public final class ExplorationCheck {
         player.setData(IslandContent.JOURNEY,ReceiverItem.DESTINATIONS.length);
         for(String set:List.of("dive_sites","exploration_islands"))require(level.getChunkSource().getGeneratorState()
                 .possibleStructureSets().stream().anyMatch(h->h.is(ResourceKey.create(Registries.STRUCTURE_SET,id(set)))),"Old ocean settings include "+set);
-        for(int i=0;i<Exploration.ROUTES.length;i++) {
-            String name=Exploration.ROUTES[i];int size=i<3?49:33;
+        for(int i=0;i<7;i++) {
+            String name=Exploration.ROUTES[i];int size=i<3?97:65;
             var template=level.getStructureTemplateManager().getOrCreate(id("islands/"+name));
             require(template.getSize().equals(new Vec3i(size,i<3?42:14,size)),"Native exploration template dimensions: "+name);
             var settings=new StructurePlaceSettings();
@@ -52,10 +52,10 @@ public final class ExplorationCheck {
             player.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(IslandContent.LONG_RECEIVER.get()));
             require(IslandContent.LONG_RECEIVER.get().use(level,player,InteractionHand.MAIN_HAND).consumesAction(),"Optional receiver remains usable after final chapter: "+name);
             logs.get(i%3).use(level,player,InteractionHand.MAIN_HAND);
-            require(player.getData(IslandContent.JOURNEY)==6,"Branch journal leaves main story open-ended: "+name);
+            require(player.getData(IslandContent.JOURNEY)==ReceiverItem.DESTINATIONS.length,"Branch journal leaves main story open-ended: "+name);
         }
         require(player.getData(Exploration.DISCOVERIES)==7,"All three independent journal discoveries persist");
-        player.setData(Exploration.CHANNEL,6);player.setShiftKeyDown(true);
+        player.setData(Exploration.CHANNEL,Exploration.ROUTES.length-1);player.setShiftKeyDown(true);
         IslandContent.LONG_RECEIVER.get().use(level,player,InteractionHand.MAIN_HAND);
         require(player.getData(Exploration.CHANNEL)==-1,"Receiver cycles back to main story");
         player.discard();return checks;

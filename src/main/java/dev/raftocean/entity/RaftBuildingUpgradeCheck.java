@@ -5,6 +5,9 @@ import dev.raftocean.registry.ModContent;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -101,6 +104,14 @@ public final class RaftBuildingUpgradeCheck {
         for(var kind:RaftPiece.Kind.values()){
             if(kind==RaftPiece.Kind.ADDON)continue;
             var raft=new RaftEntity(ModContent.RAFT.get(),level);
+            var footprint=new RaftPiece(kind,0,false);
+            if(footprint.width()*footprint.depth()>1) {
+                var layout=RaftLayout.starter();
+                for(int x:new int[]{-2,2})for(int z=-1;z<=1;z++)require(layout.add(new BlockPos(x,0,z)),"Expand ghost fixture side supports");
+                for(int z:new int[]{-2,2})for(int x=-2;x<=2;x++)require(layout.add(new BlockPos(x,0,z)),"Expand ghost fixture end supports");
+                var seed=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());seed.putString("Layout",layout.encode());
+                raft.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),seed.buildResult()));
+            }
             raft.setPos(8.5,level.getMaxY()+16,8.5);
             var player=new FakePlayer(level,new GameProfile(UUID.randomUUID(),"GhostCheck"));
             player.setPos(raft.toWorld(new Vec3(0,.626,0)));

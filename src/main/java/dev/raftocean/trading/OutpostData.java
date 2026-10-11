@@ -22,7 +22,10 @@ public final class OutpostData extends SavedData {
     private OutpostData(Map<String,Stock> stock){this.stock=new HashMap<>(stock);}
     public static OutpostData get(ServerLevel level){return level.getDataStorage().computeIfAbsent(TYPE);}
     public Stock stock(ServerLevel level,net.minecraft.core.BlockPos pos) {
-        String key=Long.toString(pos.asLong());long now=level.getGameTime();Stock old=stock.get(key);
+        return stock(level,pos,level.getGameTime());
+    }
+    Stock stock(ServerLevel level,net.minecraft.core.BlockPos pos,long now) {
+        String key=Long.toString(pos.asLong());Stock old=stock.get(key);
         if(old==null || now<old.restocked || now-old.restocked>=dev.raftocean.config.RaftConfig.OUTPOST_RESTOCK.get()*20L) {
             old=new Stock(OutpostTrading.catalog(level),now);stock.put(key,old);setDirty();
         }

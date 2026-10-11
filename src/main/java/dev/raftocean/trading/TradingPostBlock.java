@@ -12,7 +12,7 @@ import net.minecraft.world.phys.shapes.*;
 
 /** A compact counter with matching visible, selection and collision geometry. */
 public final class TradingPostBlock extends Block {
-    private static final VoxelShape SHAPE=Shapes.or(Block.box(1,0,2,15,13,14),Block.box(0,13,0,16,16,16));
+    private static final VoxelShape SHAPE=Shapes.or(Block.box(1,0,2,15,13,14),Block.box(0,13,0,16,16,16),Block.box(6,7,1,10,9,2));
     public TradingPostBlock(Properties properties){super(properties);}
     @Override protected VoxelShape getShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,CollisionContext context){return SHAPE;}
     @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){

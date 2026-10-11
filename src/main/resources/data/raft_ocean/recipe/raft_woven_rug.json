@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "raft_ocean:drift_leaf",
+    "raft_ocean:drift_leaf",
+    "raft_ocean:canvas_roll",
+    "raft_ocean:cordage"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_woven_rug"
+  }
+}

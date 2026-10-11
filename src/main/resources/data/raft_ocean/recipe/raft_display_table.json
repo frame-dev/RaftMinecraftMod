@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:oak_planks",
+    "minecraft:oak_planks",
+    "minecraft:oak_planks",
+    "minecraft:stick",
+    "minecraft:stick",
+    "raft_ocean:timber_brace"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_display_table"
+  }
+}

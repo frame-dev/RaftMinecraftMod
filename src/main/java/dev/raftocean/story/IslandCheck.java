@@ -29,16 +29,17 @@ public final class IslandCheck {
         checks=0;
         var player=new FakePlayer(level,new GameProfile(UUID.randomUUID(),"IslandCheck"));
         var stages=level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
-        var logs=List.of(IslandContent.WATCH_LOG.get(),IslandContent.GARDEN_LOG.get(),IslandContent.VAULT_LOG.get(),
-                IslandContent.BEACON_LOG.get(),IslandContent.HAVEN_LOG.get(),IslandContent.STARFALL_LOG.get());
+        var logs=List.of(IslandContent.RADIO_LOG.get(),IslandContent.WATCH_LOG.get(),IslandContent.GARDEN_LOG.get(),
+                IslandContent.VAULT_LOG.get(),IslandContent.BEACON_LOG.get(),IslandContent.HAVEN_LOG.get(),IslandContent.STARFALL_LOG.get());
         int limit=RaftConfig.FOUNDATION_LIMIT.get();
         var raft=new RaftEntity(ModContent.RAFT.get(),level);raft.setPos(.5,62.8,.5);
         try {
             check(level.getChunkSource().getGeneratorState().possibleStructureSets().stream()
                     .anyMatch(holder->holder.is(ResourceKey.create(Registries.STRUCTURE_SET,id("islands")))),"Old ocean settings gain the native island structure set");
-            for(String name:List.of("drift_atoll","glasswatch","garden_relay","echo_vault")) {
+            for(String name:List.of("drift_atoll","radio_tower","glasswatch","garden_relay","echo_vault")) {
                 var template=level.getStructureTemplateManager().getOrCreate(id("islands/"+name));
-                check(template.getSize().equals(new Vec3i(33,29,33)),"Original template loads with native NBT schema: "+name);
+                int width=name.equals("drift_atoll")?65:name.equals("radio_tower")?113:145;
+                check(template.getSize().equals(new Vec3i(width,name.equals("drift_atoll")?29:48,width)),"Island template loads with native NBT schema: "+name);
                 check(!template.filterBlocks(BlockPos.ZERO,new net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings(),Blocks.KELP).isEmpty(),
                         "Story shoreline includes harvestable underwater kelp: "+name);
             }
@@ -46,7 +47,7 @@ public final class IslandCheck {
                     .anyMatch(holder->holder.is(ResourceKey.create(Registries.STRUCTURE_SET,id("ordinary_islands")))),
                     "Existing Ocean settings also gain ordinary islands without replacing story placement");
             String[] ordinary={"shell_sandbar","tidal_grove","flower_meadow","twin_cove","stone_rise","broadleaf_island","crescent_reef","split_grove","longshore","mossy_arch"};
-            int[] sizes={17,25,33,49,65,81,49,65,33,81};
+            int[] sizes={33,49,65,97,129,161,97,129,65,161};
             var placement=new net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings();
             var ordinarySet=level.registryAccess().lookupOrThrow(Registries.STRUCTURE_SET)
                     .getOrThrow(ResourceKey.create(Registries.STRUCTURE_SET,id("ordinary_islands"))).value();
@@ -92,25 +93,26 @@ public final class IslandCheck {
             }
             var storySet=level.registryAccess().lookupOrThrow(Registries.STRUCTURE_SET)
                     .getOrThrow(ResourceKey.create(Registries.STRUCTURE_SET,id("islands"))).value();
-            check(storySet.structures().size()==7,"Story placement includes six destinations and the original atoll");
+            check(storySet.structures().size()==8,"Story placement includes seven destinations and the original atoll");
             for(int stage=0;stage<ReceiverItem.DESTINATIONS.length;stage++) {
                 String name=ReceiverItem.DESTINATIONS[stage];
                 var template=level.getStructureTemplateManager().getOrCreate(id("islands/"+name));
-                int size=stage<3?33:stage==4?65:49;
-                check(template.getSize().equals(new Vec3i(size,stage<3?29:42,size)),"Story template dimensions: "+name);
+                int size=stage==0?113:stage<4?145:stage==4?161:193;
+                check(template.getSize().equals(new Vec3i(size,48,size)),"Expanded story template dimensions: "+name);
                 Block landmark=switch(stage){
-                    case 0 -> Blocks.DARK_OAK_LOG;
-                    case 1 -> Blocks.WATER_CAULDRON;
-                    case 2 -> Blocks.CARTOGRAPHY_TABLE;
-                    case 3 -> Blocks.COPPER_BLOCK.weathering().oxidized();
-                    case 4 -> Blocks.ANVIL;
+                    case 0 -> Blocks.OAK_LOG;
+                    case 1 -> Blocks.DARK_OAK_LOG;
+                    case 2 -> Blocks.WATER_CAULDRON;
+                    case 3 -> Blocks.CARTOGRAPHY_TABLE;
+                    case 4 -> Blocks.COPPER_BLOCK.weathering().oxidized();
+                    case 5 -> Blocks.ANVIL;
                     default -> Blocks.CHISELED_STONE_BRICKS;
                 };
                 check(!template.filterBlocks(BlockPos.ZERO,placement,landmark,false).isEmpty(),
                         "Authored story landmark detail exists: "+name);
                 check(!template.filterBlocks(BlockPos.ZERO,placement,Blocks.LANTERN,false).isEmpty(),
                         "Story location has authored lighting: "+name);
-                if(stage>=3){
+                if(stage>=4){
                     check(template.filterBlocks(BlockPos.ZERO,placement,Blocks.KELP,false).size()>=6,"Story shallows contain kelp: "+name);
                     for(var resource:List.of(Blocks.CLAY,Blocks.GRAVEL,Blocks.COPPER_ORE,Blocks.IRON_ORE,Blocks.COAL_ORE)){
                         check(!template.filterBlocks(BlockPos.ZERO,placement,resource,false).isEmpty(),"Story shallows gathering resource: "+name+" "+resource);
@@ -123,8 +125,9 @@ public final class IslandCheck {
                 int cx=target.getX()>>4,cz=target.getZ()>>4;
                 int radius=(size+15)/32;
                 for(int x=cx-radius;x<=cx+radius;x++){for(int z=cz-radius;z<=cz+radius;z++){level.getChunk(x,z);}}
+                checks+=StoryExplorationCheck.run(level,name,target,size);
                 check(level.getBlockState(new BlockPos(target.getX(),49,target.getZ())).is(Blocks.STONE),"Island terrain connects to the seabed: "+name);
-                int chestY=stage==0?73:stage==3?78:66,zOffset=stage==0||stage==3?0:stage==1||stage==4?4:stage==2?7:8;
+                int chestY=stage<=1?73:stage==4?78:66,zOffset=stage<=1||stage==4?0:stage==2||stage==5?4:stage==3?7:8;
                 BlockPos chestPos=new BlockPos(target.getX(),chestY,target.getZ()+zOffset);
                 check(level.getBlockEntity(chestPos) instanceof ChestBlockEntity,"Native chunk generation places story chest: "+name);
                 var chest=(ChestBlockEntity)level.getBlockEntity(chestPos);
@@ -138,22 +141,22 @@ public final class IslandCheck {
                     check(level.getBlockState(lampPos).is(Blocks.LANTERN) && level.getBlockState(lampPos).canSurvive(level,lampPos),
                             "Story lantern stays supported: "+name);
                 }
-                if(stage==1||stage==4) {
+                if(stage==2||stage==5) {
                     boolean key=false;for(int slot=0;slot<chest.getContainerSize();slot++){if(chest.getItem(slot).is(IslandContent.KEY.get())){key=true;}}
                     check(key,"Preceding chapter loot grants the bunker key: "+name);
                 }
                 player.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(logs.get(stage)));
                 logs.get(stage).use(level,player,InteractionHand.MAIN_HAND);
                 check(player.getData(IslandContent.JOURNEY)==stage+1 && player.getMainHandItem().getCount()==1,"Reading journal advances persistent journey without consuming it");
-                if(stage==2) { testSeal(level,player,new BlockPos(target.getX(),66,target.getZ()-3)); }
-                if(stage==5) { testSeal(level,player,new BlockPos(target.getX(),66,target.getZ()-2)); }
-                if(stage==2){
+                if(stage==3) { testSeal(level,player,new BlockPos(target.getX(),66,target.getZ()-3)); }
+                if(stage==6) { testSeal(level,player,new BlockPos(target.getX(),66,target.getZ()-2)); }
+                if(stage==3){
                     var oldSave=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());player.saveWithoutId(oldSave);
                     var oldPlayer=new FakePlayer(level,new GameProfile(UUID.randomUUID(),"OldJourneyReload"));
                     oldPlayer.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),oldSave.buildResult()));
-                    check(oldPlayer.getData(IslandContent.JOURNEY)==3,"Existing completed three-stage saves continue at Ember Beacon");
+                    check(oldPlayer.getData(IslandContent.JOURNEY)==4,"Existing completed four-stage saves continue at Ember Beacon");
                 }
-                if(stage>=3){
+                if(stage>=4){
                     var kelp=template.filterBlocks(BlockPos.ZERO,placement,Blocks.KELP,false).getFirst();
                     BlockPos kelpPos=new BlockPos(target.getX()-size/2,49,target.getZ()-size/2).offset(kelp.pos());
                     check(level.getBlockState(kelpPos).is(Blocks.KELP) && level.getBlockState(kelpPos).canSurvive(level,kelpPos),
@@ -171,7 +174,7 @@ public final class IslandCheck {
             var saved=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());player.saveWithoutId(saved);
             var restored=new FakePlayer(level,new GameProfile(UUID.randomUUID(),"JourneyReload"));
             restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),saved.buildResult()));
-            check(restored.getData(IslandContent.JOURNEY)==ReceiverItem.DESTINATIONS.length,"All six story stages survive native player serialization");
+            check(restored.getData(IslandContent.JOURNEY)==ReceiverItem.DESTINATIONS.length,"All seven story stages survive native player serialization");
             player.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(IslandContent.WATCH_LOG.get()));
             IslandContent.WATCH_LOG.get().use(level,player,InteractionHand.MAIN_HAND);
             check(player.getData(IslandContent.JOURNEY)==ReceiverItem.DESTINATIONS.length,"Reading an earlier journal cannot regress the extended journey");

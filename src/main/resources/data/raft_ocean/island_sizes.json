@@ -1,0 +1,122 @@
+{
+  "shell_sandbar": {
+    "oldWidth": 17,
+    "width": 33,
+    "oldLandColumns": 38,
+    "landColumns": 122
+  },
+  "tidal_grove": {
+    "oldWidth": 25,
+    "width": 49,
+    "oldLandColumns": 151,
+    "landColumns": 448
+  },
+  "flower_meadow": {
+    "oldWidth": 33,
+    "width": 65,
+    "oldLandColumns": 339,
+    "landColumns": 1150
+  },
+  "twin_cove": {
+    "oldWidth": 49,
+    "width": 97,
+    "oldLandColumns": 621,
+    "landColumns": 2520
+  },
+  "stone_rise": {
+    "oldWidth": 65,
+    "width": 129,
+    "oldLandColumns": 1380,
+    "landColumns": 5152
+  },
+  "broadleaf_island": {
+    "oldWidth": 81,
+    "width": 161,
+    "oldLandColumns": 2667,
+    "landColumns": 10067
+  },
+  "crescent_reef": {
+    "oldWidth": 49,
+    "width": 97,
+    "oldLandColumns": 697,
+    "landColumns": 2420
+  },
+  "split_grove": {
+    "oldWidth": 65,
+    "width": 129,
+    "oldLandColumns": 1601,
+    "landColumns": 6075
+  },
+  "longshore": {
+    "oldWidth": 33,
+    "width": 65,
+    "oldLandColumns": 247,
+    "landColumns": 826
+  },
+  "mossy_arch": {
+    "oldWidth": 81,
+    "width": 161,
+    "oldLandColumns": 2521,
+    "landColumns": 9724
+  },
+  "drift_atoll": {
+    "oldWidth": 33,
+    "width": 65,
+    "oldLandColumns": 629,
+    "landColumns": 2270
+  },
+  "kelp_observatory": {
+    "oldWidth": 49,
+    "width": 97,
+    "oldLandColumns": 661,
+    "landColumns": 2263
+  },
+  "basalt_refuge": {
+    "oldWidth": 49,
+    "width": 97,
+    "oldLandColumns": 781,
+    "landColumns": 2841
+  },
+  "orchard_cove": {
+    "oldWidth": 49,
+    "width": 97,
+    "oldLandColumns": 658,
+    "landColumns": 2276
+  },
+  "merchant_harbor": {
+    "oldWidth": 65,
+    "width": 129,
+    "oldLandColumns": 1519,
+    "landColumns": 5602
+  },
+  "lantern_market": {
+    "oldWidth": 65,
+    "width": 129,
+    "oldLandColumns": 1519,
+    "landColumns": 5613
+  },
+  "broken_keel": {
+    "oldWidth": 33,
+    "width": 65,
+    "oldLandColumns": 0,
+    "landColumns": 0
+  },
+  "coral_grotto": {
+    "oldWidth": 33,
+    "width": 65,
+    "oldLandColumns": 0,
+    "landColumns": 0
+  },
+  "drowned_court": {
+    "oldWidth": 33,
+    "width": 65,
+    "oldLandColumns": 0,
+    "landColumns": 0
+  },
+  "chart_vault": {
+    "oldWidth": 33,
+    "width": 65,
+    "oldLandColumns": 0,
+    "landColumns": 0
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "raft_ocean:timber_brace",
+    "raft_ocean:timber_brace",
+    "raft_ocean:timber_brace",
+    "raft_ocean:timber_brace",
+    "raft_ocean:canvas_roll",
+    "raft_ocean:canvas_roll",
+    "raft_ocean:cordage",
+    "raft_ocean:cordage"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_canvas_canopy"
+  }
+}

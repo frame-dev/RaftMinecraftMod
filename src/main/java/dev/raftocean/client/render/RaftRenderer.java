@@ -65,6 +65,10 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
         state.cells.clear();
         state.ghost=RaftPlacementGhost.extract(entity);
         state.hullYaw = Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot());
+        state.lampSources=entity.pieces().entrySet().stream().filter(e->e.getValue().kind().lamp()).map(e->{
+            var box=MachineVisualLayout.envelope(entity.pieceBoxes(e.getKey(),e.getValue()));
+            return RaftTransform.world(new Vec3(box.getCenter().x,box.maxY-.15,box.getCenter().z),new Vec3(state.x,state.y,state.z),state.hullYaw);
+        }).toList();
         double time = entity.tickCount + partialTick;
         var previous = transitions.get(entity);
         if (previous != null) { previous.keySet().removeIf(channel -> !entity.pieces().containsKey(channel.pos)); }
@@ -357,7 +361,7 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
 
     private void add(RaftEntity entity, RaftRenderState state, AABB box, BlockState visual,
             Vec3 pivot, float mount, float turn, float spin, float flutter) {
-        MovingBlockRenderState block = new MovingBlockRenderState();
+        MovingBlockRenderState block = new RaftLampLight(state.lampSources);
         Vec3 world = RaftTransform.world(box.getCenter(), new Vec3(state.x, state.y, state.z), state.hullYaw);
         BlockPos worldPos = BlockPos.containing(world);
         block.blockState = visual; block.blockPos = worldPos; block.randomSeedPos = BlockPos.containing(box.getCenter());
@@ -394,7 +398,9 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
             var visualId=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(cell.block().blockState.getBlock());
             String meshName="station_"+visualId.getPath();
             if(visualId.getNamespace().equals("raft_ocean") && EntityMeshes.hasMesh(meshName)){
-                EntityMeshes.submit(meshName,pose,collector,state.lightCoords,state.outlineColor);
+                int lamp=dev.raftocean.entity.RaftFurniture.brightness(RaftTransform.world(box.getCenter(),new Vec3(state.x,state.y,state.z),state.hullYaw),state.lampSources);
+                int lit=net.minecraft.util.LightCoordsUtil.pack(Math.max(net.minecraft.util.LightCoordsUtil.block(state.lightCoords),lamp),net.minecraft.util.LightCoordsUtil.sky(state.lightCoords));
+                EntityMeshes.submit(meshName,pose,collector,lit,state.outlineColor);
             }else{
                 collector.submitMovingBlock(pose, cell.block(), state.outlineColor);
             }

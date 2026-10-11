@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "raft_ocean:raft_cabin_bed",
+    "raft_ocean:raft_cabin_bed",
+    "raft_ocean:timber_brace"
+  ],
+  "result": {
+    "id": "raft_ocean:raft_double_bed"
+  }
+}

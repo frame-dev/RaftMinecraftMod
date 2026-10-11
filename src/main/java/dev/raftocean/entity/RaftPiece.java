@@ -7,7 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 
 /** Original geometry shared by picking, rendering, collision, and climbing. */
-public record RaftPiece(Kind kind, int rotation, boolean open, String addonId) {
+public record RaftPiece(Kind kind, int rotation, boolean open, String addonId, boolean tableMounted) {
     public enum Kind {
         FLOOR(4), WALL(4), CORNER_WALL(6), CURVED_WALL(6), DOOR(6, 2), STAIRS(6), LADDER(2), ROOF(3),
         PILLAR(6, 3), SHORT_PILLAR(2), RAILING(2), HALF_WALL(2), CRAFTING_TABLE(6), RESEARCH_TABLE(6),
@@ -17,7 +17,9 @@ public record RaftPiece(Kind kind, int rotation, boolean open, String addonId) {
         SAIL(8, 3), STEERING_WHEEL(4), ENGINE(12), ANCHOR(6), WIND_STREAMER(2, 2), WATER_PIPE(1), FUEL_PIPE(1), POWER_CABLE(1), WATER_TANK(8), FUEL_TANK(8),
         BIOREFINER(10), BIOFUEL_GENERATOR(12), ELECTRIC_PURIFIER(10), SPRINKLER(4), BATTERY_CHARGER(8),
         WINDOW_WALL(4), TRIANGLE_WALL(3), ARCHWAY(6,2), HALF_STAIRS(3), WIDE_STAIRS(10),
-        TALL_LADDER(4,2), WIDE_FLOOR(8), WIDE_CRAFTING_TABLE(10), ADDON(1), BASIC_PURIFIER(3), DRYING_RACK(2), DISPOSABLE_ANCHOR(4), BASIC_GRILL(3);
+        TALL_LADDER(4,2), WIDE_FLOOR(8), WIDE_CRAFTING_TABLE(10), ADDON(1), BASIC_PURIFIER(3), DRYING_RACK(2), DISPOSABLE_ANCHOR(4), BASIC_GRILL(3),
+        CABIN_BED(6), DOUBLE_BED(10), FLOOR_LAMP(3,2), TABLE_LAMP(2), WOODEN_CHAIR(3), DINING_TABLE(6), SOFA(6), WOVEN_RUG(1), DECORATIVE_SHELF(5), POTTED_PALM(3,2),
+        DECK_BENCH(5), COFFEE_TABLE(4), FLOWER_BOX(2), BOOK_STACK(1), CERAMIC_VASE(1), CHART_STAND(3), NAUTICAL_SCREEN(4,2), CANVAS_CANOPY(8,3), SIDE_TABLE(3), DISPLAY_TABLE(5);
         public final double mass;
         public final int height;
         Kind(double mass) { this(mass, 1); }
@@ -28,6 +30,11 @@ public record RaftPiece(Kind kind, int rotation, boolean open, String addonId) {
         public boolean grill() { return this == GRILL || this == BASIC_GRILL; }
         public boolean anchor() { return this == ANCHOR || this == DISPOSABLE_ANCHOR; }
         public boolean purifier() { return this == PURIFIER || this == BASIC_PURIFIER; }
+        public boolean bed() { return this == BED || this == CABIN_BED || this == DOUBLE_BED; }
+        public boolean lamp() { return this == FLOOR_LAMP || this == TABLE_LAMP; }
+        public boolean furniture() { return ordinal() >= CABIN_BED.ordinal(); }
+        public boolean tableDecoration() { return this==TABLE_LAMP || this==BOOK_STACK || this==CERAMIC_VASE || this==POTTED_PALM || this==CHART_STAND || this==FLOWER_BOX; }
+        public double tableSurface() { return switch(this) { case SIDE_TABLE -> .72;case DISPLAY_TABLE -> .78;case DINING_TABLE -> .83;case COFFEE_TABLE -> .485;default -> -1; }; }
         public boolean machine() { return this == BASIC_PURIFIER || this == DRYING_RACK || this == PURIFIER || this == RAIN_COLLECTOR || grill()
                 || this == COOKING_POT || this == PLANTER || this == TREE_PLANTER || this == SMELTER || automation(); }
         public boolean conduit() { return this == WATER_PIPE || this == FUEL_PIPE || this == POWER_CABLE; }
@@ -37,21 +44,23 @@ public record RaftPiece(Kind kind, int rotation, boolean open, String addonId) {
         public boolean storage() { return this == CHEST || this == BARREL || this == COLLECTION_NET || machine() || navigation(); }
         public boolean station() {
             return storage() || this == WIDE_CRAFTING_TABLE || this == CRAFTING_TABLE || this == RESEARCH_TABLE || this == STONECUTTER || this == SMITHING_TABLE
-                    || this == GRINDSTONE || this == LOOM || this == CARTOGRAPHY_TABLE || this == BED
+                    || this == GRINDSTONE || this == LOOM || this == CARTOGRAPHY_TABLE || bed()
                     || this == ANVIL || this == ENCHANTING_TABLE || this == ENDER_CHEST;
         }
     }
 
-    public RaftPiece(Kind kind,int rotation,boolean open) { this(kind,rotation,open,""); }
+    public RaftPiece(Kind kind,int rotation,boolean open) { this(kind,rotation,open,"",false); }
+    public RaftPiece(Kind kind,int rotation,boolean open,String addonId) { this(kind,rotation,open,addonId,false); }
+    public RaftPiece onTable() { return new RaftPiece(kind,rotation,open,addonId,true); }
     public dev.raftocean.api.RaftBuildable addon() {
         return dev.raftocean.api.RaftBuildables.find(addonId).orElseThrow(
                 ()->new IllegalStateException("Required raft addon definition is missing: "+addonId));
     }
-    public int width() { return kind==Kind.ADDON && !addonId.isEmpty()?addon().width():kind==Kind.WIDE_FLOOR || kind==Kind.WIDE_STAIRS || kind==Kind.WIDE_CRAFTING_TABLE?2:1; }
-    public int depth() { return kind==Kind.ADDON && !addonId.isEmpty()?addon().depth():1; }
+    public int width() { return kind==Kind.ADDON && !addonId.isEmpty()?addon().width():kind==Kind.WIDE_FLOOR || kind==Kind.WIDE_STAIRS || kind==Kind.WIDE_CRAFTING_TABLE || kind==Kind.DOUBLE_BED || kind==Kind.DINING_TABLE || kind==Kind.SOFA || kind==Kind.WOVEN_RUG || kind==Kind.DECORATIVE_SHELF || kind==Kind.DECK_BENCH || kind==Kind.COFFEE_TABLE || kind==Kind.FLOWER_BOX || kind==Kind.NAUTICAL_SCREEN || kind==Kind.CANVAS_CANOPY || kind==Kind.DISPLAY_TABLE?2:1; }
+    public int depth() { return kind==Kind.ADDON && !addonId.isEmpty()?addon().depth():kind==Kind.CABIN_BED || kind==Kind.DOUBLE_BED || kind==Kind.WOVEN_RUG || kind==Kind.CANVAS_CANOPY?2:1; }
     public int height() { return kind==Kind.ADDON && !addonId.isEmpty()?addon().height():kind.height; }
     public double mass() { return kind==Kind.ADDON && !addonId.isEmpty()?addon().mass():kind.mass; }
-    public RaftPiece withRotation(int turn) { return new RaftPiece(kind,turn,open,addonId); }
+    public RaftPiece withRotation(int turn) { return new RaftPiece(kind,turn,open,addonId,tableMounted); }
     public java.util.Set<BlockPos> occupiedCells(BlockPos anchor) {
         var cells=new java.util.LinkedHashSet<BlockPos>();
         for(int x=0;x<width();x++)for(int z=0;z<depth();z++)for(int y=0;y<height();y++) {
@@ -62,6 +71,7 @@ public record RaftPiece(Kind kind, int rotation, boolean open, String addonId) {
     }
     public RaftPiece {
         java.util.Objects.requireNonNull(kind);java.util.Objects.requireNonNull(addonId);
+        if(tableMounted && !kind.tableDecoration())throw new IllegalArgumentException("Only tabletop ornaments can be table mounted");
         if(kind!=Kind.ADDON && !addonId.isEmpty() || kind==Kind.ADDON && !addonId.isEmpty()
                 && dev.raftocean.api.RaftBuildables.find(addonId).isEmpty()) {
             throw new IllegalArgumentException("Unknown raft addon: "+addonId);
@@ -74,6 +84,8 @@ public record RaftPiece(Kind kind, int rotation, boolean open, String addonId) {
     public List<AABB> boxes(BlockPos pos) {
         List<AABB> boxes = new ArrayList<>();
         switch (kind) {
+            case CABIN_BED, DOUBLE_BED, FLOOR_LAMP, TABLE_LAMP, WOODEN_CHAIR, DINING_TABLE, SOFA, WOVEN_RUG, DECORATIVE_SHELF, POTTED_PALM,
+                    DECK_BENCH, COFFEE_TABLE, FLOWER_BOX, BOOK_STACK, CERAMIC_VASE, CHART_STAND, NAUTICAL_SCREEN, CANVAS_CANOPY, SIDE_TABLE, DISPLAY_TABLE -> boxes.addAll(RaftFurniture.geometry(kind));
             case ADDON -> boxes.addAll(addonId.isEmpty()?List.of(new AABB(-.5,0,-.5,.5,1,.5)):addon().geometry());
             case WINDOW_WALL -> {
                 boxes.add(new AABB(-.5,0,-.5,.5,.3,-.375));
@@ -293,6 +305,13 @@ public record RaftPiece(Kind kind, int rotation, boolean open, String addonId) {
             return addon().collision().stream().map(this::rotate).map(box->box.move(pos.getX(),y,pos.getZ())).toList();
         }
         List<AABB> geometry = boxes(pos);
+        if(kind==Kind.WOVEN_RUG) { return List.of(); }
+        if(kind==Kind.CANVAS_CANOPY) { return geometry; }
+        if(kind.furniture()) {
+            // Continuous furniture bodies avoid catching feet between decorative legs.
+            AABB collider=geometry.getFirst();for(var box:geometry)collider=collider.minmax(box);
+            return List.of(collider);
+        }
         if (kind == Kind.COLLECTION_NET) {
             double y = geometry.getFirst().minY;
             return List.of(new AABB(pos.getX()-.5, y, pos.getZ()-.5, pos.getX()+.5, y+.125, pos.getZ()+.5));

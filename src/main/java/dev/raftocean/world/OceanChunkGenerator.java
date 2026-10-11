@@ -29,7 +29,7 @@ public final class OceanChunkGenerator extends FlatLevelSource {
             net.minecraft.world.level.levelgen.RandomState random,long seed) {
         // Also upgrades old Ocean World generator settings whose structure_overrides was empty.
         var originals=settings().structureOverrides().map(net.minecraft.core.HolderSet::stream).orElseGet(()->java.util.stream.Stream.empty());
-        var islands=java.util.stream.Stream.of("islands","ordinary_islands","exploration_islands","dive_sites")
+        var islands=java.util.stream.Stream.of("islands","ordinary_islands","exploration_islands","dive_sites","trading_outposts")
                 .map(name->(net.minecraft.core.Holder<net.minecraft.world.level.levelgen.structure.StructureSet>)sets.getOrThrow(
                         net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.STRUCTURE_SET,
                                 net.minecraft.resources.Identifier.fromNamespaceAndPath("raft_ocean",name))));

@@ -16,7 +16,7 @@ import java.util.WeakHashMap;
 
 /** Bounded native structure-location search, cached per player to avoid repeated chunk work. */
 public final class ReceiverItem extends Item {
-    public static final String[] DESTINATIONS={"glasswatch","garden_relay","echo_vault",
+    public static final String[] DESTINATIONS={"radio_tower","glasswatch","garden_relay","echo_vault",
             "ember_beacon","tideworks_haven","starfall_archive"};
     private record Signal(ServerLevel level,int stage,BlockPos origin,long until,BlockPos target) { }
     private final Map<Player,Signal> signals=new WeakHashMap<>();

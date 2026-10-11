@@ -531,6 +531,8 @@ public final class RaftEntity extends Entity {
             }
             target=selected.relative(switch(edge){case 0->net.minecraft.core.Direction.NORTH;case 1->net.minecraft.core.Direction.EAST;
                 case 2->net.minecraft.core.Direction.SOUTH;default->net.minecraft.core.Direction.WEST;});
+        }else if(kind!=null && kind.tableDecoration() && existing!=null && existing.kind().tableSurface()>=0 && face==net.minecraft.core.Direction.UP) {
+            target=snappingCell.above(existing.height());
         }else if(wallLike(kind)){
             boolean deck=existing==null || existing.kind().floor() || existing.kind()==RaftPiece.Kind.COLLECTION_NET;
             if(deck){target=snappingCell.above();rotation=player.isShiftKeyDown()?rotation:edge;}
@@ -545,6 +547,7 @@ public final class RaftEntity extends Entity {
             }
         }
         RaftPiece piece=foundation?null:new RaftPiece(kind,rotation,false,kind==RaftPiece.Kind.ADDON?dev.raftocean.api.RaftBuildables.forItem(held).orElseThrow().id().toString():"");
+        if(piece!=null && structure.isTableMount(target,piece))piece=piece.onTable();
         var occupied=structure.pieces().get(target);
         boolean cornerJoin=kind==RaftPiece.Kind.WALL && occupied!=null && occupied.kind()==RaftPiece.Kind.WALL
                 && Math.floorMod(rotation-occupied.rotation(),2)==1;
@@ -639,7 +642,7 @@ public final class RaftEntity extends Entity {
                     player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable(collected>0?"raft_ocean.net.collected":"raft_ocean.net.blocked",collected));
                     return InteractionResult.SUCCESS_SERVER;
                 }
-                if (kind == RaftPiece.Kind.BED) { return dev.raftocean.survival.RaftBeds.use(this, table, player); }
+                if (kind.bed()) { return dev.raftocean.survival.RaftBeds.use(this, table, player); }
                 if (kind.machine()) {
                     var cupResult = dev.raftocean.survival.CupTransfers.use(this, table, kind, player, hand);
                     if (cupResult != InteractionResult.PASS) { return cupResult; }

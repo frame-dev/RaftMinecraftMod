@@ -183,3 +183,9 @@ gameMode = "WORLD"
 
 [progression]
 	researchRequired = true
+
+[trading]
+	# Enable the native barter counter on trading islands.
+	enabled = true
+	# Shared stock refreshes on opening after this many world-game seconds.
+	restockSeconds = 1200

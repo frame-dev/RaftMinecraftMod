@@ -1,0 +1,300 @@
+{
+  "Recipes": [
+    {
+      "buy": {
+        "id": "minecraft:cod",
+        "count": 4
+      },
+      "sell": {
+        "id": "minecraft:wheat_seeds",
+        "count": 6
+      },
+      "maxUses": 12,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "minecraft:cod",
+        "count": 6
+      },
+      "sell": {
+        "id": "minecraft:pumpkin_seeds",
+        "count": 3
+      },
+      "maxUses": 12,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "minecraft:cod",
+        "count": 6
+      },
+      "sell": {
+        "id": "minecraft:melon_seeds",
+        "count": 3
+      },
+      "maxUses": 12,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "minecraft:cod",
+        "count": 8
+      },
+      "sell": {
+        "id": "minecraft:sugar_cane",
+        "count": 4
+      },
+      "maxUses": 12,
+      "rewardExp": false,
+      "xp": 0,
+      "buyB": {
+        "id": "raft_ocean:scrap",
+        "count": 2
+      }
+    },
+    {
+      "buy": {
+        "id": "minecraft:salmon",
+        "count": 4
+      },
+      "sell": {
+        "id": "minecraft:wheat_seeds",
+        "count": 6
+      },
+      "maxUses": 12,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "minecraft:salmon",
+        "count": 6
+      },
+      "sell": {
+        "id": "minecraft:pumpkin_seeds",
+        "count": 3
+      },
+      "maxUses": 12,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "minecraft:salmon",
+        "count": 6
+      },
+      "sell": {
+        "id": "minecraft:melon_seeds",
+        "count": 3
+      },
+      "maxUses": 12,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "minecraft:salmon",
+        "count": 8
+      },
+      "sell": {
+        "id": "minecraft:sugar_cane",
+        "count": 4
+      },
+      "maxUses": 12,
+      "rewardExp": false,
+      "xp": 0,
+      "buyB": {
+        "id": "raft_ocean:scrap",
+        "count": 2
+      }
+    },
+    {
+      "buy": {
+        "id": "minecraft:pufferfish",
+        "count": 2
+      },
+      "sell": {
+        "id": "minecraft:kelp",
+        "count": 6
+      },
+      "maxUses": 12,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "minecraft:tropical_fish",
+        "count": 3
+      },
+      "sell": {
+        "id": "minecraft:bamboo",
+        "count": 4
+      },
+      "maxUses": 12,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "raft_ocean:scrap",
+        "count": 6
+      },
+      "sell": {
+        "id": "raft_ocean:raft_railing",
+        "count": 4
+      },
+      "maxUses": 8,
+      "rewardExp": false,
+      "xp": 0,
+      "buyB": {
+        "id": "minecraft:gold_nugget",
+        "count": 3
+      }
+    },
+    {
+      "buy": {
+        "id": "raft_ocean:scrap",
+        "count": 6
+      },
+      "sell": {
+        "id": "raft_ocean:raft_window_wall",
+        "count": 2
+      },
+      "maxUses": 8,
+      "rewardExp": false,
+      "xp": 0,
+      "buyB": {
+        "id": "minecraft:gold_nugget",
+        "count": 3
+      }
+    },
+    {
+      "buy": {
+        "id": "raft_ocean:scrap",
+        "count": 6
+      },
+      "sell": {
+        "id": "raft_ocean:raft_archway",
+        "count": 2
+      },
+      "maxUses": 8,
+      "rewardExp": false,
+      "xp": 0,
+      "buyB": {
+        "id": "minecraft:gold_nugget",
+        "count": 3
+      }
+    },
+    {
+      "buy": {
+        "id": "raft_ocean:scrap",
+        "count": 6
+      },
+      "sell": {
+        "id": "raft_ocean:raft_curved_wall",
+        "count": 2
+      },
+      "maxUses": 8,
+      "rewardExp": false,
+      "xp": 0,
+      "buyB": {
+        "id": "minecraft:gold_nugget",
+        "count": 3
+      }
+    },
+    {
+      "buy": {
+        "id": "raft_ocean:scrap",
+        "count": 12
+      },
+      "sell": {
+        "id": "raft_ocean:reef_flippers",
+        "count": 1
+      },
+      "maxUses": 3,
+      "rewardExp": false,
+      "xp": 0,
+      "buyB": {
+        "id": "minecraft:salmon",
+        "count": 8
+      }
+    },
+    {
+      "buy": {
+        "id": "raft_ocean:scrap",
+        "count": 16
+      },
+      "sell": {
+        "id": "raft_ocean:metal_spear",
+        "count": 1
+      },
+      "maxUses": 3,
+      "rewardExp": false,
+      "xp": 0,
+      "buyB": {
+        "id": "minecraft:gold_ingot",
+        "count": 2
+      }
+    },
+    {
+      "buy": {
+        "id": "minecraft:gold_ingot",
+        "count": 2
+      },
+      "sell": {
+        "id": "raft_ocean:survey_log",
+        "count": 1
+      },
+      "maxUses": 4,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "minecraft:gold_ingot",
+        "count": 2
+      },
+      "sell": {
+        "id": "raft_ocean:refuge_log",
+        "count": 1
+      },
+      "maxUses": 4,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "minecraft:gold_ingot",
+        "count": 2
+      },
+      "sell": {
+        "id": "raft_ocean:orchard_log",
+        "count": 1
+      },
+      "maxUses": 4,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "minecraft:cod",
+        "count": 8
+      },
+      "sell": {
+        "id": "raft_ocean:shoreleaf_salve",
+        "count": 1
+      },
+      "maxUses": 6,
+      "rewardExp": false,
+      "xp": 0,
+      "buyB": {
+        "id": "raft_ocean:drift_leaf",
+        "count": 4
+      }
+    }
+  ]
+}

@@ -1,5 +1,19 @@
 # Raft Ocean
 
+Version 0.11.40 makes [every island type larger](docs/LARGER_ISLANDS.md): ordinary resource islands span 33–161 blocks, exploration islands 97, trading outposts 129, and story islands 113–193. Buildings, loot, puzzles and the open-ended story retain their scale and progression. Extra shores and vegetation expand the resource islands, and spacing checks account for the larger footprints. New sizes appear in newly generated terrain. Install 0.11.40 on every client and the server.
+
+Version 0.11.38 adds [larger story islands with more exploration](docs/STORY_ISLAND_EXPLORATION.md): seven 81–129-block templates with irregular coastlines, coves, wooded slopes, tidal pools, new reefs and 28 optional side areas. Connected trails reach supply shelters, garden ruins, lookouts and stone grottoes. Main journals, puzzles and the open ending remain intact. New layouts appear in newly generated terrain. Install 0.11.38 on every client and the server.
+
+Version 0.11.37 makes [story islands rarer and expands the open-ended voyage](docs/STORY_REVISION.md). Seven matching English/German journals connect the crew's journey through recurring objects, clearer destination clues and an unresolved eastern transmission. Story candidate density drops by about 68% in new terrain; other island pools retain their placement. Install 0.11.37 on every client and the server.
+
+Version 0.11.36 adds [tables with placeable tabletop decorations](docs/TABLETOP_DECORATIONS.md): a 1×1 side table and 2×1 display table, plus mounting support on existing dining and coffee tables. Lamps, books, vases, palms, charts and flower boxes snap to the top and stay attached when the raft moves or reloads. Install 0.11.36 on every client and the server.
+
+Version 0.11.35 adds [eight deck decorations](docs/DECK_DECORATIONS.md): bench, coffee table, flower box, book stack, ceramic vase, chart stand, nautical divider and striped canopy. All have original custom models and crafting recipes, with rotated footprint checks and open canopy collision. Install 0.11.35 on every client and the server.
+
+Version 0.11.34 adds [cabin furniture](docs/CABIN_FURNITURE.md): ten original furnishings including 1×2 and 2×2 beds, lamps, sofa, dining table, chair, rug, shelf and potted palm. Larger pieces reserve their entire footprint; beds retain moving-home behavior and lamps visually light nearby raft surfaces. Install 0.11.34 on every client and the server.
+
+Version 0.11.33 adds [trading outposts and island exploration routes](docs/TRADING_OUTPOSTS.md): two coastal markets with 20 data-driven barter offers, shared saved stock, optional receiver signals and configurable restocking. Twenty-one land islands gain coastal landings, paths, stairs and route lighting. New terrain appears in unexplored chunks; the story stays open-ended. Install 0.11.33 on every client and the server.
+
 Version 0.11.32 adds [underwater expeditions, branching islands and crew features](docs/EXPEDITIONS_AND_CREW.md): four flooded dive sites, three resource islands, original journals, optional receiver channels, saved crew roles, shared research and timed teammate rescue. New locations generate in unexplored Ocean World chunks; the story remains open-ended. Install 0.11.32 on every client and the server.
 
 Version 0.11.31 adds [optional mod compatibility](docs/MOD_COMPATIBILITY.md): shared crafting/research material tags, exported iron plates/copper wire, rare mod-resource ocean salvage, standard NeoForge energy item charging and lazy optional station adapter registration. Matching mod jars can be added to `compat-mods/` for development runs. Foreign moving machines require dedicated adapters; older Minecraft jars cannot load on 26.3.
