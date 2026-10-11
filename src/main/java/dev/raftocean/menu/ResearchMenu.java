@@ -45,6 +45,7 @@ public final class ResearchMenu extends AbstractContainerMenu {
     public int state(int topic){return data.get(topic);}
     public boolean materialKnown(int material){return data.get(MATERIAL_START+material)==1;}
     public int inputState(){return data.get(INPUT_STATE);}
+    public Player owner(){return owner;}
     @Override public boolean stillValid(Player player){
         return raft==null?player==owner:player==owner && RaftStationMenus.valid(raft,pos,RaftPiece.Kind.RESEARCH_TABLE,player);
     }

@@ -245,6 +245,8 @@
   "raft_ocean.research.topic.mapping": "Navigationswerkstatt",
   "raft_ocean.research.description.mapping": "Materialien: Bretter, Glas, Pflanzenfaser",
   "raft_ocean.research.learn": "Lernen",
+  "raft_ocean.research.free": "Kostenlos",
+  "raft_ocean.research.free.help": "Keine Materialforschung erforderlich",
   "raft_ocean.research.materials": "Materialien",
   "raft_ocean.research.recipes": "Rezepte",
   "raft_ocean.research.input": "Material",

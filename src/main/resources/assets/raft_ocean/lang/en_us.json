@@ -378,6 +378,8 @@
   "raft_ocean.research.topic.mapping": "Navigation workshop",
   "raft_ocean.research.description.mapping": "Materials: Planks, Glass, Plant fiber",
   "raft_ocean.research.learn": "Learn",
+  "raft_ocean.research.free": "Free",
+  "raft_ocean.research.free.help": "No material study required",
   "raft_ocean.research.materials": "Materials",
   "raft_ocean.research.recipes": "Recipes",
   "raft_ocean.research.input": "Sample",

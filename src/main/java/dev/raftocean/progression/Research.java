@@ -52,10 +52,23 @@ public final class Research {
         if(player.level().isClientSide() || material<0 || materialKnown(player,material)){return false;}
         sample.shrink(1);player.setData(MATERIALS,player.getData(MATERIALS)|1<<material);dev.raftocean.crew.CrewAccess.publish(player);return true;
     }
+    private static int requiredMaterialsMask(int topic){
+        if(topic<0 || topic>=TOPICS.length){return 0;}
+        int mask=TOPICS[topic].materials();
+        return mask<0?0:mask;
+    }
+    public static int requiredMaterialCount(int topic){
+        return Integer.bitCount(requiredMaterialsMask(topic));
+    }
+    public static int knownMaterialCount(Player player,int topic){
+        if(topic<0 || topic>=TOPICS.length){return 0;}migrate(player);
+        return Integer.bitCount(player.getData(MATERIALS)&requiredMaterialsMask(topic));
+    }
     public static int state(Player player,int topic){
         if(topic<0 || topic>=TOPICS.length){return -1;}migrate(player);
         if((player.getData(KNOWLEDGE)&1<<topic)!=0){return 2;}
-        return (player.getData(MATERIALS)&TOPICS[topic].materials())==TOPICS[topic].materials()?1:0;
+        int required=requiredMaterialsMask(topic);
+        return required==0 || (player.getData(MATERIALS)&required)==required?1:0;
     }
     public static boolean study(Player player,int topic){
         if(player.level().isClientSide() || state(player,topic)!=1){return false;}

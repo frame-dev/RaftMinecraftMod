@@ -40,8 +40,11 @@ public final class ResearchScreen extends AbstractContainerScreen<ResearchMenu> 
         for(int row=0;row<6;row++){
             int index=page*6+row;rows[row].visible=!materials && index<count();
             if(rows[row].visible){int state=menu.state(index);rows[row].active=state==1;
-                rows[row].setMessage(Component.translatable(state==2?"raft_ocean.research.known":"raft_ocean.research.learn"));
-                rows[row].setTooltip(Tooltip.create(Component.translatable("raft_ocean.research.description."+Research.TOPICS[index].id())));}
+                String key=state==2?"raft_ocean.research.known":(Research.requiredMaterialCount(index)==0?"raft_ocean.research.free":"raft_ocean.research.learn");
+                rows[row].setMessage(Component.translatable(key));
+                String tooltip=Research.requiredMaterialCount(index)==0?Component.translatable("raft_ocean.research.description."+Research.TOPICS[index].id()).getString()+"\n"+Component.translatable("raft_ocean.research.free.help").getString():Component.translatable("raft_ocean.research.description."+Research.TOPICS[index].id()).getString();
+                rows[row].setTooltip(Tooltip.create(Component.literal(tooltip)));
+            }
         }
         super.extractRenderState(graphics,x,y,partial);
     }
