@@ -11,6 +11,10 @@ public final class MachineVisualLayout {
     public static final double VESSEL_INNER_RADIUS = .425;
     public static final double FILL_RADIUS = .405;
     private MachineVisualLayout() { }
+    public static AABB detail(AABB bounds, double x, double y, double z, double X, double Y, double Z) {
+        return new AABB(bounds.minX + x * bounds.getXsize(), bounds.minY + y * bounds.getYsize(), bounds.minZ + z * bounds.getZsize(),
+                bounds.minX + X * bounds.getXsize(), bounds.minY + Y * bounds.getYsize(), bounds.minZ + Z * bounds.getZsize());
+    }
     public static AABB canonicalBox(AABB mounted,Vec3 pivot,float mount){
         return RaftTransform.bounds(mounted.move(-pivot.x,-pivot.y,-pivot.z),-mount).move(pivot);
     }

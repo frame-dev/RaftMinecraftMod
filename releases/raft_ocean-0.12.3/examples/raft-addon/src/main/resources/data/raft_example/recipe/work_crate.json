@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:oak_planks",
+    "minecraft:oak_planks",
+    "raft_ocean:scrap_fasteners"
+  ],
+  "result": {
+    "id": "raft_example:work_crate"
+  }
+}

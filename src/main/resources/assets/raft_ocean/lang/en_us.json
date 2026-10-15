@@ -690,5 +690,21 @@
   "block.raft_ocean.display_side_table": "Cabin Side Table",
   "item.raft_ocean.raft_display_table": "Wide Display Table",
   "block.raft_ocean.station_display_table": "Wide Display Table",
-  "block.raft_ocean.display_display_table": "Wide Display Table"
+  "block.raft_ocean.display_display_table": "Wide Display Table",
+  "raft_ocean.net.empty": "This net is empty",
+  "raft_ocean.net.full": "Inventory full — cargo remains in the net",
+  "raft_ocean.net.partial": "Collected %s items; %s remain in the net",
+  "raft_ocean.ui.status.recipe": "No matching recipe. Check ingredients.",
+  "raft_ocean.ui.recipe_tip": "Match the machine's ingredients. With JEI, click this meter to browse recipes.",
+  "raft_ocean.nav.reverse_tip": "Reverse thrust without rotating the raft. The engine arrow shows its push direction.",
+  "raft_ocean.nav.adjust_tip": "Small steps give finer control. Sails change thrust direction; the wheel turns the hull.",
+  "raft_ocean.harvest.collected": "Collected %s finished items",
+  "raft_ocean.harvest.partial": "Collected %s items; %s remain in the machine",
+  "raft_ocean.harvest.full": "Inventory full — finished items remain in the machine",
+  "raft_ocean.harvest.empty": "No finished items to collect",
+  "raft_ocean.hint.machine": "Sneak + use with an empty hand: collect finished items",
+  "raft_ocean.hint.net": "Sneak + use with an empty hand: collect net cargo",
+  "raft_ocean.hint.stash": "Sneak + use with an empty hand: stash matching backpack items",
+  "raft_ocean.config.building.quickMachineHarvest": "Quick machine harvest",
+  "raft_ocean.config.interactionHints": "Interaction hints"
 }

@@ -20,6 +20,7 @@ import net.minecraft.world.phys.Vec3;
 
 /** Cosmetic moving parts share the authoritative hull frame; colliders stay stable. */
 public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderState> {
+    private final java.util.Map<RaftEntity, java.util.Map<BlockPos, MachineRotor>> machineRotors = new java.util.WeakHashMap<>();
     private record Channel(BlockPos pos, String name) { }
     private final java.util.Map<RaftEntity, java.util.Map<Channel, Transition>> transitions = new java.util.WeakHashMap<>();
     private static final class Flywheel {
@@ -72,6 +73,9 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
         double time = entity.tickCount + partialTick;
         var previous = transitions.get(entity);
         if (previous != null) { previous.keySet().removeIf(channel -> !entity.pieces().containsKey(channel.pos)); }
+        var oldRotors = machineRotors.get(entity);
+        if (oldRotors != null) { oldRotors.keySet().removeIf(pos -> !entity.pieces().containsKey(pos)
+                || entity.pieces().get(pos).kind() != RaftPiece.Kind.COOKING_POT && entity.pieces().get(pos).kind() != RaftPiece.Kind.BIOREFINER); }
         var oldEngines=engines.get(entity);
         if(oldEngines!=null){oldEngines.keySet().removeIf(pos->!entity.pieces().containsKey(pos)
                 || entity.pieces().get(pos).kind()!=RaftPiece.Kind.ENGINE && entity.pieces().get(pos).kind()!=RaftPiece.Kind.GRINDSTONE
@@ -250,6 +254,11 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
         boolean effects=effectRange>0 && viewer!=null && viewer.position().distanceToSqr(machineWorld)<=effectRange*effectRange;
         var modelBounds=MachineVisualLayout.envelope(entity.pieceBoxes(pos,piece.withRotation(0))).move(-pivot.x,-pivot.y,-pivot.z);
         float mount=piece.rotation()*90;
+        float rotor = 0;
+        if (kind == RaftPiece.Kind.COOKING_POT || kind == RaftPiece.Kind.BIOREFINER) {
+            rotor = machineRotors.computeIfAbsent(entity, key -> new java.util.HashMap<>())
+                    .computeIfAbsent(pos, key -> new MachineRotor()).update(time, active, kind == RaftPiece.Kind.BIOREFINER ? 2 : 3);
+        }
         var water=ModContent.MACHINE_WATER.get().defaultBlockState();
         var steam=ModContent.MACHINE_STEAM.get().defaultBlockState();
         var food=ModContent.MACHINE_FOOD.get().defaultBlockState();
@@ -274,6 +283,25 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
         if(kind==RaftPiece.Kind.BIOFUEL_GENERATOR && active>.01) {
             double glow=.025+.012*Math.sin(time*.25);
             machinePart(entity,state,new AABB(-.16,.76,-.17,-.16+glow,.79,-.14),grain,pivot,mount,0);
+        }
+        if (kind == RaftPiece.Kind.BIOREFINER && (active > .01 || machine.progress() > 0)) {
+            var contents = MachineVisualLayout.detail(modelBounds, .27,.62,.27,.73,.635,.73);
+            machinePart(entity,state,contents,stem,pivot,mount,0);
+            var shaft = MachineVisualLayout.detail(modelBounds,.485,.63,.485,.515,.98,.515);
+            machinePart(entity,state,shaft,ModContent.RAFT_DECK.get().defaultBlockState(),pivot,mount,0);
+            var blade = MachineVisualLayout.detail(modelBounds,.28,.645,.48,.72,.67,.52);
+            // Rotate about the chamber center, then install in the mounted hull frame.
+            Vec3 center = modelBounds.getCenter();
+            Vec3 rotorPivot = pivot.add(center.x,0,center.z);
+            machinePart(entity,state,blade.move(-center.x,0,-center.z),ModContent.RAFT_DECK.get().defaultBlockState(),rotorPivot,mount,rotor);
+        }
+        if (kind == RaftPiece.Kind.DRYING_RACK && (machine.progress() > 0 || active > .01 || machine.ready())) {
+            var brick = machine.ready() ? net.minecraft.world.level.block.Blocks.TERRACOTTA.defaultBlockState()
+                    : net.minecraft.world.level.block.Blocks.CLAY.defaultBlockState();
+            for (int index = 0; index < 2; index++) {
+                double x=.14+index*.40;
+                machinePart(entity,state,MachineVisualLayout.detail(modelBounds,x,.735,.27,x+.30,1.00,.73),brick,pivot,mount,0);
+            }
         }
         if(kind==RaftPiece.Kind.PLANTER && machine.crop()!=0) {
             boolean aquatic=machine.crop()==6;
@@ -319,7 +347,7 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
                 double surface=MachineVisualLayout.waterHeight(modelBounds,fill,0),top=modelBounds.maxY+.12;
                 var stirrer=ModContent.RAFT_DECK.get().defaultBlockState();
                 machinePart(entity,state,new AABB(-.016,surface+.015,-.016,.016,top,.016),stirrer,pivot,mount,0);
-                machinePart(entity,state,new AABB(-.19,surface+.015,-.025,.19,surface+.045,.025),stirrer,pivot,mount,(float)(time*3*active));
+                machinePart(entity,state,new AABB(-.19,surface+.015,-.025,.19,surface+.045,.025),stirrer,pivot,mount,rotor);
             }
             if(effects && kind==RaftPiece.Kind.RAIN_COLLECTOR && active>.01) {
                 for(int drop=0;drop<3;drop++) {
@@ -376,8 +404,15 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
         var joined = new java.util.HashSet<java.util.List<Integer>>();
         int[][] sides = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         for (int[] side : sides) {
-            var other = entity.pieces().get(pos.offset(side[0], 0, side[1]));
-            if (other != null && dev.raftocean.survival.Automation.member(other.kind(), network)) { joined.add(java.util.List.of(side[0], side[1])); }
+            var neighbor = pos.offset(side[0], 0, side[1]);
+            var other = entity.pieces().get(neighbor);
+            var utility = switch(network) {
+                case POWER -> dev.raftocean.api.RaftUtility.POWER;
+                case WATER -> dev.raftocean.api.RaftUtility.FRESH_WATER;
+                case FUEL -> dev.raftocean.api.RaftUtility.BIOFUEL;
+            };
+            if (other != null && dev.raftocean.survival.Automation.member(other.kind(), network)
+                    || dev.raftocean.api.RaftMachineUtilities.acceptsAt(entity,neighbor,utility)) { joined.add(java.util.List.of(side[0], side[1])); }
         }
         int turns = piece.rotation();
         String variant = "";

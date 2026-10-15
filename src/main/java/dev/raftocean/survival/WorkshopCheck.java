@@ -28,6 +28,18 @@ public final class WorkshopCheck {
         for(String name:names) {
             require(level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Identifier.fromNamespaceAndPath("raft_ocean",name))).isPresent(),"Workshop recipe loaded: "+name);checks++;
         }
+        var visualRaft=SurvivalCheck.create(level,RaftPiece.Kind.BIOREFINER);
+        try {
+            var visual=visualRaft.machines();
+            visual.accept("1,1,0,500,1,0,0,0,0");
+            var before=visual.at(CELL);
+            for(String invalid:List.of("1,1,0,600,1,0,0,0,0;broken", "1,1,0,600,1,0,0,0,0;1,1,0,100,0,0,0,0,0",
+                    "1,1,0,notnumber,1,0,0,0,0", "1,1,0,600,2,0,0,0,0")) {
+                visual.accept(invalid);
+                require(visual.at(CELL).equals(before),"Malformed animation frame preserves prior working/progress state"); checks++;
+            }
+            visual.accept("");require(visual.at(CELL).equals(MachineAnimationState.Visual.EMPTY),"Valid empty animation frame clears removed machines");checks++;
+        } finally {visualRaft.discard();}
         checks+=craft(level,"damp_brick",2,Items.CLAY_BALL,Items.CLAY_BALL,Items.SAND);
         checks+=craft(level,"metal_plate",2,Items.IRON_INGOT,Items.IRON_INGOT,dev.raftocean.registry.ModContent.SCRAP_FASTENERS.get());
         checks+=craft(level,"copper_wire",4,Items.COPPER_INGOT,dev.raftocean.registry.ModContent.PLANT_FIBER.get());
@@ -74,7 +86,9 @@ public final class WorkshopCheck {
             var parser=new MachineAnimationState(planter);parser.accept("1,1,0,99999,1,8,-3,1,99");
             require(parser.at(CELL).progress()==1000 && parser.at(CELL).rawWater()==4 && parser.at(CELL).cleanWater()==0 && parser.at(CELL).crop()==6,"Animation snapshot numbers are bounded");checks++;
             parser.accept("bad,data;1,1,0,100,0,0,1,0,2");
-            require(parser.at(CELL).crop()==2 && !parser.at(CELL).working(),"Malformed snapshot entries do not corrupt valid cells");checks++;
+            require(parser.at(CELL).crop()==6 && parser.at(CELL).working(),"Incomplete snapshot preserves the previous complete bounded frame");checks++;
+            parser.accept("1,1,0,100,0,0,1,0,2");
+            require(parser.at(CELL).crop()==2 && !parser.at(CELL).working(),"Complete replacement frame updates all machine fields");checks++;
         } finally {planter.storage(CELL).clearContent();planter.discard();}
         var sync=new net.neoforged.neoforge.event.OnDatapackSyncEvent(level.getServer().getPlayerList(),null);
         ProcessingRecipe.onSync(sync);

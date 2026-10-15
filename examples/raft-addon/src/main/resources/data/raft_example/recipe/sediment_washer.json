@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "ICI",
+    "PPP"
+  ],
+  "key": {
+    "P": "minecraft:oak_planks",
+    "I": "minecraft:iron_ingot",
+    "C": "minecraft:copper_ingot"
+  },
+  "result": {
+    "id": "raft_example:sediment_washer",
+    "count": 1
+  }
+}

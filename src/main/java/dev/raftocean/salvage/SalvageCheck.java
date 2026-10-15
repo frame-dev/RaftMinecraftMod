@@ -138,13 +138,19 @@ public final class SalvageCheck {
         return checks;
     }
 
+    private static boolean settle(DebrisStream state, Vec3 origin, Vec3 course, long readyAt) {
+        for (long tick = readyAt - 180; tick < readyAt; tick += 20) {
+            if (state.update(origin, course, tick)) { return false; }
+        }
+        return state.update(origin, course, readyAt);
+    }
+
     private static int streamChecks(ServerLevel level, Vec3 origin) {
         int checks = 0;
         for (Vec3 direction : List.of(new Vec3(1, 0, 0), new Vec3(-1, 0, 0), new Vec3(0, 0, 1),
                 new Vec3(0, 0, -1), new Vec3(1, 0, 1).normalize())) {
             var state = new DebrisStream();
-            require(!state.update(origin, direction, 0) && !state.update(origin, direction, 199)
-                    && state.update(origin, direction, 200), "New corridor settles for ten seconds"); checks++;
+            require(!state.update(origin, direction, 0) && settle(state, origin, direction, 200), "New corridor settles for ten seconds"); checks++;
             Vec3 debris = DebrisStream.spawnPosition(origin, direction, 20, 3);
             Vec3 relative = debris.subtract(origin);
             require(Math.abs(relative.dot(direction) - 20) < 1.0E-10 && DebrisStream.incoming(relative, direction, 8),
@@ -159,20 +165,28 @@ public final class SalvageCheck {
             require(!DebrisStream.incoming(relative, direction, 8), "Passed debris frees incoming corridor capacity"); checks++;
             require(state.update(origin.add(direction.scale(1)), direction, 220), "Normal travel does not restart spawning delay"); checks++;
             require(!state.update(origin.add(direction.scale(1)), direction.scale(-1), 240)
-                    && !state.update(origin.add(direction.scale(2)), direction.scale(-1), 439)
-                    && state.update(origin.add(direction.scale(2)), direction.scale(-1), 440), "Reversed course waits before new corridor"); checks++;
+                    && settle(state, origin.add(direction.scale(2)), direction.scale(-1), 440), "Reversed course waits before new corridor"); checks++;
             require(!state.update(origin.add(100, 0, 100), direction.scale(-1), 460), "Large displacement pauses new debris"); checks++;
         }
         require(DebrisStream.matchesDrift(new Vec3(-.018, 0, 0), new Vec3(1, 0, 0))
                 && !DebrisStream.matchesDrift(new Vec3(.018, 0, 0), new Vec3(1, 0, 0)),
                 "Old opposite-flow debris does not block new corridor spawning"); checks++;
+        var resumed = new DebrisStream();
+        resumed.update(origin, new Vec3(1, 0, 0), 0);
+        require(settle(resumed, origin, new Vec3(1, 0, 0), 200), "Continuous occupied travel settles normally"); checks++;
+        resumed.pause(220);
+        require(!resumed.update(origin, new Vec3(1, 0, 0), 240)
+                && settle(resumed, origin, new Vec3(1, 0, 0), 440), "Anchor release waits for a fresh debris corridor"); checks++;
+        require(!resumed.update(origin, new Vec3(1, 0, 0), 800)
+                && settle(resumed, origin, new Vec3(1, 0, 0), 1000), "Long unoccupied gap restarts settling instead of spawning immediately"); checks++;
         var gradual = new DebrisStream();
         gradual.update(origin, new Vec3(1, 0, 0), 0);
+        settle(gradual, origin, new Vec3(1, 0, 0), 200);
         for (int degrees = 5; degrees <= 30; degrees += 5) {
             double radians = Math.toRadians(degrees);
             gradual.update(origin, new Vec3(Math.cos(radians), 0, Math.sin(radians)), 200 + degrees);
         }
-        require(!gradual.update(origin, new Vec3(Math.cos(Math.PI / 6), 0, Math.sin(Math.PI / 6)), 300),
+        require(!gradual.update(origin, new Vec3(Math.cos(Math.PI / 6), 0, Math.sin(Math.PI / 6)), 270),
                 "Gradual cumulative turn resets settling delay"); checks++;
         var raft = new RaftEntity(ModContent.RAFT.get(), level); raft.setPos(origin);
         var debris = DebrisEntity.create(level, DebrisEntity.Kind.PLANK, origin.add(20, 0, 0));

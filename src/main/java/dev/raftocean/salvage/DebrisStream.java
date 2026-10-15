@@ -11,13 +11,21 @@ public final class DebrisStream {
     private Vec3 corridorCourse;
     private Vec3 lastPosition;
     private long readyAt;
+    private long lastUpdate = Long.MIN_VALUE;
+
+    public void pause(long now) {
+        readyAt = now + SETTLE_TICKS;
+        lastUpdate = now;
+        lastPosition = null;
+    }
 
     public boolean update(Vec3 position, Vec3 course, long now) {
         Vec3 desired = horizontal(course);
         if (desired.lengthSqr() < 1.0E-6) {
             desired = forward == null ? horizontal(new Vec3(.02, 0, .008)).normalize() : forward;
         } else { desired = desired.normalize(); }
-        if (forward == null || desired.dot(corridorCourse) < TURN_COSINE
+        if (forward == null || lastPosition == null || now < lastUpdate || now - lastUpdate > 40
+                || desired.dot(corridorCourse) < TURN_COSINE
                 || horizontal(position.subtract(lastPosition)).lengthSqr() > 64) {
             readyAt = now + SETTLE_TICKS;
             forward = desired; corridorCourse = desired;
@@ -25,6 +33,7 @@ public final class DebrisStream {
         // Small turns track the current heading without repeatedly restarting the delay.
         forward = desired;
         lastPosition = position;
+        lastUpdate = now;
         return now >= readyAt;
     }
 

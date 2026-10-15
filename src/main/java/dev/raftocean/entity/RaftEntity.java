@@ -363,7 +363,11 @@ public final class RaftEntity extends Entity {
         return bounds;
     }
 
+    private long layoutRevision;
+    public long layoutRevision() { return layoutRevision; }
+
     private void rebuildLayout() {
+        layoutRevision++;
         colliderCache.clear();
         worldCollisionCache=null;
         blocks.clear();
@@ -657,6 +661,11 @@ public final class RaftEntity extends Entity {
         }
         if (!add && buildKind == null) {
             if(selectedPiece!=null && selectedPiece.kind()==RaftPiece.Kind.ADDON && !selectedPiece.addonId().isEmpty()) {
+                var context=machineContext(selected);
+                if(context.isPresent()) {
+                    var collected=dev.raftocean.api.RaftMachineMenus.quickHarvest(context.get(),player,hand);
+                    if(collected!=InteractionResult.PASS)return collected;
+                }
                 var result=selectedPiece.addon().interaction().use(this,selected,player,hand);
                 if(result!=InteractionResult.PASS)return result;
                 var machine=dev.raftocean.api.RaftBuildables.machine(selectedPiece.addonId());
@@ -672,11 +681,16 @@ public final class RaftEntity extends Entity {
                 }
                 if(kind==RaftPiece.Kind.COLLECTION_NET && player.isShiftKeyDown() && held.isEmpty()) {
                     int collected=dev.raftocean.salvage.NetHarvest.collect(this,table,player);
-                    player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable(collected>0?"raft_ocean.net.collected":"raft_ocean.net.blocked",collected));
+                    int remaining=dev.raftocean.salvage.NetHarvest.remaining(this,table);
+                    String key=collected>0?(remaining>0?"raft_ocean.net.partial":"raft_ocean.net.collected")
+                            :remaining>0?"raft_ocean.net.full":"raft_ocean.net.empty";
+                    player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable(key,collected,remaining));
                     return InteractionResult.SUCCESS_SERVER;
                 }
                 if (kind.bed()) { return dev.raftocean.survival.RaftBeds.use(this, table, player); }
                 if (kind.machine()) {
+                    var harvestResult = dev.raftocean.survival.MachineHarvest.use(this, table, kind, player, hand);
+                    if (harvestResult != InteractionResult.PASS) { return harvestResult; }
                     var cupResult = dev.raftocean.survival.CupTransfers.use(this, table, kind, player, hand);
                     if (cupResult != InteractionResult.PASS) { return cupResult; }
                 }

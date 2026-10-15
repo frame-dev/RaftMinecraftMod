@@ -292,3 +292,16 @@ Version 0.11.6 adds [prepared meal bonuses and their duration settings](MEALS_AN
 
 
 Version 0.11.8 adds an `[automation]` section for network enablement, biofuel engine duration, generator yield, purifier energy/time, and sprinkler radius/energy. See [Raft automation](RAFT_AUTOMATION.md) for all seven settings, recipes, routing and capacities.
+
+
+## Quick collection and interaction hints (0.12.6)
+
+`building.quickMachineHarvest` is a synced server boolean, default `true`.
+Sneak-use with an empty hand collects completed machine output slots, leaving
+ingredients/fuel/batteries and inventory overflow untouched. Disable to use
+ordinary menus for that gesture. It does not drain water reservoirs.
+
+`interactionHints` is a client boolean, default `true`, in the separate client
+configuration. It controls short wrapped machine/net/stash prompts under the
+crosshair. Hidden HUD, open screens and held items suppress these prompts.
+See [quick machine collection](QUICK_MACHINE_HARVEST.md) for behavior/tests.

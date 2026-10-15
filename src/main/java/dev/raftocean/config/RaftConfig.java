@@ -19,6 +19,7 @@ public final class RaftConfig {
     public static final ModConfigSpec.EnumValue<Mode> MODE = B.comment("WORLD follows Minecraft difficulty; other values override mod creature behavior. Minecraft Peaceful always prevents hostile behavior.").translation("raft_ocean.config.gameMode").defineEnum("gameMode",Mode.WORLD);
     public static final ModConfigSpec.IntValue FOUNDATION_LIMIT = integer("building.foundationLimit",1024,9,1024,"Maximum foundations placed per raft; lowering this preserves existing builds. Native save/network ceiling is 1024.");
     public static final ModConfigSpec.BooleanValue REINFORCEMENT = bool("building.foundationReinforcement",true,"Allow metal braces to armor foundations against shark damage. Turning this off preserves existing armor but disables protection.");
+    public static final ModConfigSpec.BooleanValue QUICK_HARVEST = bool("building.quickMachineHarvest",true,"Sneak-use machines with an empty hand to collect only completed outputs. Excess remains in the machine.");
     public static final ModConfigSpec.BooleanValue QUICK_STASH = bool("building.quickStash",true,"Sneak-click chests/barrels with an empty hand to store matching backpack items. Hotbar and equipment are preserved.");
     public static final ModConfigSpec.BooleanValue PEACEFUL_THIRST = bool("survival.thirstInPeaceful",true,"Allow thirst drain in Peaceful. Dehydration damage is always disabled there; false restores hydration.");
     public static final ModConfigSpec.BooleanValue THIRST = bool("survival.thirstEnabled", true, "Enable hydration drain and dehydration damage.");
@@ -87,15 +88,16 @@ public final class RaftConfig {
     public static final ModConfigSpec.IntValue PLANT_LIGHT = integer("survival.planterMinimumLight",9,0,15,"Minimum light for both planters; zero removes brightness requirement.");
     public static final ModConfigSpec.BooleanValue PLANT_SKY = bool("survival.plantersRequireOpenSky",true,"Require both planters to be uncovered by raft pieces; brightness is checked separately.");
     public static final ModConfigSpec.DoubleValue ENGINE_FUEL = decimal("navigation.engineFuelMultiplier",1,.1,4,"Engine fuel duration multiplier for newly consumed fuel.");
-    public static final ModConfigSpec.DoubleValue ENGINE_THRUST = decimal("navigation.engineThrustMultiplier",1,0,3,"Engine thrust multiplier; zero stops engines without consuming fuel. Speed cap still applies.");
-    public static final ModConfigSpec.DoubleValue SAIL_THRUST = decimal("navigation.sailThrustMultiplier",1,0,3,"Sail thrust multiplier; speed cap and wind alignment still apply.");
-    public static final ModConfigSpec.DoubleValue PADDLE_THRUST = decimal("navigation.paddleStrengthMultiplier",1,0,3,"Paddle impulse multiplier; zero disables strokes. Speed cap still applies.");
+    public static final ModConfigSpec.DoubleValue ENGINE_THRUST = decimal("navigation.engineThrustMultiplier",1,0,3,"Engine thrust multiplier (base 1.5 m/s); zero stops engines without consuming fuel. Speed cap still applies.");
+    public static final ModConfigSpec.DoubleValue SAIL_THRUST = decimal("navigation.sailThrustMultiplier",1,0,3,"Sail thrust multiplier (base 1.0 m/s at unit aligned wind); speed cap and wind alignment still apply.");
+    public static final ModConfigSpec.DoubleValue PADDLE_THRUST = decimal("navigation.paddleStrengthMultiplier",1,0,3,"Paddle impulse multiplier (base peak 1.8 m/s); zero disables strokes. Speed cap still applies.");
     public static final ModConfigSpec.BooleanValue MEAL_BONUSES = bool("survival.preparedMealBonuses",true,"Prepared bowl meals grant temporary level-one bonuses; false leaves their ordinary nutrition unchanged.");
     public static final ModConfigSpec.IntValue MEAL_DURATION = integer("survival.mealBonusTicks",2400,200,12000,"Duration of prepared meal bonuses; repeat meals refresh rather than stack effect strength.");
     public static final ModConfigSpec.BooleanValue ENERGY_ITEMS = bool("compatibility.energyItems",true,"Expose raft batteries through NeoForge energy capabilities and charge compatible single modded energy items in the raft charger. One charge unit equals one FE.");
     public static final ModConfigSpec SPEC = B.build();
     private static final ModConfigSpec.Builder C = new ModConfigSpec.Builder();
     public static final ModConfigSpec.BooleanValue NAV_HUD = C.translation("raft_ocean.config.navigationHud").define("navigationHud",true);
+    public static final ModConfigSpec.BooleanValue INTERACTION_HINTS = C.translation("raft_ocean.config.interactionHints").define("interactionHints",true);
     public static final ModConfigSpec.BooleanValue THIRST_HUD = C.translation("raft_ocean.config.thirstHud").define("thirstHud",true);
     public static final ModConfigSpec.IntValue EFFECT_DISTANCE = C.comment("Maximum distance in blocks for cosmetic machine bubbles, smoke, sparks and rain drops; zero disables them. Water, crops and food remain visible.").translation("raft_ocean.config.machineEffectDistance").defineInRange("machineEffectDistance",32,0,128);
     public static final ModConfigSpec CLIENT_SPEC = C.build();

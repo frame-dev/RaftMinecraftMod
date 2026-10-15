@@ -28,7 +28,7 @@ public final class AutomationCheck {
         var tank=new BlockPos(-1,1,0);var pipe=new BlockPos(0,1,0);var engine=new BlockPos(1,1,0);
         var waterTank=new BlockPos(-1,1,1);var waterPipe=new BlockPos(0,1,1);var planter=new BlockPos(1,1,1);
         var oceanCell=new BlockPos(1,100,-1);var previous=level.getBlockState(oceanCell);
-        boolean enabled=RaftConfig.AUTOMATION.get();
+        boolean enabled=RaftConfig.AUTOMATION.get();int biofuelTicks=RaftConfig.BIOFUEL_ENGINE_TICKS.get();
         try {
             RaftConfig.AUTOMATION.set(true);
             var refine=SurvivalCheck.create(level,RaftPiece.Kind.BIOREFINER);entities.add(refine);
@@ -74,8 +74,8 @@ public final class AutomationCheck {
             for(int i=0;i<5;i++){Automation.tick(raft);}
             require(raft.storage(c).cleanWater==1 && generator.energy>=0 && generator.fuelTicks>0,"Connected generator powers real water purification");checks++;
             require(motor.getItem(1).is(Automation.BIOFUEL.get()),"Fuel network supplies engine");checks++;
-            motor.enabled=true;raft.navigation().target(true);
-            require(motor.fuelCapacity==Math.clamp((int)(3200*RaftConfig.ENGINE_FUEL.get()),1,200000) && motor.fuelTicks==motor.fuelCapacity-1,"Engine burns biofuel like coal");checks++;
+            RaftConfig.BIOFUEL_ENGINE_TICKS.set(1234);motor.enabled=true;raft.navigation().target(true);
+            require(motor.fuelCapacity==Math.clamp((int)(1234*RaftConfig.ENGINE_FUEL.get()),1,200000) && motor.fuelTicks==motor.fuelCapacity-1,"Engine applies the configured canister duration and fuel multiplier");checks++;
             reservoir.cleanWater=64;generator.energy=1700;
             var saved=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());raft.saveWithoutId(saved);
             var restored=new RaftEntity(ModContent.RAFT.get(),level);entities.add(restored);
@@ -156,6 +156,6 @@ public final class AutomationCheck {
             require(irrigation.storage(tank).cleanWater==1 && irrigation.storage(engine).cleanWater==1,
                     "Sprinkler rotates irrigation between thirsty planters");checks++;
             return checks;
-        } finally {RaftConfig.AUTOMATION.set(enabled);level.setBlock(oceanCell,previous,3);entities.forEach(RaftEntity::discard);}
+        } finally {RaftConfig.BIOFUEL_ENGINE_TICKS.set(biofuelTicks);RaftConfig.AUTOMATION.set(enabled);level.setBlock(oceanCell,previous,3);entities.forEach(RaftEntity::discard);}
     }
 }

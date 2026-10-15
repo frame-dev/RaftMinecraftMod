@@ -43,7 +43,11 @@ public final class DebrisSpawning {
         }
         var ready = new java.util.LinkedHashMap<RaftEntity, DebrisStream>();
         for (RaftEntity raft : rafts) {
-            if (raft.navigation().anchored()) { continue; }
+            if (raft.navigation().anchored()) {
+                var paused = STREAMS.get(raft);
+                if (paused != null) { paused.pause(level.getGameTime()); }
+                continue;
+            }
             Vec3 course = DebrisStream.horizontal(raft.getDeltaMovement());
             if (course.lengthSqr() < 1.0E-6) { course = new Vec3(raft.getCurrentX(), 0, raft.getCurrentZ()); }
             DebrisStream stream = STREAMS.computeIfAbsent(raft, ignored -> new DebrisStream());

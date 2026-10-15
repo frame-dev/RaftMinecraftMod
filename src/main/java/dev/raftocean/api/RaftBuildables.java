@@ -6,9 +6,9 @@ import java.util.Optional;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
-/** API v2: register on both logical sides during common setup, using enqueueWork. */
+/** API v3: register on both logical sides during common setup, using enqueueWork. */
 public final class RaftBuildables {
-    public static final int API_VERSION=2;
+    public static final int API_VERSION=3;
     private static final Map<String,RaftMachineBehavior> MACHINES=new LinkedHashMap<>();
     private static final Map<String,RaftBuildable> TYPES=new LinkedHashMap<>();
     private RaftBuildables() { }
@@ -21,6 +21,10 @@ public final class RaftBuildables {
         java.util.Objects.requireNonNull(behavior);
         if(behavior.slots()<9 || behavior.slots()>54 || behavior.slots()%9!=0 || behavior.tickInterval()<1 || behavior.tickInterval()>1200)
             throw new IllegalArgumentException("Invalid machine inventory/tick interval: "+type.id());
+        java.util.Objects.requireNonNull(behavior.utilityInputs());
+        if(behavior.utilityInputs().stream().anyMatch(java.util.Objects::isNull)
+                || behavior.quickHarvestSlots().stream().anyMatch(slot->slot==null || slot<0 || slot>=behavior.slots()))
+            throw new IllegalArgumentException("Invalid machine utility/output declarations: "+type.id());
         register(type);MACHINES.put(type.id().toString(),behavior);
     }
     /** Optional adapters must defer resolving foreign classes and registries until their mod is loaded. */

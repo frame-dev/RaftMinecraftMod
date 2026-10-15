@@ -57,6 +57,7 @@ public final class FeaturePolishCheck {
             require(NetHarvest.collect(net,cell,player)==10 && player.getInventory().countItem(Items.OAK_PLANKS)==10
                     && net.storage(cell).getItem(0).isEmpty(),"Net harvest transfers exact counts without dropping loot");checks++;
             require(NetHarvest.collect(net,cell,player)==0,"Repeated net pickup cannot duplicate cargo");checks++;
+            require(NetHarvest.remaining(net,cell)==0,"Empty net feedback reports no cargo");checks++;
             for(int slot=0;slot<36;slot++){player.getInventory().setItem(slot,new ItemStack(Items.STONE,64));}
             player.getInventory().setItem(0,new ItemStack(Items.OAK_PLANKS,63));net.storage(cell).setItem(0,new ItemStack(Items.OAK_PLANKS,10));
             require(NetHarvest.collect(net,cell,player)==1 && net.storage(cell).getItem(0).getCount()==9
@@ -65,6 +66,8 @@ public final class FeaturePolishCheck {
                 player.getAbilities().instabuild=creative;
                 require(NetHarvest.collect(net,cell,player)==0 && net.storage(cell).getItem(0).getCount()==9,"Full inventory never destroys net cargo in either game mode");checks++;
             }
+            require(NetHarvest.remaining(net,cell)==9,"Partial/full pickup feedback retains the exact cargo count");checks++;
+            require(NetHarvest.remaining(net,cell.above())==0,"Stale net feedback does not create another inventory");checks++;
             player.getAbilities().instabuild=false;player.setPos(player.position().add(100,0,0));
             require(NetHarvest.collect(net,cell,player)==0 && net.storage(cell).getItem(0).getCount()==9,"Distant net pickup preserves cargo");checks++;
             player.getInventory().clearContent();player.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(SurvivalContent.SALT_WATER.get(),2));
@@ -76,6 +79,7 @@ public final class FeaturePolishCheck {
             purifier.discard();
             require(CupTransfers.use(purifier,cell,RaftPiece.Kind.PURIFIER,player,InteractionHand.MAIN_HAND)==InteractionResult.FAIL
                     && player.getMainHandItem().getCount()==2,"Removed station rejects cup use without losing items");checks++;
+            checks += qualityChecks(level);
             RaftConfig.MODE.set(RaftConfig.Mode.PEACEFUL);RaftConfig.BIRDS.set(true);planter.storage(cell).setItem(2,new ItemStack(Items.WHEAT,3));
             require(!OceanCreature.stealCrop(planter,cell) && planter.storage(cell).getItem(2).getCount()==3,"Direct theft transaction honors Peaceful");checks++;
         } finally {
@@ -85,4 +89,49 @@ public final class FeaturePolishCheck {
         }
         return checks;
     }
+    private static int qualityChecks(ServerLevel level) {
+        int checks = 0;
+        var cell = new BlockPos(1, 1, 0);
+        var chest = SurvivalCheck.create(level, RaftPiece.Kind.CHEST);
+        var grill = SurvivalCheck.create(level, RaftPiece.Kind.GRILL);
+        var pot = SurvivalCheck.create(level, RaftPiece.Kind.COOKING_POT);
+        try {
+            var pairs = dev.raftocean.menu.RaftChests.pairs(chest);
+            require(pairs == dev.raftocean.menu.RaftChests.pairs(chest), "Unchanged chest layout reuses its pairing map"); checks++;
+            chest.setPos(chest.position().add(10, 0, 0)); chest.setYRot(90);
+            require(pairs == dev.raftocean.menu.RaftChests.pairs(chest), "Hull motion does not rebuild raft-local chest pairs"); checks++;
+            var seed = net.minecraft.world.level.storage.TagValueOutput.createWithoutContext(net.minecraft.util.ProblemReporter.DISCARDING);
+            seed.putString("Structure", "0,1,0,CHEST,0,0;1,1,0,CHEST,0,0");
+            chest.load(net.minecraft.world.level.storage.TagValueInput.create(net.minecraft.util.ProblemReporter.DISCARDING, level.registryAccess(), seed.buildResult()));
+            var paired = dev.raftocean.menu.RaftChests.pairs(chest);
+            require(cell.equals(paired.get(new BlockPos(0, 1, 0))) && paired != pairs,
+                    "Reloading a changed layout rebuilds chest pairs"); checks++;
+            require(chest.removeStructuralPiece(cell) && dev.raftocean.menu.RaftChests.pairs(chest).isEmpty(),
+                    "Removing one chest invalidates the cached double chest"); checks++;
+            var storage = grill.storage(cell);
+            storage.setItem(0, new ItemStack(Items.STONE)); storage.setItem(1, new ItemStack(Items.OAK_PLANKS, 3));
+            SurvivalMachines.tick(grill);
+            require(storage.status.equals("recipe") && storage.getItem(0).getCount() == 1
+                    && storage.getItem(1).getCount() == 3 && storage.fuelTicks == 0,
+                    "Invalid grill recipe explains blockage without spending items or fuel"); checks++;
+            storage.setItem(0, ItemStack.EMPTY); SurvivalMachines.tick(grill);
+            require(storage.status.equals("supplies"), "Empty grill requests ingredients instead of reporting recipe failure"); checks++;
+            var ingredients = pot.storage(cell); ingredients.cleanWater = 1;
+            ingredients.setItem(0, new ItemStack(Items.STONE)); ingredients.setItem(1, new ItemStack(Items.CARROT));
+            ingredients.setItem(6, new ItemStack(Items.BOWL)); ingredients.setItem(3, new ItemStack(Items.OAK_PLANKS));
+            SurvivalMachines.tick(pot);
+            require(ingredients.status.equals("recipe") && ingredients.cleanWater == 1 && ingredients.fuelTicks == 0
+                    && ingredients.getItem(6).is(Items.BOWL), "Invalid multi-input recipe preserves water, bowl and fuel"); checks++;
+            var menu = new dev.raftocean.menu.SurvivalMenu(88,
+                    new FakePlayer(level, new GameProfile(UUID.randomUUID(), "QualityMenuCheck")).getInventory(), RaftPiece.Kind.COOKING_POT, ingredients);
+            require(menu.status().equals("recipe"), "Recipe failure is synchronized to machine UI"); checks++;
+        } finally {
+            for (var raft : List.of(chest, grill, pot)) {
+                raft.pieces().keySet().forEach(pos -> { var inventory = raft.storage(pos); if (inventory != null) { inventory.clearContent(); } });
+                raft.discard();
+            }
+        }
+        return checks;
+    }
+
 }

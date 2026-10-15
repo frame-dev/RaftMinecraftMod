@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+[[mods]]
+modId="raft_example"
+version="1.1.1"
+displayName="Raft Buildable Example"
+description="Work crate and persistent kelp dryer demonstrating Raft Ocean API v2."
+[[dependencies.raft_example]]
+modId="raft_ocean"
+type="required"
+versionRange="[0.11.17,0.12)"
+ordering="AFTER"
+side="BOTH"
+[[dependencies.raft_example]]
+modId="neoforge"
+type="required"
+versionRange="[26.3.0.48-beta,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.raft_example]]
+modId="minecraft"
+type="required"
+versionRange="[26.3]"
+ordering="NONE"
+side="BOTH"

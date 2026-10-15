@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "raft_example:block/kelp_dryer_active"
+    }
+  }
+}

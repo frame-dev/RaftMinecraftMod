@@ -53,7 +53,7 @@ public final class SurvivalMachines {
             RecipeHolder<? extends AbstractCookingRecipe> holder = kind.grill()
                     ? level.recipeAccess().getRecipeFor(RecipeType.CAMPFIRE_COOKING, input, level).orElse(null)
                     : level.recipeAccess().getRecipeFor(RecipeType.SMELTING, input, level).orElse(null);
-            if (holder == null) { reset(inventory); return; }
+            if (holder == null) { rejectRecipe(inventory, !inventory.getItem(0).isEmpty()); return; }
             results.add(holder.value().assemble(input));
             duration = holder.value().cookingTime(); key = holder.id().identifier().toString();
         } else {
@@ -62,13 +62,16 @@ public final class SurvivalMachines {
             var input = CraftingInput.of(inputs.length, 1, Arrays.stream(inputs).mapToObj(slot -> slot == waterSlot
                     ? new ItemStack(SurvivalContent.FRESH_WATER.get()) : inventory.getItem(slot)).toList());
             var holder = level.recipeAccess().getRecipeFor(ProcessingRecipe.type(kind), input, level).orElse(null);
-            if (holder == null) { reset(inventory); return; }
+            if (holder == null) {
+                rejectRecipe(inventory, Arrays.stream(inputs).allMatch(slot -> slot == waterSlot || !inventory.getItem(slot).isEmpty()));
+                return;
+            }
             results.add(holder.value().assemble(input));
             holder.value().byproducts().forEach(stack -> {
                 ItemStack product = stack.create();
                 if (!product.is(SurvivalContent.EMPTY_CUP.get())) { results.add(product); }
             });
-            if (results.size() > outputs.length) { reset(inventory); return; }
+            if (results.size() > outputs.length) { rejectRecipe(inventory, true); return; }
             duration = holder.value().duration(); key = holder.id().identifier().toString();
         }
         inventory.duration = duration;
@@ -121,6 +124,10 @@ public final class SurvivalMachines {
         return !result.isEmpty() && result.getCount() <= result.getMaxStackSize()
                 && (existing.isEmpty() || ItemStack.isSameItemSameComponents(existing, result)
                 && existing.getCount() + result.getCount() <= existing.getMaxStackSize());
+    }
+    private static void rejectRecipe(RaftStorage inventory, boolean supplied) {
+        reset(inventory);
+        inventory.status = supplied ? "recipe" : "supplies";
     }
     private static void reset(RaftStorage inventory) { inventory.progress = 0; inventory.duration = 0; inventory.work = ""; }
 

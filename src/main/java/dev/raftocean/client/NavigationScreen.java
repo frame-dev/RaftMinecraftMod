@@ -4,6 +4,7 @@ import dev.raftocean.entity.RaftPiece;
 import dev.raftocean.menu.NavigationMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,7 +17,8 @@ public final class NavigationScreen extends AbstractContainerScreen<NavigationMe
         super.init();
         if(menu.kind()==RaftPiece.Kind.ENGINE){
             reverse=addRenderableWidget(Button.builder(Component.empty(),button->send(10))
-                    .bounds(leftPos+140,topPos+105,92,18).build());
+                    .bounds(leftPos+140,topPos+105,92,18)
+                    .tooltip(Tooltip.create(Component.translatable("raft_ocean.nav.reverse_tip"))).build());
         }
         if (menu.kind() != RaftPiece.Kind.STEERING_WHEEL) {
             toggle = addRenderableWidget(Button.builder(Component.empty(), button -> send(0)).bounds(leftPos+140, topPos+(menu.kind()==RaftPiece.Kind.SAIL?105:83), 92, 18).build());
@@ -25,7 +27,8 @@ public final class NavigationScreen extends AbstractContainerScreen<NavigationMe
             int[] ids={1,5,3,4,6,2};String[] labels={"-15°","-5°","-1°","+1°","+5°","+15°"};
             for(int i=0;i<ids.length;i++) {
                 int id=ids[i];addRenderableWidget(Button.builder(Component.literal(labels[i]),button->send(id))
-                        .bounds(leftPos+12+i*37,topPos+83,34,18).build());
+                        .bounds(leftPos+12+i*37,topPos+83,34,18)
+                        .tooltip(Tooltip.create(Component.translatable("raft_ocean.nav.adjust_tip"))).build());
             }
             addRenderableWidget(Button.builder(Component.literal("-45°"),button->send(7)).bounds(leftPos+12,topPos+105,37,18).build());
             addRenderableWidget(Button.builder(Component.literal("+45°"),button->send(8)).bounds(leftPos+52,topPos+105,37,18).build());
@@ -65,7 +68,7 @@ public final class NavigationScreen extends AbstractContainerScreen<NavigationMe
         graphics.pose().popMatrix();
     }
     @Override protected void extractLabels(GuiGraphicsExtractor graphics, int x, int y) {
-        graphics.text(font, title, 13, 14, 0xFFECE9D5);
+        graphics.text(font, font.plainSubstrByWidth(title.getString(),220), 13, 14, 0xFFECE9D5);
         graphics.text(font, Component.translatable(menu.kind()==RaftPiece.Kind.ENGINE?"raft_ocean.nav.thrust":"raft_ocean.nav.heading", menu.heading()), 75, 40, 0xFFECE9D5);
         graphics.text(font, Component.translatable("raft_ocean.nav.wind", menu.wind(), menu.windPower()), 75, 53, 0xFF70C8D1);
         if (menu.kind() == RaftPiece.Kind.SAIL) {

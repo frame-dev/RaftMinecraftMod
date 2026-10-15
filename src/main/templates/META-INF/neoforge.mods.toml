@@ -6,7 +6,8 @@ version="${mod_version}"
 displayName="${mod_name}"
 description='''
 An original ocean survival mod with moving rafts, exploration, and progression.
-Development milestone 3: extendable raft foundations.
+Build an ocean home with moving stations, survival machines, sailing,
+cooperative exploration, trading and an open-ended original story.
 '''
 
 [[mixins]]

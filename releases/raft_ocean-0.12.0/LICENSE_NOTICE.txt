@@ -1,0 +1,8 @@
+Raft Ocean
+Declared project license: All Rights Reserved.
+
+This release does not change the project's existing license declaration.
+Minecraft, NeoForge, Java, JEI and other mods are not bundled.
+The example addon retains its separate MIT license in examples/raft-addon/LICENSE.
+The NeoForge template and Gradle notices retain their existing terms in
+TEMPLATE_LICENSE.txt and docs/GRADLE_LICENSE.txt.

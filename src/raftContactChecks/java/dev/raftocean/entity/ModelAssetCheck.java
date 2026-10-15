@@ -68,6 +68,7 @@ public final class ModelAssetCheck {
         if(inventoryModels!=expectedItems){throw new IllegalStateException("Missing inventory fit checks: "+inventoryModels);}
         System.out.println(models+" models and "+elements+" elements accepted by the native Minecraft model parser.");
         System.out.println(inventoryModels+" GUI silhouettes fitted and centered using native ItemTransform matrices.");
+        verifyMachineMotion();
         verifyMachineAlignment();
         verifyPolygonMeshes();
     }
@@ -104,6 +105,31 @@ public final class ModelAssetCheck {
             }
         }
         System.out.println(meshes+" polygon meshes and "+quads+" quads passed material/vertex/normal validation.");
+    }
+
+    private static void verifyMachineMotion() {
+        var rotor = new dev.raftocean.client.render.MachineRotor();
+        float before = rotor.update(1000, 0, 3);
+        for (int frame=1;frame<=40;frame++) {
+            float angle = rotor.update(1000+frame*.25, 1, 3);
+            if (angle < before || angle-before > .76F) { throw new IllegalStateException("Machine rotor jumps during start"); }
+            before = angle;
+        }
+        for (int frame=1;frame<=200;frame++) {
+            float angle = rotor.update(1010+frame*.25, 0, 3);
+            if (angle < before || angle-before > .76F) { throw new IllegalStateException("Machine rotor reverses during stop"); }
+            before = angle;
+        }
+        if (Math.abs(rotor.update(2000,0,3)-before)>.0001F
+                || Math.abs(rotor.update(Double.NaN,1,3)-before)>.0001F) {
+            throw new IllegalStateException("Resuming an unseen machine changes its rotor phase");
+        }
+        var bounds = new AABB(-.4,0,-.4,.4,.2,.4);
+        var bricks = MachineVisualLayout.detail(bounds,.14,.735,.27,.44,1,.73);
+        if(bricks.minY<bounds.minY || bricks.maxY>bounds.maxY || bricks.minX<bounds.minX || bricks.maxZ>bounds.maxZ) {
+            throw new IllegalStateException("Drying bricks leave the authored tray envelope");
+        }
+        System.out.println("243 machine rotor continuity and normalized-detail checks passed.");
     }
 
     private static void verifyMachineAlignment() throws Exception {

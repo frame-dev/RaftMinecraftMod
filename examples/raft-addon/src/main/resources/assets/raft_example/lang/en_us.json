@@ -5,5 +5,7 @@
   "block.raft_example.kelp_dryer_active": "Working Kelp Dryer",
   "raft_example.dryer.slots": "Slot 1: kelp | Slot 2: dried kelp | Slot 3: sticks. Sneak-click to pause.",
   "raft_example.dryer.paused": "Dryer paused",
-  "raft_example.dryer.running": "Dryer enabled"
+  "raft_example.dryer.running": "Dryer enabled",
+  "block.raft_example.sediment_washer": "Raft Sediment Washer",
+  "item.raft_example.sediment_washer": "Raft Sediment Washer"
 }

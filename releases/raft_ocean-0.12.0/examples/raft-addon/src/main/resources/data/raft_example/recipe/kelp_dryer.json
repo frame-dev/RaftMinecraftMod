@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "ICI",
+    "PPP"
+  ],
+  "key": {
+    "P": "minecraft:oak_planks",
+    "I": "minecraft:iron_ingot",
+    "C": "minecraft:campfire"
+  },
+  "result": {
+    "id": "raft_example:kelp_dryer",
+    "count": 1
+  }
+}

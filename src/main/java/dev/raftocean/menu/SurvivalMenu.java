@@ -21,7 +21,7 @@ import net.neoforged.neoforge.registries.*;
 public final class SurvivalMenu extends AbstractContainerMenu {
     public static final DeferredRegister<MenuType<?>> TYPES = DeferredRegister.create(Registries.MENU, "raft_ocean");
     private static final Map<RaftPiece.Kind, DeferredHolder<MenuType<?>, MenuType<SurvivalMenu>>> REGISTERED = new EnumMap<>(RaftPiece.Kind.class);
-    public static final List<String> STATUSES = List.of("supplies", "working", "fuel", "output", "rain", "light", "water", "full", "cup", "power", "network", "off");
+    public static final List<String> STATUSES = List.of("supplies", "working", "fuel", "output", "rain", "light", "water", "full", "cup", "power", "network", "off", "recipe");
     static {
         for (var kind : RaftPiece.Kind.values()) {
             if (kind.machine()) {

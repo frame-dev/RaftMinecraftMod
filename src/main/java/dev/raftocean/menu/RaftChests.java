@@ -11,8 +11,12 @@ import net.minecraft.world.inventory.ChestMenu;
 
 /** Deterministic side-by-side pairs; inventories remain owned by their original halves. */
 public final class RaftChests {
+    private record Cached(long revision, Map<BlockPos, BlockPos> pairs) { }
+    private static final Map<RaftEntity, Cached> CACHE = new WeakHashMap<>();
     private RaftChests() { }
-    public static Map<BlockPos, BlockPos> pairs(RaftEntity raft) {
+    public static synchronized Map<BlockPos, BlockPos> pairs(RaftEntity raft) {
+        var cached = CACHE.get(raft);
+        if (cached != null && cached.revision() == raft.layoutRevision()) { return cached.pairs(); }
         Map<BlockPos, BlockPos> result = new HashMap<>();
         var positions = raft.pieces().entrySet().stream().filter(e -> e.getValue().kind() == RaftPiece.Kind.CHEST)
                 .map(Map.Entry::getKey).sorted(Comparator.comparingInt((BlockPos cell) -> cell.getY())
@@ -29,7 +33,9 @@ public final class RaftChests {
                 }
             }
         }
-        return result;
+        var pairs = Map.copyOf(result);
+        CACHE.put(raft, new Cached(raft.layoutRevision(), pairs));
+        return pairs;
     }
     public static ChestMenu menu(int id, Inventory inventory, RaftEntity raft, BlockPos pos) {
         BlockPos partner = pairs(raft).get(pos);

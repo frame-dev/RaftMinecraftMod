@@ -109,6 +109,7 @@ public final class RaftMachineApiCheck {
             if(restored!=null) { restored.machineContext(pos).ifPresent(ctx->ctx.state().clearContent());restored.discard(); }
             level.getEntitiesOfClass(ItemEntity.class,new AABB(0,level.getMaxY(),0,20,level.getMaxY()+60,20)).forEach(ItemEntity::discard);
         }
+        checks += RaftUtilityApiCheck.run(level);
         return checks;
     }
     private static int items(ServerLevel level,AABB area) { return level.getEntitiesOfClass(ItemEntity.class,area).stream().filter(e->e.getItem().is(Items.KELP)).mapToInt(e->e.getItem().getCount()).sum(); }

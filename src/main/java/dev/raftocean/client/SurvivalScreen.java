@@ -48,6 +48,11 @@ public final class SurvivalScreen extends AbstractContainerScreen<SurvivalMenu> 
                         Component.translatable("raft_ocean.ui." + (role.output() ? "take_only" : "insert_tip"))), mouseX, mouseY);
             }
         }
+        if (!menu.suppliesPage() && mouseX >= leftPos + 64 && mouseX <= leftPos + 138
+                && mouseY >= topPos + 78 && mouseY <= topPos + 99) {
+            graphics.setComponentTooltipForNextFrame(font, List.of(
+                    Component.translatable("raft_ocean.ui.recipe_tip")), mouseX, mouseY);
+        }
         if (!menu.suppliesPage() && menu.waterMachine() && mouseX >= leftPos + 145 && mouseX <= leftPos + 184
                 && mouseY >= topPos + 74 && mouseY <= topPos + 109) {
             graphics.setComponentTooltipForNextFrame(font, List.of(

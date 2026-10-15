@@ -1,4 +1,4 @@
-# Raft Ocean building and machine API v2 — 0.11.17
+# Raft Ocean building and machine API v3 — 0.13.0
 
 Public common-side classes: dev.raftocean.api.RaftBuildables and RaftBuildable.
 The mod jar includes these classes; the sources jar includes the complete source.
@@ -15,8 +15,8 @@ From the main project's directory with Java25 installed:
 ```
 
 This uses Gradle9.2.1, ModDevGradle2.0.147 and NeoForge26.3.0.48-beta. The example
-compiles against build/libs/raft_ocean-0.11.17.jar. Its output is
-examples/raft-addon/build/libs/raft-example-addon-1.1.1.jar.
+compiles against build/libs/raft_ocean-0.13.0.jar. Its output is
+examples/raft-addon/build/libs/raft-example-addon-1.2.0.jar.
 Install that jar and the main mod together on the client and server, then restart.
 Obtain the crate with /give @s raft_example:work_crate, or craft it with two oak
 planks and Scrap Fasteners. Place it over two foundations and right-click it with
@@ -64,7 +64,7 @@ built-in records remain readable. An addon record adds its ID as a seventh field
 Keep the same addon definitions installed on the server and every client. Worlds
 containing addon pieces require their addon; unknown IDs are rejected explicitly.
 
-## Machine API v2
+## Machine API v3
 
 For the full setup, registration, resource, machine, menu, multiplayer,
 persistence, migration and debugging instructions, see
@@ -86,10 +86,20 @@ Fuel/progress survive saves; output blockage or pause conserves supplies.
 The active model changes its trim. Native slot transactions enforce input rules.
 
 Existing v1 registrations and addon structure IDs remain compatible.
-Both sides must run 0.11.17 and matching addon definitions; network protocol
+Both sides must run 0.13.0 and matching addon definitions; network protocol
 changes mean mixed main-mod versions are unsupported. The controller is shared,
 so mutable per-instance state must live in its context, not controller fields.
 
-Custom bone rendering, world BlockEntity automation, automatic JEI categories
-and automatic integration with built-in utility/research networks are not
-provided by v2. The full guide explains supported extensions and their limits.
+API v3 adds opt-in utility inputs (power, fresh water and biofuel), generator
+readiness demand, item/resource batch helpers and safe quick output collection.
+See [API_V3_UTILITIES.md](API_V3_UTILITIES.md) for the complete contracts and
+[the example addon](../examples/raft-addon/README.md) for three complete examples.
+
+Existing v1/v2 registration methods and controllers remain supported through
+new default methods. Defaults join no networks and claim no quick-harvest slots,
+preserving existing addon sneak-use behavior. Update dependency ranges when
+moving an addon to a new main-mod release; all peers need matching mods.
+
+Custom bone rendering, automatic JEI categories, research registration and
+arbitrary world BlockEntity transplantation remain outside this API. Addons can
+use normal recipe/tag resources and their own explicit client integration.

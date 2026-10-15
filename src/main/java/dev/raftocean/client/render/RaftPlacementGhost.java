@@ -14,10 +14,12 @@ public final class RaftPlacementGhost {
     private RaftPlacementGhost() { }
     public static RaftEntity.Placement last;
     public static long tick=-1;
+    private static java.lang.ref.WeakReference<RaftEntity> owner=new java.lang.ref.WeakReference<>(null);
+    public static boolean belongsTo(RaftEntity raft) { return owner.get()==raft; }
     private static int rotationOffset;
     public static int rotateBuild() { rotationOffset=(rotationOffset+1)&3;return rotationOffset; }
     public static int rotationOffset() { return rotationOffset; }
-    public static void resetRotation() { rotationOffset=0; }
+    public static void resetRotation() { rotationOffset=0;last=null;tick=-1;owner.clear(); }
     public static RaftEntity.Placement extract(RaftEntity raft){
         var game=Minecraft.getInstance();var player=game.player;
         if(player==null || game.gui.screen()!=null || !(game.hitResult instanceof EntityHitResult hit) || hit.getEntity()!=raft){return null;}
@@ -28,7 +30,7 @@ public final class RaftPlacementGhost {
                 || !pick.piece().kind().station() && pick.piece().kind()!=dev.raftocean.entity.RaftPiece.Kind.DOOR)){
             plan=raft.placement(player,player.getOffhandItem(),pick,rotationOffset);
         }
-        last=plan;tick=game.level.getGameTime();return plan;
+        last=plan;owner=new java.lang.ref.WeakReference<>(raft);tick=game.level.getGameTime();return plan;
     }
     public static void submit(RaftEntity.Placement plan,PoseStack pose,SubmitNodeCollector collector){
         if(plan==null){return;}

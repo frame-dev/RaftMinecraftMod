@@ -1,6 +1,6 @@
-# Creating blocks and machines with Raft Ocean API v2
+# Creating blocks and machines with Raft Ocean API v3
 
-Target: Raft Ocean **0.11.17**, Minecraft **26.3**, NeoForge **26.3.0.48-beta**,
+Target: Raft Ocean **0.13.0**, Minecraft **26.3**, NeoForge **26.3.0.48-beta**,
 Java **25**, Gradle **9.2.1**, ModDevGradle **2.0.147**. These are this project's
 pinned versions. This guide describes the code shipped here, not other Minecraft releases.
 
@@ -32,8 +32,8 @@ $env:JAVA_HOME='C:\Program Files\Zulu\zulu-25'
 .\gradlew.bat -p examples/raft-addon build --no-parallel
 ```
 
-The main dependency must already exist at `build/libs/raft_ocean-0.11.17.jar`.
-The example output is `examples/raft-addon/build/libs/raft-example-addon-1.1.1.jar`.
+The main dependency must already exist at `build/libs/raft_ocean-0.13.0.jar`.
+The example output is `examples/raft-addon/build/libs/raft-example-addon-1.2.0.jar`.
 Put both jars in the client's and dedicated server's `mods` directories. Restart.
 Never install the sources jar as a mod. Never bundle Raft Ocean classes inside
 your addon: it is an ordinary required dependency.
@@ -64,13 +64,13 @@ project name and display name. A Java package change also requires moving the
 Java files into the corresponding directories.
 
 In `neoforge.mods.toml`, retain a required, BOTH-side Raft Ocean dependency with
-`ordering="AFTER"`. This example requires `[0.11.17,0.12)`; that range is a
+`ordering="AFTER"`. This example requires `[0.13.0,0.14)`; that range is a
 declared compatibility policy, not a promise that every later release has been
 tested. Pin a narrower range if you require a specific tested build. Keep the
 Minecraft and NeoForge requirements appropriate to this target.
 
-Version 0.11.17 changes entity tracking and uses protocol
-`raft-movement-11.17`. All players and the server need the same main-mod release
+Version 0.13.0 uses protocol
+`raft-movement-13.0`. All players and the server need the same main-mod release
 and matching addon definitions. Updating only one side is unsupported.
 
 ## 3. Register the real Minecraft block and item
@@ -360,14 +360,16 @@ nonnegative durations/capacities and translate tick intervals consistently.
 the pinned implementation reference. Do not change the main mod's global static
 config spec from an addon.
 
-API v2 supplies building registration and machine lifecycle/state/menu/view
-hooks. It does not automatically join addon machines to the main mod's water,
-fuel or battery network, research graph, shark target selection or entity AI.
-You may implement addon-owned behavior through the provided context, but those
-internal main-mod systems are not stable public contracts. If you depend on
-internal classes, pin the exact release and document that dependency. Use normal
-Minecraft recipe/tag/advancement resources where possible instead of adding
-enum constants to `RaftPiece.Kind` or modifying the main registry.
+API v3 supplies building registration, machine lifecycle/state/menu/view hooks,
+explicit utility inputs and item/resource batch processing. See
+[API_V3_UTILITIES.md](API_V3_UTILITIES.md) for power, fresh water, biofuel,
+readiness demand and opt-in quick output collection. Existing controllers keep
+no utility or quick-harvest declarations unless they opt in.
+
+Research registration, shark targeting and entity AI are not public extension
+contracts. Prefer normal recipe/tag/advancement resources and your own explicit
+integrations; do not add enum constants to `RaftPiece.Kind`. The API v3 example
+now includes a complete sediment washer alongside the v1 crate and v2 dryer.
 
 ## 12. Test and diagnose your addon
 

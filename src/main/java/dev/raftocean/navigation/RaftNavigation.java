@@ -13,7 +13,10 @@ import net.minecraft.world.phys.Vec3;
 
 /** Server-owned wind and propulsion in the rotating hull coordinate frame. */
 public final class RaftNavigation {
-    public static final double MAX_SPEED = .16;
+    // Minecraft runs at 20 ticks per second; one block is one meter.
+    public static final double ENGINE_SPEED = 1.5 / 20;
+    public static final double SAIL_SPEED = 1.0 / 20;
+    public static final double PADDLE_SPEED = 1.8 / 20;
     private final RaftEntity raft;
     private final Set<BlockPos> clientEnabled = new HashSet<>();
     private final Map<BlockPos, Integer> clientTrims = new HashMap<>();
@@ -53,13 +56,13 @@ public final class RaftNavigation {
         double alignment = direction(bearing).dot(direction(windBearing));
         // A broad reach produces useful lateral drive; pointing directly into the wind stalls.
         double drive = alignment <= -.75 ? 0 : (.6 + .4 * alignment) * Math.min(1, (alignment + .75) / .25);
-        return .08 * dev.raftocean.config.RaftConfig.SAIL_THRUST.get() * Math.clamp(strength, 0, 3) * drive;
+        return SAIL_SPEED * dev.raftocean.config.RaftConfig.SAIL_THRUST.get() * Math.clamp(strength, 0, 3) * drive;
     }
     public boolean stroke(Vec3 look) {
         Vec3 horizontal = new Vec3(look.x, 0, look.z);
         if (dev.raftocean.config.RaftConfig.PADDLE_THRUST.get()==0 || anchored() || horizontal.lengthSqr() < .0001) { return false; }
         double scale = Math.clamp(Math.sqrt(216 / raft.getMass()), .4, 1);
-        paddle = cap(paddle.add(horizontal.normalize().scale(.14 * scale * dev.raftocean.config.RaftConfig.PADDLE_THRUST.get())), .22 * dev.raftocean.config.RaftConfig.PADDLE_THRUST.get());
+        paddle = cap(paddle.add(horizontal.normalize().scale(PADDLE_SPEED * scale * dev.raftocean.config.RaftConfig.PADDLE_THRUST.get())), PADDLE_SPEED * dev.raftocean.config.RaftConfig.PADDLE_THRUST.get());
         return true;
     }
     private static Vec3 cap(Vec3 vector, double maximum) {
@@ -87,7 +90,7 @@ public final class RaftNavigation {
                     engines++; running.add(entry.getKey());
                     double bearing = raft.getYRot() + entry.getValue().rotation() * 90 + storage.trim;
                     double engineScale=Math.min(1,dev.raftocean.config.RaftConfig.ENGINE_FOUNDATIONS.get()/(double)raft.getBlocks().size());
-                    thrust = thrust.add(direction(bearing).scale(.08 * dev.raftocean.config.RaftConfig.ENGINE_THRUST.get() * Math.min(2, storage.fuelSpeed) * engineScale));
+                    thrust = thrust.add(direction(bearing).scale(ENGINE_SPEED * dev.raftocean.config.RaftConfig.ENGINE_THRUST.get() * Math.min(2, storage.fuelSpeed) * engineScale));
                 }
             }
         }
@@ -104,9 +107,9 @@ public final class RaftNavigation {
             var reader = new FuelReader(BlockPos.containing(raft.stationPosition(pos, RaftPiece.Kind.ENGINE)));
             reader.setLevel(level); reader.setItem(1, stack.copy());
             boolean biofuel = stack.is(dev.raftocean.survival.Automation.BIOFUEL.get());
-            // Biofuel is a coal-equivalent fuel: same burn time and engine speed.
+            // Biofuel uses coal engine speed and the configured canister burn time.
             ItemStack rated = biofuel ? new ItemStack(net.minecraft.world.item.Items.COAL) : stack;
-            int duration = reader.duration(level, rated) * (biofuel ? dev.raftocean.survival.Automation.BIOFUEL_BURN_MULTIPLIER : 1);
+            int duration = biofuel ? dev.raftocean.config.RaftConfig.BIOFUEL_ENGINE_TICKS.get() : reader.duration(level, rated);
             float speed = reader.speed(level, rated);
             var remainder = stack.getCraftingRemainder();
             if (duration <= 0 || !Float.isFinite(speed) || speed <= 0 || remainder != null && stack.getCount() != 1) { return false; }
@@ -134,25 +137,41 @@ public final class RaftNavigation {
         String[] fields = encoded.split(";", -1);
         if (fields.length != 7) { return; }
         try {
-            setHeading(Double.parseDouble(fields[0])); windHeading = normalize(Double.parseDouble(fields[1]));
+            double newHeading = Double.parseDouble(fields[0]);
+            double newWindHeading = Double.parseDouble(fields[1]);
             double strength = Double.parseDouble(fields[2]);
-            windStrength = Double.isFinite(strength) ? Math.clamp(strength, 0, 3) : 1;
-            engines = Math.clamp(Integer.parseInt(fields[3]), 0, 128); sails = Math.clamp(Integer.parseInt(fields[4]), 0, 128);
-            anchored = fields[5].equals("1"); clientEnabled.clear(); clientTrims.clear(); running.clear();
+            int newEngines = Integer.parseInt(fields[3]), newSails = Integer.parseInt(fields[4]);
+            if (!Double.isFinite(newHeading) || !Double.isFinite(newWindHeading) || !Double.isFinite(strength)
+                    || strength < 0 || strength > 3 || newEngines < 0 || newSails < 0
+                    || newEngines > dev.raftocean.entity.RaftStructure.MAX_PIECES
+                    || newSails > dev.raftocean.entity.RaftStructure.MAX_PIECES
+                    || !fields[5].equals("0") && !fields[5].equals("1")) { return; }
+            Set<BlockPos> newEnabled = new HashSet<>(), newRunning = new HashSet<>(), seen = new HashSet<>();
+            Map<BlockPos, Integer> newTrims = new HashMap<>();
             if (!fields[6].isEmpty()) {
-                for (String entry : fields[6].split("/")) {
-                    String[] cell = entry.split(",");
-                    if (cell.length == 3 || cell.length == 6) {
-                        BlockPos pos = new BlockPos(Integer.parseInt(cell[0]), Integer.parseInt(cell[1]), Integer.parseInt(cell[2]));
-                        if (cell.length == 3 || cell[4].equals("1")) { clientEnabled.add(pos); }
-                        if (cell.length == 6) {
-                            clientTrims.put(pos, Math.clamp(Integer.parseInt(cell[3]), -180, 180));
-                            if (cell[5].equals("1")) { running.add(pos); }
-                        }
-                    }
+                String[] entries = fields[6].split("/", -1);
+                if (entries.length > dev.raftocean.entity.RaftStructure.MAX_PIECES) { return; }
+                for (String entry : entries) {
+                    String[] cell = entry.split(",", -1);
+                    if (cell.length != 3 && cell.length != 6) { return; }
+                    BlockPos pos = new BlockPos(Integer.parseInt(cell[0]), Integer.parseInt(cell[1]), Integer.parseInt(cell[2]));
+                    if (!seen.add(pos)) { return; }
+                    if (cell.length == 3) { newEnabled.add(pos); continue; }
+                    int trim = Integer.parseInt(cell[3]);
+                    if (trim < -180 || trim > 180 || !cell[4].equals("0") && !cell[4].equals("1")
+                            || !cell[5].equals("0") && !cell[5].equals("1")) { return; }
+                    newTrims.put(pos, trim);
+                    if (cell[4].equals("1")) { newEnabled.add(pos); }
+                    if (cell[5].equals("1")) { newRunning.add(pos); }
                 }
             }
-        } catch (NumberFormatException ignored) { clientEnabled.clear(); }
+            // Commit only complete snapshots; a truncated update cannot mix two frames.
+            setHeading(newHeading); windHeading = normalize(newWindHeading); windStrength = strength;
+            engines = newEngines; sails = newSails; anchored = fields[5].equals("1");
+            clientEnabled.clear(); clientEnabled.addAll(newEnabled);
+            clientTrims.clear(); clientTrims.putAll(newTrims);
+            running.clear(); running.addAll(newRunning);
+        } catch (NumberFormatException ignored) { /* Preserve the last complete navigation frame. */ }
     }
     private static final class FuelReader extends FurnaceBlockEntity {
         FuelReader(BlockPos pos) { super(pos, Blocks.FURNACE.defaultBlockState()); }

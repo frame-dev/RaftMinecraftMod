@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 public final class QuickStash {
     private QuickStash() { }
     public static int store(RaftEntity raft,BlockPos pos,Player player) {
-        if(raft.level().isClientSide() || !dev.raftocean.config.RaftConfig.QUICK_STASH.get())return 0;
+        if(raft.level().isClientSide() || player.isSpectator() || !dev.raftocean.config.RaftConfig.QUICK_STASH.get())return 0;
         var piece=raft.pieces().get(pos);
         if(piece==null || piece.kind()!=RaftPiece.Kind.CHEST && piece.kind()!=RaftPiece.Kind.BARREL
                 || !RaftStationMenus.valid(raft,pos,piece.kind(),player))return 0;

@@ -1,0 +1,12 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.147'
+}
+version='1.2.0'
+group='example.raftaddon'
+java.toolchain.languageVersion=JavaLanguageVersion.of(25)
+neoForge { version='26.3.0.48-beta' }
+def raftProjectProperties = new Properties()
+file('../../gradle.properties').withInputStream { raftProjectProperties.load(it) }
+def raftProjectVersion = raftProjectProperties.getProperty('mod_version')
+dependencies { implementation files("../../build/libs/raft_ocean-${raftProjectVersion}.jar") }

@@ -24,17 +24,22 @@ public final class ExampleAddon {
     private static final java.util.function.Supplier<Block> DRYER=BLOCKS.registerSimpleBlock("kelp_dryer");
     private static final java.util.function.Supplier<Block> DRYER_ACTIVE=BLOCKS.registerSimpleBlock("kelp_dryer_active");
     private static final net.neoforged.neoforge.registries.DeferredItem<net.minecraft.world.item.BlockItem> DRYER_ITEM=ITEMS.registerSimpleBlockItem("kelp_dryer",DRYER);
+    private static final java.util.function.Supplier<Block> WASHER=BLOCKS.registerSimpleBlock("sediment_washer");
+    private static final net.neoforged.neoforge.registries.DeferredItem<net.minecraft.world.item.BlockItem> WASHER_ITEM=ITEMS.registerSimpleBlockItem("sediment_washer",WASHER);
     public ExampleAddon(IEventBus bus) {
         BLOCKS.register(bus);ITEMS.register(bus);bus.addListener(this::setup);
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(this::checkExample);
     }
     private void checkExample(net.neoforged.neoforge.event.server.ServerStartingEvent event) {
         if(Boolean.getBoolean("raftOcean.carrySmoke"))
-            com.mojang.logging.LogUtils.getLogger().info("Raft example: {} native dryer assertions passed.",ExampleMachineCheck.run(event.getServer().overworld()));
+            com.mojang.logging.LogUtils.getLogger().info("Raft example: {} native addon assertions passed.",ExampleMachineCheck.run(event.getServer().overworld()));
     }
     private void setup(FMLCommonSetupEvent event) {
         event.enqueueWork(()->{
             var machineBox=new AABB(-.5,0,-.5,.5,.875,.5);
+            RaftBuildables.register(new RaftBuildable(Identifier.fromNamespaceAndPath(ID,"sediment_washer"),
+                    ()->WASHER_ITEM.get(),WASHER,1,1,1,10,true,List.of(machineBox),List.of(machineBox),
+                    (raft,anchor,player,hand)->InteractionResult.PASS),new SedimentWasher(WASHER,DRYER_ACTIVE));
             RaftBuildables.register(new RaftBuildable(Identifier.fromNamespaceAndPath(ID,"kelp_dryer"),
                     ()->DRYER_ITEM.get(),DRYER,1,1,1,10,true,List.of(machineBox),List.of(machineBox),
                     (raft,anchor,player,hand)->InteractionResult.PASS),new KelpDryer(DRYER,DRYER_ACTIVE));

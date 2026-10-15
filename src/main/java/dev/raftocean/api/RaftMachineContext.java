@@ -17,6 +17,11 @@ public record RaftMachineContext(RaftEntity raft,BlockPos anchor,RaftBuildable t
         var boxes=raft.pieceBoxes(anchor,piece);var envelope=boxes.getFirst();for(var box:boxes)envelope=envelope.minmax(box);
         return raft.toWorld(envelope.getCenter());
     }
+    /** Stale handles cannot draw resources or change a replacement machine. */
+    public boolean isInstalled() {
+        return !raft.isRemoved() && raft.machineContext(anchor).map(current->current.state()==state
+                && current.type().id().equals(type.id())).orElse(false);
+    }
     public boolean valid(Player player) {
         var piece=raft.pieces().get(anchor);
         return dev.raftocean.crew.CrewAccess.allowed(player,raft) && !raft.isRemoved() && player.isAlive() && player.level()==raft.level() && piece!=null

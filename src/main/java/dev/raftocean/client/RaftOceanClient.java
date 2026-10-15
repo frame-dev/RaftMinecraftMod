@@ -85,11 +85,15 @@ public final class RaftOceanClient {
 
     @SubscribeEvent
     public static void onGuiLayers(net.neoforged.neoforge.client.event.RegisterGuiLayersEvent event) {
+        event.registerAboveAll(net.minecraft.resources.Identifier.fromNamespaceAndPath("raft_ocean","interaction_hints"),
+                (graphics,delta)->InteractionHints.draw(graphics,Minecraft.getInstance()));
         event.registerAboveAll(net.minecraft.resources.Identifier.fromNamespaceAndPath("raft_ocean","placement"),(graphics,delta)->{
             var game=Minecraft.getInstance();var ghost=dev.raftocean.client.render.RaftPlacementGhost.last;
             if(game.player==null || game.level==null || ghost==null || game.gui.hud.isHidden() || game.gui.screen()!=null
                     || game.level.getGameTime()-dev.raftocean.client.render.RaftPlacementGhost.tick>1
-                    || !(game.hitResult instanceof net.minecraft.world.phys.EntityHitResult)) {return;}
+                    || !(game.hitResult instanceof net.minecraft.world.phys.EntityHitResult hit)
+                    || !(hit.getEntity() instanceof dev.raftocean.entity.RaftEntity raft)
+                    || !dev.raftocean.client.render.RaftPlacementGhost.belongsTo(raft)) {return;}
             var item=game.player.getMainHandItem();var offhand=game.player.getOffhandItem();
             if(!item.is(ModContent.FOUNDATION.get()) && ModContent.structuralKind(item)==null
                     && !offhand.is(ModContent.FOUNDATION.get()) && ModContent.structuralKind(offhand)==null){return;}

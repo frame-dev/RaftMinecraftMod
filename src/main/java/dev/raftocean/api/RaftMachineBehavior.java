@@ -10,6 +10,12 @@ public interface RaftMachineBehavior {
     /** Native inventory clicks and shift-clicks enforce these server-side slot rules. */
     default boolean canInsert(RaftMachineContext context,int slot,net.minecraft.world.item.ItemStack stack) { return true; }
     default boolean canExtract(RaftMachineContext context,int slot,Player player) { return true; }
+    /** Opt-in inputs connect at the boundary of the rotated occupied footprint. */
+    default java.util.Set<RaftUtility> utilityInputs() { return java.util.Set.of(); }
+    /** Positive FE demand wakes connected generators at their normal production rate. */
+    default int powerDemand(RaftMachineContext context) { return 0; }
+    /** Empty by default, preserving existing addons' sneak-use behavior. */
+    default java.util.Set<Integer> quickHarvestSlots() { return java.util.Set.of(); }
     default int slots() { return 9; }
     default int tickInterval() { return 1; }
     default void placed(RaftMachineContext context,Player player) { }

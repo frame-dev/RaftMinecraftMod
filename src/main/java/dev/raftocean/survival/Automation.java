@@ -128,7 +128,7 @@ public final class Automation {
                 }
                 ready.add(pos);
             }
-            boolean demand=!ready.isEmpty();
+            boolean demand=!ready.isEmpty() || dev.raftocean.api.RaftMachineUtilities.hasPowerDemand(raft,group);
             for(var generator:generators) {
                 if(demand && generator.energy < ENERGY_CAPACITY) {
                     if(generator.fuelTicks==0 && generator.getItem(0).is(BIOFUEL.get())) {

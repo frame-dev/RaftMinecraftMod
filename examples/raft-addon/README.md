@@ -1,36 +1,50 @@
-# Raft Ocean API v2 example addon
+# Raft Ocean API v3 example addon
 
-Requires Raft Ocean API v2 (0.11.17 or later), Minecraft 26.3, NeoForge 26.3.0.48-beta and Java 25.
-This is a separate mod with original resources, a two-cell work crate and a
-one-cell kelp dryer. The dryer saves inventory, fuel, progress and pause state.
+Targets Raft Ocean 0.13.0, Minecraft 26.3, NeoForge 26.3.0.48-beta and Java 25.
+The declared main-mod range is [0.13.0,0.14); choose a tested range for your addon.
+Output: examples/raft-addon/build/libs/raft-example-addon-1.2.0.jar.
 
-From the main project directory:
+From the main project, first build its jar into build/libs, then:
 
 ```powershell
 $env:JAVA_HOME='C:\Program Files\Zulu\zulu-25'
-.\gradlew.bat -p examples/raft-addon build --no-parallel
+.\gradlew.bat -p examples/raft-addon build --offline --no-parallel
 ```
 
-Build the main mod first. The file dependency reads the current version from
-`../../gradle.properties` and expects its jar in `../../build/libs`. If you
-unpack this example elsewhere, update that dependency and use a Gradle 9.2.1
-wrapper. Output: `build/libs/raft-example-addon-1.1.1.jar`. Install both mod jars
-on client and dedicated server and restart. Sources jars are development files.
+The file dependency reads the current main-project version automatically.
+For a standalone copy, update build.gradle to your local jar or repository
+coordinate and use a Gradle 9.2.1 wrapper. Install both playable jars on every
+client and server, then restart. Do not install sources jars as mods.
 
-Use `/give @s raft_example:work_crate` or `/give @s raft_example:kelp_dryer`,
-or use the included normal crafting recipes. The crate needs two foundations.
-For the dryer, use an empty hand to open its inventory: slot 1 kelp, slot 2
-output, slot 3 sticks. One stick processes two kelp, five loaded seconds each.
-Slots 4–9 are storage. Sneak-click with an empty hand to pause/resume. The orange
-trim indicates activity. Output rejects insertion; incorrect input/fuel is
-rejected by the server. No JEI dependency is required.
+## Complete examples
 
-Check all four placement rotations, save/reload midway, blocked output, pause,
-shared multiplayer use, and removal with inventory. Contents should drop once;
-loaded inventories should retain exact counts. Test movement and models locally.
+- `raft_example:work_crate`: two-foundation decoration with a server interaction.
+- `raft_example:kelp_dryer`: persistent v2-compatible machine. Inventory slots
+  1 kelp, 2 output, 3 sticks; remaining slots are storage. A stick dries two kelp
+  in five seconds each. Sneak-empty-hand toggles pause; normal use opens slots.
+- `raft_example:sediment_washer`: v3 utility machine. One sand plus 10 FE and
+  one cup of piped fresh water yields one clay ball per one-second update.
+  Slot 1 is sand; slot 2 is clay. Other slots reject insertion. Empty-handed
+  sneak-use collects the output. Its output is read-only in the generic menu.
 
-Full documentation: `docs/MACHINE_ADDON_GUIDE.md` in the main project.
-API reference: `docs/RAFT_ADDON_API.md`.
+Obtain with /give or the three included normal crafting recipes. Place the
+washer beside a raft biofuel generator and a water tank, or connect them with
+power cables and water pipes. Add biofuel to the generator and fresh water to
+the tank. The washer advertises demand only when sand/output space/water are
+ready; idle, dry or blocked machines preserve generator burn reserve.
+The washer's enabled state is an API example property, not a custom pause UI.
 
-License: MIT, including the example source/model definitions. Model references
-use original Raft Ocean textures supplied by the required main mod.
+All examples reuse original Raft Ocean material textures. The washer shares
+original example geometry with a teal material variant. Source/model code is
+MIT; texture licensing remains with the required main mod.
+
+## Test
+
+Check four rotations, drifting/turning rafts, saves mid-process, full outputs,
+missing water/power, removal and co-op pickup. Repeated actions must not duplicate
+items. All peers must have matching addon definitions. Native example smoke
+checks run when the main bootstrap server loads this addon with
+`raftOcean.carrySmoke=true`; ordinary game startup does not run them.
+
+Guides in the main project: docs/RAFT_ADDON_API.md,
+docs/MACHINE_ADDON_GUIDE.md and docs/API_V3_UTILITIES.md.

@@ -5,5 +5,7 @@
   "block.raft_example.kelp_dryer_active": "Aktiver Seetangtrockner",
   "raft_example.dryer.slots": "Fach 1: Seetang | Fach 2: getrockneter Seetang | Fach 3: Stöcke. Schleichen + Klick pausiert.",
   "raft_example.dryer.paused": "Trockner pausiert",
-  "raft_example.dryer.running": "Trockner eingeschaltet"
+  "raft_example.dryer.running": "Trockner eingeschaltet",
+  "block.raft_example.sediment_washer": "Floß-Sedimentwäscher",
+  "item.raft_example.sediment_washer": "Floß-Sedimentwäscher"
 }

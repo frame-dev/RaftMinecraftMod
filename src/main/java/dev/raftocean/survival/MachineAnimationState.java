@@ -47,16 +47,22 @@ public final class MachineAnimationState {
         raft.publishMachines(snapshot.toString());
     }
     public void accept(String encoded) {
-        visuals.clear();if(encoded.length()>24000 || encoded.isEmpty()){return;}
-        for(String entry:encoded.split(";")) {
-            String[] fields=entry.split(",");if(fields.length!=9){continue;}
-            try {
-                BlockPos pos=new BlockPos(Integer.parseInt(fields[0]),Integer.parseInt(fields[1]),Integer.parseInt(fields[2]));
-                visuals.put(pos,new Visual(Math.clamp(Integer.parseInt(fields[3]),0,1000),fields[4].equals("1"),
-                        Math.clamp(Integer.parseInt(fields[5]),0,4),Math.clamp(Integer.parseInt(fields[6]),0,64),fields[7].equals("1"),
-                        Math.clamp(Integer.parseInt(fields[8]),0,6)));
-            } catch(NumberFormatException ignored) { }
-            if(visuals.size()>=512){break;}
-        }
+        if (encoded.length() > 24000) { return; }
+        if (encoded.isEmpty()) { visuals.clear(); return; }
+        String[] entries = encoded.split(";", -1);
+        if (entries.length > 512) { return; }
+        Map<BlockPos,Visual> next = new HashMap<>();
+        try {
+            for (String entry : entries) {
+                String[] fields = entry.split(",", -1);
+                if (fields.length != 9) { return; }
+                BlockPos pos = new BlockPos(Integer.parseInt(fields[0]), Integer.parseInt(fields[1]), Integer.parseInt(fields[2]));
+                int progress = Integer.parseInt(fields[3]), raw = Integer.parseInt(fields[5]), clean = Integer.parseInt(fields[6]), crop = Integer.parseInt(fields[8]);
+                if (!fields[4].equals("0") && !fields[4].equals("1") || !fields[7].equals("0") && !fields[7].equals("1")
+                        || next.containsKey(pos)) { return; }
+                next.put(pos,new Visual(Math.clamp(progress,0,1000),fields[4].equals("1"),Math.clamp(raw,0,4),Math.clamp(clean,0,64),fields[7].equals("1"),Math.clamp(crop,0,6)));
+            }
+        } catch (NumberFormatException ignored) { return; }
+        visuals.clear(); visuals.putAll(next);
     }
 }

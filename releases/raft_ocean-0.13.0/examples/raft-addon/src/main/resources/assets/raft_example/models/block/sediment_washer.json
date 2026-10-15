@@ -1,0 +1,6 @@
+{
+  "parent": "raft_example:block/kelp_dryer",
+  "textures": {
+    "metal": "raft_ocean:block/fine_teal"
+  }
+}

@@ -50,6 +50,38 @@ public final class NavigationCheck {
                 "Sail produces lateral thrust on either broad reach for counter-steering");checks++;
         require(RaftNavigation.normalize(-15) == 345 && RaftNavigation.normalize(375) == 15
                 && RaftNavigation.normalize(Double.NaN) == 0, "Finite normalized headings"); checks++;
+        require(Math.abs(RaftNavigation.sailDrive(300, 300, 1) * 20 - 1.0) < 1E-9,
+                "Aligned sail delivers the requested 1.0 meters per second at unit wind"); checks++;
+        var snapshotRaft = new RaftEntity(ModContent.RAFT.get(), level);
+        try {
+            var snapshot = snapshotRaft.navigation();
+            snapshot.acceptSnapshot("45;300;1;150;200;0;1,1,0,180,1,1");
+            require(snapshot.engines() == 150 && snapshot.sails() == 200 && snapshot.heading() == 45
+                    && snapshot.running(ENGINE), "Large raft navigation counts are not truncated at 128"); checks++;
+            for (String invalid : List.of("90;10;1;1;1;0;1,1,0,0,1,1/broken",
+                    "NaN;10;1;1;1;0;", "90;10;Infinity;1;1;0;", "90;10;1;513;1;0;",
+                    "90;10;1;1;1;0;1,1,0,0,1,1/1,1,0,0,1,0")) {
+                snapshot.acceptSnapshot(invalid);
+                require(snapshot.heading() == 45 && snapshot.windHeading() == 300 && snapshot.engines() == 150
+                        && snapshot.running(ENGINE), "Malformed navigation leaves the last complete frame intact"); checks++;
+            }
+            snapshot.acceptSnapshot("90;10;1;0;0;0;");
+            require(snapshot.heading() == 90 && !snapshot.running(ENGINE), "Complete empty snapshot clears retired engines"); checks++;
+        } finally { snapshotRaft.discard(); }
+        var paddleRaft = new RaftEntity(ModContent.RAFT.get(), level);
+        try {
+            paddleRaft.setCurrent(0, 0);
+            require(paddleRaft.navigation().stroke(new Vec3(1, 0, 0)), "Starter raft accepts a paddle stroke"); checks++;
+            require(Math.abs(paddleRaft.navigation().target(true).length() * 20 - 1.8) < 1E-9,
+                    "Paddle delivers requested 1.8 meters per second on starter raft"); checks++;
+            for (int i = 0; i < 20; i++) {
+                paddleRaft.navigation().stroke(new Vec3(1, 0, 0));
+                require(Math.abs(paddleRaft.navigation().target(true).length() * 20 - 1.8) < 1E-9,
+                        "Repeated strokes cannot accumulate above paddle speed"); checks++;
+            }
+            require(paddleRaft.navigation().target(true).length() * 20 < 1.8,
+                    "Paddle drive still decays between strokes"); checks++;
+        } finally { paddleRaft.discard(); }
         var raft = create(level);
         boolean forced = level.setChunkForced(0,0,true);
         level.getChunkSource().tick(() -> true, false);
@@ -90,7 +122,7 @@ public final class NavigationCheck {
             wheelMenu.clickMenuButton(player,9);require(navigation.heading()==raft.getYRot(),"Wheel reset holds present hull heading");checks++;
             require(!anchorMenu.clickMenuButton(player,9) && !driveMenu.clickMenuButton(player,4),"Fine controls cannot steer an anchor or engine menu");checks++;
             raft.storage(SAIL).enabled = false;
-            raft.setCurrent(.02,.008);raft.storage(SAIL).enabled=true;raft.storage(SAIL).trim=45;
+            raft.setCurrent(.005,.002);raft.storage(SAIL).enabled=true;raft.storage(SAIL).trim=45;
             Vec3 trimmed=navigation.target(true);
             require(trimmed.x<0,"Trimmed close reach counter-steers default eastward current");checks++;
             raft.storage(SAIL).enabled=false;
@@ -277,7 +309,7 @@ public final class NavigationCheck {
                 var menu=new NavigationMenu(76,new FakePlayer(level,new GameProfile(UUID.randomUUID(),"EngineBearingCheck")).getInventory(),raft,ENGINE,RaftPiece.Kind.ENGINE);
                 for(int reverse=0;reverse<2;reverse++){
                     engine.trim=reverse*180;
-                    Vec3 expected=RaftNavigation.direction(yaw+rotation*90+engine.trim).scale(.08);
+                    Vec3 expected=RaftNavigation.direction(yaw+rotation*90+engine.trim).scale(1.5 / 20);
                     require(raft.navigation().target(true).distanceToSqr(expected)<1E-12,"Mounted engine thrust matches physical direction at every tested hull bearing");checks++;
                     require(menu.heading()==(int)RaftNavigation.normalize(yaw+rotation*90+engine.trim),"Engine UI reports actual thrust bearing");checks++;
                 }

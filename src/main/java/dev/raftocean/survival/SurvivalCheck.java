@@ -175,6 +175,7 @@ public final class SurvivalCheck {
             }
             checks += SurvivalInteractionCheck.run(level, player);
             checks += WorkshopCheck.run(level,player);
+            checks += MachineHarvestCheck.run(level);
             checks += FeaturePolishCheck.run(level);
             checks += DivingCheck.run(level);
             checks += dev.raftocean.archery.ArcheryCheck.run(level);

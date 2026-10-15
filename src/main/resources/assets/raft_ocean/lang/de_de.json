@@ -690,5 +690,21 @@
   "block.raft_ocean.display_side_table": "Kabinen-Beistelltisch",
   "item.raft_ocean.raft_display_table": "Breiter Dekorationstisch",
   "block.raft_ocean.station_display_table": "Breiter Dekorationstisch",
-  "block.raft_ocean.display_display_table": "Breiter Dekorationstisch"
+  "block.raft_ocean.display_display_table": "Breiter Dekorationstisch",
+  "raft_ocean.net.empty": "Dieses Netz ist leer",
+  "raft_ocean.net.full": "Inventar voll — die Beute bleibt im Netz",
+  "raft_ocean.net.partial": "%s Gegenstände eingesammelt; %s bleiben im Netz",
+  "raft_ocean.ui.status.recipe": "Kein Rezept. Zutaten prüfen.",
+  "raft_ocean.ui.recipe_tip": "Passende Maschinenzutaten einlegen. Mit JEI hier klicken, um Rezepte zu sehen.",
+  "raft_ocean.nav.reverse_tip": "Schub umkehren, ohne das Floß zu drehen. Der Motorpfeil zeigt die Schubrichtung.",
+  "raft_ocean.nav.adjust_tip": "Kleine Schritte steuern genauer. Segel ändern den Schub; das Steuerrad dreht das Floß.",
+  "raft_ocean.harvest.collected": "%s fertige Gegenstände eingesammelt",
+  "raft_ocean.harvest.partial": "%s eingesammelt; %s bleiben in der Maschine",
+  "raft_ocean.harvest.full": "Inventar voll — fertige Gegenstände bleiben in der Maschine",
+  "raft_ocean.harvest.empty": "Keine fertigen Gegenstände zum Einsammeln",
+  "raft_ocean.hint.machine": "Schleichen + Benutzen mit leerer Hand: Ergebnisse einsammeln",
+  "raft_ocean.hint.net": "Schleichen + Benutzen mit leerer Hand: Netzbeute einsammeln",
+  "raft_ocean.hint.stash": "Schleichen + Benutzen mit leerer Hand: passende Rucksackvorräte einlagern",
+  "raft_ocean.config.building.quickMachineHarvest": "Maschinenergebnisse schnell einsammeln",
+  "raft_ocean.config.interactionHints": "Interaktionshinweise"
 }
