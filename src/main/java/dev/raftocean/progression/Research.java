@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-/** One-time material study followed by free, explicitly learned recipe projects. */
+/** One-time material batches followed by explicitly learned recipe projects. */
 public final class Research {
     public static final ResearchCatalog.Project[] TOPICS=ResearchCatalog.PROJECTS;
     public static final int ALL_PROJECTS=(1<<TOPICS.length)-1;
@@ -26,6 +26,23 @@ public final class Research {
     public static final DeferredHolder<AttachmentType<?>,AttachmentType<Integer>> SCHEMA=
             SurvivalContent.ATTACHMENTS.register("research_schema",()->AttachmentType.builder(()->0)
                     .serialize(Codec.intRange(0,1).fieldOf("schema")).copyOnDeath().build());
+    private static final int[] SAMPLE_COSTS=loadSampleCosts();
+    private static int[] loadSampleCosts(){
+        try(var stream=Research.class.getResourceAsStream("/data/raft_ocean/research_sample_costs.json")){
+            if(stream==null){throw new IllegalStateException("Missing research sample costs");}
+            var costs=com.google.gson.JsonParser.parseReader(new java.io.InputStreamReader(stream,
+                    java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+            int[] result=new int[ResearchCatalog.MATERIALS.length];
+            for(int i=0;i<result.length;i++){
+                result[i]=costs.get(ResearchCatalog.MATERIALS[i].id()).getAsInt();
+                if(result[i]<1 || result[i]>64){throw new IllegalStateException("Invalid research batch: "+i);}
+            }
+            return result;
+        } catch(java.io.IOException error){throw new IllegalStateException("Cannot load research sample costs",error);}
+    }
+    public static int sampleCost(int material){
+        return material>=0 && material<SAMPLE_COSTS.length?SAMPLE_COSTS[material]:0;
+    }
     private Research() {}
     public static void initialize() {}
     public static TagKey<Item> tag(String path){return TagKey.create(Registries.ITEM,Identifier.fromNamespaceAndPath("raft_ocean",path));}
@@ -49,8 +66,8 @@ public final class Research {
     }
     public static boolean research(Player player,ItemStack sample){
         int material=materialIndex(sample);
-        if(player.level().isClientSide() || material<0 || materialKnown(player,material)){return false;}
-        sample.shrink(1);player.setData(MATERIALS,player.getData(MATERIALS)|1<<material);dev.raftocean.crew.CrewAccess.publish(player);return true;
+        if(player.level().isClientSide() || material<0 || materialKnown(player,material) || sample.getCount()<sampleCost(material)){return false;}
+        sample.shrink(sampleCost(material));player.setData(MATERIALS,player.getData(MATERIALS)|1<<material);dev.raftocean.crew.CrewAccess.publish(player);return true;
     }
     private static int requiredMaterialsMask(int topic){
         if(topic<0 || topic>=TOPICS.length){return 0;}

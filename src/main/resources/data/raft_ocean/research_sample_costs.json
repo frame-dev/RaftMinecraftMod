@@ -1,0 +1,6 @@
+{
+  "scrap": 4, "iron": 3, "soil": 2, "mesh": 2, "canvas": 2,
+  "wire": 4, "fiber": 4, "wood": 4, "stone": 4, "clay": 4,
+  "brick": 3, "copper": 3, "glass": 3, "fuel": 2, "rope": 3,
+  "fasteners": 4, "plate": 3, "kelp": 4, "leather": 2, "paste": 3
+}

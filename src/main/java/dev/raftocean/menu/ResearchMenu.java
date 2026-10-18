@@ -34,7 +34,7 @@ public final class ResearchMenu extends AbstractContainerMenu {
                 if(index<MATERIAL_START){return Research.state(owner,index);}
                 if(index<INPUT_STATE){return Research.materialKnown(owner,index-MATERIAL_START)?1:0;}
                 int material=Research.materialIndex(input.getItem(0));
-                return material<0?0:Research.materialKnown(owner,material)?2:1;
+                return material<0?0:Research.materialKnown(owner,material)?2:input.getItem(0).getCount()<Research.sampleCost(material)?3:1;
             }
             public void set(int index,int value){}
             public int getCount(){return INPUT_STATE+1;}

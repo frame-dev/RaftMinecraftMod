@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.13.1 — 2026-10-18 — staged story exploration
+
+- Seven strictly increasing story island widths, from 129 to 249 blocks, with
+  irregular coastlines, preserved main landmarks and connected side-site routes.
+- 28 guaranteed English/German field-note books tell additional crew accounts
+  across shelters, gardens, lookouts and grottoes. The story remains open-ended.
+- Research consumes complete material batches of 2–4 samples once; the research
+  screen displays costs and refuses incomplete batches without consumption.
+- Existing knowledge, starter survival paths and journal/puzzle identities retained.
+- Larger terrain and new loot apply to newly generated chunks.
+
+
 
 
 ## 0.13.0 — 2026-10-15 — addon API v3 and starter SDK

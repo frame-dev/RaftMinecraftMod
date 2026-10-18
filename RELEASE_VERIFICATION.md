@@ -1,3 +1,33 @@
+# Verification — 0.13.1 preview
+
+Checked on 2026-10-18 with Minecraft 26.3, NeoForge 26.3.0.48-beta, Java 25,
+ModDevGradle 2.0.147 and Gradle 9.2.1. API3 and movement protocol13.0 retained.
+
+- Build and isolated bootstrap server passed. Runtime research: 686 assertions,
+  including all 20 short-batch refusals, exact batch consumption, one-time study,
+  existing research persistence and starter sun-dried-brick smelter access.
+- Existing movement2,904/carry729/collision425/construction3,641, crafting262,811,
+  machineAPI69, survival959 and remaining server suites passed without an addon.
+- Packaged templates: 28 reachable side sites, 2,218 connected clear trail cells,
+  7,996 protected authored core blocks preserved; irregular coastline checks pass.
+- All 28 guaranteed field-note tables have native 26.3 component modifiers and
+  bilingual title/pages. Localization: 793 matching English/German keys,
+  placeholder parity, sound files and bounded configuration presets passed.
+- Research assets: 30 projects, 60 unique unlocks, complete discovery rewards;
+  starter access retained. Packaged JAR integrity and 20 batch costs verified.
+- Fresh Ocean World: 5,810 runtime assertions passed, including generated
+  story shorelines, clear trails, all 28 real loot-container field-note books,
+  native journal progression, puzzles, persistence and neighboring island pools.
+
+Evidence: build/story-0.13.1-build.log, build/story-0.13.1-assets.log,
+build/story-0.13.1-ocean-verified.log.
+The first ocean check stopped on an obsolete dimension assertion; its expectations
+were corrected before rerunning in a new isolated world. No user worlds changed.
+Live client book layout, larger-island exploration and actual co-op latency still
+need playtesting. Existing generated chunks retain their earlier terrain/loot.
+
+## Previous release evidence
+
 # Release verification — 0.13.0 preview
 
 Addon API v3 verified locally on 2026-10-15 with Minecraft26.3,

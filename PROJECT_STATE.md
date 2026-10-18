@@ -6,7 +6,19 @@
 
 
 
-- Updated: 2026-10-15.
+- Updated: 2026-10-18.
+
+- Latest development: 0.13.1 preview, staged story exploration and research balance.
+  Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1. API3/protocol13.0 retained.
+  Story widths129/153/177/201/217/233/249;28 bilingual field-note books.
+  Research batches2-4 samples, prior knowledge preserved; starter paths retained.
+  See docs/STORY_STAGE_PROGRESSION.md. Existing generated chunks unchanged.
+  Build/bootstrap passed:686research,262811crafting,959survival; existing suites pass.
+  Fresh Ocean World5810 assertions;28 actual field-note books/paths/puzzles checked.
+  Asset audit2218trails/7996protected core blocks,793bilingual keys passed.
+  Milestones1-11implemented;12preview build ready. GitHub release remains0.13.0.
+  Live client book layout and multiplayer/large-world playtesting still required.
 
 - Latest: Raft Ocean0.13.0 preview; artifact build/libs/raft_ocean-0.13.0.jar.
   Targets: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,

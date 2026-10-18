@@ -75,8 +75,13 @@ public final class ResearchCheck {
                 if(id.equals("#minecraft:coals")){id="minecraft:coal";}
                 Item sample=net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(Identifier.parse(id));
                 require(sample!=null && sample!=Items.AIR,"Research material exists: "+id);
-                menu.getSlot(0).set(new ItemStack(sample,2));
-                require(menu.clickMenuButton(player,ResearchMenu.STUDY_SAMPLE) && menu.getSlot(0).getItem().getCount()==1,"Material research consumes exactly one sample");
+                int cost=Research.sampleCost(material);
+                menu.getSlot(0).set(new ItemStack(sample,cost-1));
+                require(menu.inputState()==3 && !menu.clickMenuButton(player,ResearchMenu.STUDY_SAMPLE)
+                        && menu.getSlot(0).getItem().getCount()==cost-1 && !Research.materialKnown(player,material),
+                        "Incomplete research batch spends nothing and stays unknown: "+id);
+                menu.getSlot(0).set(new ItemStack(sample,cost+1));
+                require(menu.clickMenuButton(player,ResearchMenu.STUDY_SAMPLE) && menu.getSlot(0).getItem().getCount()==1,"Material research consumes exactly its declared batch");
                 require(!menu.clickMenuButton(player,ResearchMenu.STUDY_SAMPLE) && menu.getSlot(0).getItem().getCount()==1,"Previously studied material is never consumed again");
                 require(Research.materialKnown(player,material) && menu.materialKnown(material),"Material checklist is synchronized");
             }

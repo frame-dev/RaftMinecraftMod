@@ -37,6 +37,8 @@ public final class ResearchScreen extends AbstractContainerScreen<ResearchMenu> 
     @Override public void extractRenderState(GuiGraphicsExtractor graphics,int x,int y,float partial){
         study.active=menu.inputState()==1;
         study.setMessage(Component.translatable(menu.inputState()==2?"raft_ocean.research.known":"raft_ocean.research.study"));
+        int material=Research.materialIndex(menu.getSlot(0).getItem());
+        study.setTooltip(material<0?null:Tooltip.create(Component.translatable("raft_ocean.research.batch",Research.sampleCost(material))));
         for(int row=0;row<6;row++){
             int index=page*6+row;rows[row].visible=!materials && index<count();
             if(rows[row].visible){int state=menu.state(index);rows[row].active=state==1;
@@ -69,9 +71,10 @@ public final class ResearchScreen extends AbstractContainerScreen<ResearchMenu> 
                 String item=ResearchCatalog.MATERIALS[index].item();
                 if(item.equals("#minecraft:planks")){item="minecraft:oak_planks";}
                 if(item.equals("#minecraft:coals")){item="minecraft:coal";}
-                graphics.item(new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.parse(item))),126,56+row*20);
+                graphics.item(new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.parse(item)),Research.sampleCost(index)),126,56+row*20);
             }
-            graphics.text(font,font.plainSubstrByWidth(label.getString(),materials?175:150),materials?147:128,60+row*20,color);
+            if(materials){graphics.text(font,Component.literal("x"+Research.sampleCost(index)),300,60+row*20,color);}
+            graphics.text(font,font.plainSubstrByWidth(label.getString(),materials?145:150),materials?147:128,60+row*20,color);
             if(materials && menu.materialKnown(index)){graphics.text(font,Component.literal("+"),330,60+row*20,color);}
         }
         graphics.text(font,Component.literal((page+1)+" / "+((count()+5)/6)),215,183,0xFFECE9D5);

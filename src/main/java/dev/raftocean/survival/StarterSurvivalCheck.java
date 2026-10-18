@@ -68,9 +68,9 @@ public final class StarterSurvivalCheck {
             inventory.setItem(2,ItemStack.EMPTY);SurvivalMachines.process(rack,cell,RaftPiece.Kind.DRYING_RACK,level);
             require(inventory.getItem(2).is(CraftingExpansion.item("dried_brick")) && inventory.getItem(2).getCount()==1
                     && inventory.getItem(0).getCount()==1 && inventory.cleanWater==0 && inventory.fuelTicks==0,"Sun drying yields one dry brick without fuel or water");
-            var sample=new ItemStack(CraftingExpansion.item("dried_brick"),2);
+            var sample=new ItemStack(CraftingExpansion.item("dried_brick"),Research.sampleCost(10)+1);
             require(Research.research(player,sample) && sample.getCount()==1,"A sun-dried brick satisfies the brick research material");
-            require(Research.research(player,new ItemStack(Items.CLAY_BALL)),"Clay is the remaining smelter research sample");
+            require(Research.research(player,new ItemStack(Items.CLAY_BALL,Research.sampleCost(9))),"Clay is the remaining smelter research sample");
             int project=java.util.stream.IntStream.range(0,Research.TOPICS.length).filter(i->Research.TOPICS[i].id().equals("smelter")).findFirst().orElseThrow();
             require(Research.study(player,project) && Research.allowed(player,new ItemStack(ModContent.structuralItem(RaftPiece.Kind.SMELTER))),"Smelter research unlocks without firing bricks or researching metal");
             var d=new ItemStack(CraftingExpansion.item("dried_brick"));var p=new ItemStack(Items.OAK_PLANKS);

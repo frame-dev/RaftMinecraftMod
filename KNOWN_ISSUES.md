@@ -1,4 +1,4 @@
-# Known limitations — 0.13.0 preview
+# Known limitations — 0.13.1 preview
 
 - Automated checks pass, but live client appearance, real network latency,
   large-raft performance and a complete multiplayer playthrough still require

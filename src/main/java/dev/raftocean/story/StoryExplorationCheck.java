@@ -36,14 +36,22 @@ public final class StoryExplorationCheck {
             checks++;
             var pos=site.getAsJsonArray("pos");
             var anchor=origin.offset(pos.get(0).getAsInt(),pos.get(1).getAsInt(),pos.get(2).getAsInt());
-            boolean supplies=false;
+            boolean supplies=false,note=false;
             for(int dx=-3;dx<=3;dx++)for(int dz=-3;dz<=3;dz++) {
                 if(level.getBlockEntity(anchor.offset(dx,0,dz)) instanceof Container container) {
-                    for(int slot=0;slot<container.getContainerSize();slot++)if(!container.getItem(slot).isEmpty())supplies=true;
+                    for(int slot=0;slot<container.getContainerSize();slot++){
+                        var stack=container.getItem(slot);
+                        if(!stack.isEmpty())supplies=true;
+                        var book=stack.get(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT);
+                        if(book!=null && book.pages().size()==2 && book.pages().getFirst().raw().getContents()
+                                instanceof net.minecraft.network.chat.contents.TranslatableContents contents
+                                && contents.getKey().equals(site.get("note").getAsString()+".page"))note=true;
+                    }
                 }
             }
             if(!supplies)throw new IllegalStateException("Side-site loot missing: "+name+" "+site.get("kind"));
-            checks++;
+            if(!note)throw new IllegalStateException("Guaranteed translated field note missing: "+name+" "+site.get("kind"));
+            checks+=2;
         }
         for(var value:island.getAsJsonArray("trails")) {
             var cell=value.getAsJsonArray();

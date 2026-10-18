@@ -37,7 +37,7 @@ public final class IslandStructure extends Structure {
                     int cx=context.chunkPos().x(),cz=context.chunkPos().z();
                     // Include both footprints and one chunk of open water between pools.
                     int otherWidth=switch(set) {
-                        case "islands" -> 193;
+                        case "islands" -> 249;
                         case "ordinary_islands" -> 161;
                         case "exploration_islands" -> 97;
                         case "dive_sites" -> 65;

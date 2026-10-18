@@ -22,6 +22,7 @@ import java.util.*;
 /** Native generation, template loot, progression persistence, puzzle and placement-cap checks. */
 public final class IslandCheck {
     private static int checks;
+    private static final int[] STORY_WIDTHS={129,153,177,201,217,233,249};
     private static final Set<Block> SEABED_STONE = Set.of(Blocks.STONE,Blocks.GRANITE,Blocks.DIORITE,Blocks.ANDESITE,
             Blocks.COAL_ORE,Blocks.COPPER_ORE,Blocks.IRON_ORE);
     private static void check(boolean value,String message) { if(!value){throw new IllegalStateException(message);}checks++; }
@@ -40,7 +41,7 @@ public final class IslandCheck {
                     .anyMatch(holder->holder.is(ResourceKey.create(Registries.STRUCTURE_SET,id("islands")))),"Old ocean settings gain the native island structure set");
             for(String name:List.of("drift_atoll","radio_tower","glasswatch","garden_relay","echo_vault")) {
                 var template=level.getStructureTemplateManager().getOrCreate(id("islands/"+name));
-                int width=name.equals("drift_atoll")?65:name.equals("radio_tower")?113:145;
+                int width=name.equals("drift_atoll")?65:STORY_WIDTHS[java.util.Arrays.asList(ReceiverItem.DESTINATIONS).indexOf(name)];
                 check(template.getSize().equals(new Vec3i(width,name.equals("drift_atoll")?29:48,width)),"Island template loads with native NBT schema: "+name);
                 check(!template.filterBlocks(BlockPos.ZERO,new net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings(),Blocks.KELP).isEmpty(),
                         "Story shoreline includes harvestable underwater kelp: "+name);
@@ -103,7 +104,7 @@ public final class IslandCheck {
             for(int stage=0;stage<ReceiverItem.DESTINATIONS.length;stage++) {
                 String name=ReceiverItem.DESTINATIONS[stage];
                 var template=level.getStructureTemplateManager().getOrCreate(id("islands/"+name));
-                int size=stage==0?113:stage<4?145:stage==4?161:193;
+                int size=STORY_WIDTHS[stage];
                 check(template.getSize().equals(new Vec3i(size,48,size)),"Expanded story template dimensions: "+name);
                 Block landmark=switch(stage){
                     case 0 -> Blocks.OAK_LOG;
