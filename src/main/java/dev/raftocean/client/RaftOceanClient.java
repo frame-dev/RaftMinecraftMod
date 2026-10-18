@@ -67,6 +67,7 @@ public final class RaftOceanClient {
     public static void onMenuScreens(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event) {
         event.register(dev.raftocean.menu.ResearchMenu.TYPE.get(), ResearchScreen::new);
         event.register(dev.raftocean.menu.RadioMenu.TYPE.get(), RadioScreen::new);
+        event.register(dev.raftocean.menu.CompactorMenu.TYPE.get(), CompactorScreen::new);
         event.register(dev.raftocean.menu.NotebookMenu.TYPE.get(), NotebookScreen::new);
         for (var kind : dev.raftocean.entity.RaftPiece.Kind.values()) {
             if (kind.machine()) { event.register(dev.raftocean.menu.SurvivalMenu.type(kind), SurvivalScreen::new); }

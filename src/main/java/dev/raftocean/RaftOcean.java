@@ -56,6 +56,8 @@ public final class RaftOcean {
         dev.raftocean.survival.Automation.initialize();
         dev.raftocean.survival.Batteries.initialize();
         dev.raftocean.story.RaftRadio.initialize();
+        dev.raftocean.salvage.SalvageCompactor.initialize();
+        dev.raftocean.menu.CompactorMenu.initialize();
         dev.raftocean.menu.RadioMenu.TYPES.register(modEventBus);
         dev.raftocean.archery.ArcheryContent.initialize();
         dev.raftocean.progression.Research.initialize();
@@ -101,6 +103,7 @@ public final class RaftOcean {
 
     private void onCommonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(dev.raftocean.story.RaftRadio::register);
+        event.enqueueWork(dev.raftocean.salvage.SalvageCompactor::register);
         event.enqueueWork(() -> dev.raftocean.archery.ArcheryContent.ARROWS.forEach(
                 arrow -> net.minecraft.world.level.block.DispenserBlock.registerProjectileBehavior(arrow.get())));
         LOGGER.info("Raft Ocean: common setup complete.");
@@ -135,6 +138,7 @@ public final class RaftOcean {
                 LOGGER.info("Raft Ocean: {} runtime research assertions passed.", researchChecks);
                 LOGGER.info("Raft Ocean: {} runtime crew/rescue assertions passed.",dev.raftocean.crew.CrewCheck.run(event.getServer().overworld()));
                 LOGGER.info("Raft Ocean: {} runtime outpost trading assertions passed.",dev.raftocean.trading.OutpostCheck.run(event.getServer().overworld()));
+                LOGGER.info("Raft Ocean: {} runtime compactor assertions passed.",dev.raftocean.salvage.CompactorCheck.run(event.getServer().overworld()));
                 int salvageChecks = dev.raftocean.salvage.SalvageCheck.run(event.getServer().overworld());
                 LOGGER.info("Raft Ocean: {} runtime salvage assertions passed.", salvageChecks);
                 LOGGER.info("Raft Ocean: {} runtime cooking-batch assertions passed.",dev.raftocean.survival.CookingBatchCheck.run(event.getServer().overworld()));

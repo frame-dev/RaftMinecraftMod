@@ -24,11 +24,18 @@ The comparisons with the mod and the priority order are our engineering assessme
 
 ## Implemented follow-up
 
+0.13.7 adds priority4's [surplus recycling loop](SALVAGE_RECYCLING.md): original
+battery-powered compactor, exact mixed-material bales and five outpost purchases.
+Native stock migration preserves used offers and restock deadlines. This implements
+a renewable materials-to-shop loop; special catches, coins, reputation and shop
+tiers remain future work. Timings, yields, names and assets are original.
+Mechanic reference rechecked2026-10-18: [Recycler](https://raft.fandom.com/wiki/Recycler)
+and [Trading Post](https://raft.fandom.com/wiki/Trading_Post).
+
 0.13.6 adds the explicit-start/single-batch portion of priority5's
 [cooking interaction](COOKING_BATCHES.md), with saved progress and an automatic
 compatibility option. Current two-food/water/bowl recipes are retained; four-food
-pads and post-cooking serving remain future work. Priority4's recycler and trading
-economy remain unimplemented.
+pads and post-cooking serving remain future work. The fuller coin/reputation trading economy remains future work.
 
 0.13.5 implements priority3's [shared sails and engine load feedback/bands](SAILING_AND_ENGINE_LOAD.md),
 preserving the user's nominal speeds. It includes a legacy engine-scaling toggle;
@@ -114,16 +121,16 @@ The wiki links recyclers to tradeable resource cubes, and special-bait fishing
 to coins and reputation. Reputation unlocks higher trading tiers.
 Source: [Trading Post](https://raft.fandom.com/wiki/Trading_Post).
 
-Current mod: OutpostTrading uses saved, limited-stock native merchant offers
-from trading/outpost.json. Offers exchange fish or valuables directly for goods;
-the merchant reports zero XP and no progress bar. This path does not implement
-the wiki's cube/coin/reputation economy. No recycler implementation was found in
-the current source/resource search.
+Current mod (0.13.7): OutpostTrading uses saved, limited-stock native merchant
+offers from trading/outpost.json. Twenty fish/scrap/valuable barters are retained,
+with five additional salvage-bale purchases. The battery-powered compactor now
+makes bales from renewable materials, providing a surplus-to-shop loop. Native
+merchants still report zero XP and no progress bar: coins, reputation, special
+trading fish and shop tiers are absent.
 
-Recommended economic milestone: an original powered salvage compactor and trade
-tokens, followed by special catches, bait tiers, saved reputation and shop tiers.
-Retain transactional stock handling and crew safety. Do not add a currency without
-renewable acquisition paths and meaningful surplus-material sinks.
+Next economic milestone: special catches, bait tiers, saved reputation and shop
+tiers. Retain transactional stock handling and crew safety. Any further currency
+must have renewable acquisition paths and meaningful sinks.
 
 ## 5. Cooking should reward preparing for an expedition
 

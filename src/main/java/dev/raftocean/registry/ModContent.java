@@ -75,6 +75,8 @@ public final class ModContent {
                         output.accept(PADDLE.get());
                         output.accept(dev.raftocean.story.IslandContent.RECEIVER.get());
                         output.accept(dev.raftocean.story.RaftRadio.ITEM.get());
+                        output.accept(dev.raftocean.salvage.SalvageCompactor.ITEM.get());
+                        output.accept(dev.raftocean.salvage.SalvageCompactor.BALE.get());
                         output.accept(dev.raftocean.story.RaftRadio.ANTENNA_ITEM.get());
                         output.accept(dev.raftocean.story.IslandContent.ANTENNA.get());
                         output.accept(dev.raftocean.story.IslandContent.LONG_RECEIVER.get());

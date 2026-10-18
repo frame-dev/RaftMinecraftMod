@@ -189,6 +189,9 @@ gameMode = "WORLD"
 	researchRequired = true
 
 [trading]
+	# Powered compactor seconds per bale; portable batteries spend one charge per running second.
+	recyclingEnabled = true
+	compactorSeconds = 180
 	# Enable the native barter counter on trading islands.
 	enabled = true
 	# Shared stock refreshes on opening after this many world-game seconds.

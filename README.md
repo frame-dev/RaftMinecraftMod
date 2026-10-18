@@ -1,10 +1,10 @@
-# Raft Ocean — 0.13.6 preview
+# Raft Ocean — 0.13.7 preview
 
-This update adds [deliberate cooking-pot batches](docs/COOKING_BATCHES.md).
-Press Cook for one meal, pause/resume it, and retain progress across saves.
-Spare supplies do not start another batch. Existing recipes, cups, bowls and food
-bonuses remain compatible, with an option to restore automatic cooking.
-Sailing, cooperative building and the open-ended story remain available.
+This update adds a [battery-powered salvage compactor](docs/SALVAGE_RECYCLING.md).
+Turn renewable surplus materials into salvage bales, then barter them for seeds,
+food crops, decorations and diving equipment at outposts. Mixed batches retain
+inputs until completion and pause safely without power or output space.
+Deliberate cooking, sailing, cooperative building and the open-ended story remain.
 
 The [addon API v3](docs/API_V3_UTILITIES.md) supports utility
 inputs, preflighted processing, generator demand and opt-in output collection.
@@ -31,7 +31,7 @@ are not supported by this build.
 
 ## Install and start
 
-Install `raft_ocean-0.13.6.jar` in the matching NeoForge profile's `mods`
+Install `raft_ocean-0.13.7.jar` in the matching NeoForge profile's `mods`
 folder. Keep exactly one Raft Ocean jar installed. Sources jars are for
 developers. Use the same version on every multiplayer client and server.
 

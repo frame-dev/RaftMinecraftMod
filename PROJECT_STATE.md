@@ -8,6 +8,28 @@
 
 - Updated: 2026-10-18.
 
+- Latest development: 0.13.7 preview, surplus recycling and outpost bale purchases.
+  Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.7 requires matching peers.
+  Original API-backed Salvage Compactor owns seven mixed feed slots, a portable
+  battery socket and four-bale output. Exact forty-point batches retain inputs
+  until completion;180powered seconds/charge per bale by default. Pause, empty
+  battery, unavailable feed, disabled config and blocked output retain progress.
+  Dedicated EN/DE panel shows feed, battery, progress and waiting status.
+  Material tiers are item tags; electrical research unlocks the crafting recipe.
+  Five bale-paid purchases append to saved outposts without resetting legacy uses
+  or restock deadline. Previous twenty offers retained. Coins/reputation/fish tiers
+  and wired/foreign-battery compactor support remain future work.
+  Verified30native compactor,50native outpost and9746fresh Ocean assertions;
+  full build/bootstrap and package audits pass.167items/784blocks/7renderers,
+  958native models/57897elements,171fittedGUI plus7inherited transforms,
+  879EN/DE keys,30research projects/63unlocks and7plans/8gates.
+  See docs/SALVAGE_RECYCLING.md and RELEASE_VERIFICATION.md.
+  User speeds, predator delays, harder research and open-ended story retained.
+  Milestones1-11implemented;12preview maintenance. GitHub release remains0.13.0.
+  Pending live new-screen appearance, real co-op latency, older user saves and
+  full playthrough; no new movement bug or collision fix is claimed in this task.
+
 - Latest development: 0.13.6 preview, deliberate cooking-pot batches.
   Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
   ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.6 requires matching peers.

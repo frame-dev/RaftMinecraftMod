@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "raft_ocean:drift_leaf",
+    "minecraft:kelp",
+    "minecraft:dried_kelp"
+  ]
+}

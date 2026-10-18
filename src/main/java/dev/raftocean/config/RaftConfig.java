@@ -8,6 +8,8 @@ public final class RaftConfig {
     private static final ModConfigSpec.Builder B = new ModConfigSpec.Builder();
     public static final ModConfigSpec.BooleanValue OUTPOST_TRADING=bool("trading.enabled",true,"Allow island barter counters. Disabling closes trade access without removing generated islands.");
     public static final ModConfigSpec.IntValue OUTPOST_RESTOCK=integer("trading.restockSeconds",1200,60,86400,"World gameplay seconds between outpost stock refreshes, applied on the next opening. Stock is shared and saved per counter.");
+    public static final ModConfigSpec.BooleanValue RECYCLING=bool("trading.recyclingEnabled",true,"Process surplus materials into salvage bales; disabling preserves inventory and progress.");
+    public static final ModConfigSpec.IntValue COMPACTOR_SECONDS=integer("trading.compactorSeconds",180,30,1800,"Powered seconds per forty-point salvage bale; consumes one native battery charge per running second, pauses without power or output space.");
     public static final ModConfigSpec.BooleanValue AUTOMATION = bool("automation.enabled",true,"Run connected raft water, fuel and electrical networks.");
     public static final ModConfigSpec.IntValue BIOFUEL_ENGINE_TICKS = integer("automation.biofuelEngineTicks",6000,20,200000,"Engine burn ticks per biofuel canister, before engineFuelMultiplier.");
     public static final ModConfigSpec.IntValue GENERATOR_ENERGY = integer("automation.energyPerBiofuel",2000,20,20000,"Energy generated per biofuel canister; stored energy capacity is 2000.");

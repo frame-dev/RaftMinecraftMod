@@ -1,3 +1,47 @@
+# Verification — 0.13.7 preview
+
+Checked2026-10-18: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.7.
+
+- Full build, bootstrap and a fresh Ocean World pass in
+  build/compactor-0.13.7-verified.log (BUILD SUCCESSFUL). The isolated Ocean level
+  is ocean_world_0_13_7_recycling;9746Ocean assertions include the new compactor
+  and outpost suites. User worlds and active client outputs were not modified.
+- Thirty native compactor assertions cover mixed exact-point batches, component
+  protection, native menu slot rules, portable-charge conservation, empty power,
+  blocked/four-bale output, configuration disable, saved progress/manual pause,
+  actual raft serialization, independent restored state, exact-once completion,
+  filtered shift transfer, foreign controls/carried-item rejection, moving reach
+  and invalid detached contexts.
+- Fifty native outpost assertions cover existing payments, exact bale payments,
+  native lamp pickup, wrong/insufficient currency, shared stock, saved uses,
+  optional-field legacy migration with retained uses/restock time, idempotence,
+  restock, concurrent sessions, reach and disabled trading.
+- Existing crafting263560, research781, notebook133, receiver1969,
+  movement2904, carry729, collision425, survival952, cooking64,
+  propulsion1625, navigation161 and creature/config593 checks pass.
+- Native parser accepts958models/57897elements;171GUI silhouettes are centered
+  and fitted, with7inherited aliases. Package coverage167items/784blocks/7renderers
+  passes. Surface audit finds no opaque coplanar overdraw or UV overflow and
+  preserves all prior model envelopes. New models reuse original mod textures.
+- Packaged English/German879key/placeholder parity, three original sounds,
+  bounded configuration examples,30research projects/63unlocks and7schematics/
+  8gates pass. Crafting audit covers all157mod recipes and the existing vanilla
+  2×2/3×3 station paths,12000placements and16005ingredient alternatives.
+- Final JAR SHA256:
+  0CA0834EED88D72E01918744EBA931E595E76CEB7D9BEF51ADA7678F17EF9E16.
+  Verified runtime and sources JARs are copied to build/libs; their hashes match
+  the isolated build outputs. No failed check remains. Known host Perflib/JNA
+  diagnostics recur during hardware reporting and do not fail the mod suites.
+
+Pending: live compactor-screen appearance, actual co-op latency, older user saves,
+full economy balance and playthrough. The compactor currently uses native portable
+batteries, without wired/foreign energy support or a dedicated JEI recycling
+category. Coins, shop reputation and special trading fish are not implemented.
+No public GitHub release or new third-party integration test is claimed.
+
+---
+
 # Verification — 0.13.6 preview
 
 Checked2026-10-18: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,

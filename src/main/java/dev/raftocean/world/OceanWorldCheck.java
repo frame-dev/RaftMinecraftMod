@@ -203,6 +203,8 @@ public final class OceanWorldCheck {
         checks += dev.raftocean.story.NotebookCheck.run(level);
         checks += dev.raftocean.navigation.NavigationLoadCheck.run(level);
         checks += dev.raftocean.survival.CookingBatchCheck.run(level);
+        checks += dev.raftocean.salvage.CompactorCheck.run(level);
+        checks += dev.raftocean.trading.OutpostCheck.run(level);
         checks += dev.raftocean.story.ExplorationCheck.run(level);
         checks += dev.raftocean.trading.OutpostIslandCheck.run(level);
         return checks;

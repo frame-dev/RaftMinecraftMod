@@ -23,7 +23,7 @@ public final class OutpostCheck {
         try {
             dev.raftocean.config.RaftConfig.OUTPOST_TRADING.set(true);
             OutpostData.get(level).stock(level,pos,level.getGameTime()+dev.raftocean.config.RaftConfig.OUTPOST_RESTOCK.get()*20L);
-            var catalog=OutpostTrading.catalog(level);require(catalog.size()==20,"Twenty native data-driven barter offers load");
+            var catalog=OutpostTrading.catalog(level);require(catalog.size()==25,"Twenty-five native data-driven barter offers load");
             for(var offer:catalog)require(offer.getResult().getCount()<=offer.getResult().getMaxStackSize(),"Trade output fits a native stack");
             require(OutpostTrading.open(level,pos,player),"Counter opens native merchant screen without merchant entity");
             require(!OutpostTrading.open(level,pos,other),"One counter serializes competing player sessions");
@@ -42,6 +42,21 @@ public final class OutpostCheck {
             var data=OutpostData.get(level);var ops=level.registryAccess().createSerializationContext(NbtOps.INSTANCE);
             var restored=OutpostData.CODEC.parse(ops,OutpostData.CODEC.encodeStart(ops,data).getOrThrow()).getOrThrow();
             require(restored.stock(level,pos).offers().getFirst().getUses()==first.getUses(),"Native saved stock retains used trades across reload");
+            var jsonOps=level.registryAccess().createSerializationContext(com.mojang.serialization.JsonOps.INSTANCE);
+            var legacy=OutpostData.CODEC.encodeStart(jsonOps,data).getOrThrow().getAsJsonObject();
+            for(var entry:legacy.entrySet()){
+                var stock=entry.getValue().getAsJsonObject();stock.remove("revision");
+                var recipes=stock.getAsJsonObject("offers").getAsJsonArray("Recipes");while(recipes.size()>20)recipes.remove(recipes.size()-1);
+            }
+            var migrated=OutpostData.CODEC.parse(jsonOps,legacy).getOrThrow();var migratedStock=migrated.stock(level,pos);
+            require(migratedStock.offers().size()==25 && migratedStock.offers().getFirst().getUses()==first.getUses()
+                    && migratedStock.restocked()==data.stock(level,pos).restocked(),"Legacy stock gains bale offers while retaining used stock and restock deadline");
+            require(migrated.stock(level,pos).offers().size()==25,"Repeated opening cannot duplicate migrated offers");
+            menu.setSelectionHint(22);menu.getSlot(0).set(new ItemStack(dev.raftocean.salvage.SalvageCompactor.BALE.get(),1));
+            require(menu.getSlot(2).getItem().isEmpty(),"Bale decoration requires full price");
+            menu.getSlot(0).set(new ItemStack(dev.raftocean.salvage.SalvageCompactor.BALE.get(),2));menu.quickMoveStack(player,2);
+            require(menu.getOffers().get(22).getUses()==1 && menu.getSlot(0).getItem().isEmpty()
+                    && player.getInventory().countItem(dev.raftocean.registry.ModContent.structuralItem(dev.raftocean.entity.RaftPiece.Kind.TABLE_LAMP))==1,"Native bale trade buys a usable lamp and consumes exact currency");
             menu.setSelectionHint(10);var decor=menu.getOffers().get(10);
             menu.getSlot(0).set(new ItemStack(dev.raftocean.registry.ModContent.SCRAP.get(),6));
             require(menu.getSlot(2).getItem().isEmpty(),"Valuable decoration requires both payment ingredients");

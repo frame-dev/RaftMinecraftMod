@@ -295,6 +295,71 @@
         "id": "raft_ocean:drift_leaf",
         "count": 4
       }
+    },
+    {
+      "buy": {
+        "id": "raft_ocean:salvage_bale",
+        "count": 1
+      },
+      "sell": {
+        "id": "minecraft:beetroot_seeds",
+        "count": 8
+      },
+      "maxUses": 8,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "raft_ocean:salvage_bale",
+        "count": 1
+      },
+      "sell": {
+        "id": "minecraft:carrot",
+        "count": 4
+      },
+      "maxUses": 8,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "raft_ocean:salvage_bale",
+        "count": 2
+      },
+      "sell": {
+        "id": "raft_ocean:raft_table_lamp",
+        "count": 1
+      },
+      "maxUses": 8,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "raft_ocean:salvage_bale",
+        "count": 2
+      },
+      "sell": {
+        "id": "raft_ocean:raft_woven_rug",
+        "count": 1
+      },
+      "maxUses": 8,
+      "rewardExp": false,
+      "xp": 0
+    },
+    {
+      "buy": {
+        "id": "raft_ocean:salvage_bale",
+        "count": 3
+      },
+      "sell": {
+        "id": "raft_ocean:reef_flippers",
+        "count": 1
+      },
+      "maxUses": 8,
+      "rewardExp": false,
+      "xp": 0
     }
   ]
 }

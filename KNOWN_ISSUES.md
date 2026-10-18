@@ -1,4 +1,8 @@
-# Known limitations — 0.13.6 preview
+# Known limitations — 0.13.7 preview
+
+- Salvage recycling adds a portable-battery compactor and five bale purchases.
+  Coins, shop reputation, special trading fish and recycling JEI category are future
+  work. Existing fish/scrap offers remain usable; the input tiers use data-pack tags.
 
 - Cooking pots now wait for Cook and stop after one batch. Existing automation can
   retain continuous processing with survival.manualCooking=false. Four-food pads

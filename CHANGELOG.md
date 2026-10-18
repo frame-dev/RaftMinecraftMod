@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.13.7 preview — surplus recycling and outpost purchases
+
+- Original battery-powered Salvage Compactor and bound Salvage Bale models.
+- Exact mixed forty-point batches use seven feed slots; native battery in slot8,
+  four-bale buffer in slot9. Inputs stay intact until atomic completion.
+- Dedicated workshop UI shows feed points, charge, progress and Pause/Resume.
+- Saved progress pauses without materials, power, output space or when disabled.
+- Data-pack feedstock tiers, configurable enable/time, electrical research recipe.
+- Five bale purchases: beetroot seeds, carrots, table lamps, rugs and reef flippers.
+- Old outpost stock gains these offers once without resetting uses or restock time.
+- Native batch/menu/save/trade regressions; English/German text, API3 and handshake13.7.
+- Speeds, predator delays, harder research and the open-ended story retained.
+
 ## 0.13.6 preview — deliberate cooking batches
 
 - Cook prepares one cooking-pot batch and stops after completion.
