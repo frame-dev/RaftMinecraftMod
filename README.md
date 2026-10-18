@@ -1,10 +1,10 @@
-# Raft Ocean — 0.13.5 preview
+# Raft Ocean — 0.13.6 preview
 
-This update adds [wind-limited sails and foundation-load engine handling](docs/SAILING_AND_ENGINE_LOAD.md).
-Extra sails share their drive instead of stacking speed. Engines show capacity,
-slow down under heavy load and stall when overloaded; six powered engines support
-large rafts. Your original 1.5/1.0/1.8 m/s engine/sail/paddle base speeds are retained.
-The expedition notebook, cooperative building and open-ended story remain available.
+This update adds [deliberate cooking-pot batches](docs/COOKING_BATCHES.md).
+Press Cook for one meal, pause/resume it, and retain progress across saves.
+Spare supplies do not start another batch. Existing recipes, cups, bowls and food
+bonuses remain compatible, with an option to restore automatic cooking.
+Sailing, cooperative building and the open-ended story remain available.
 
 The [addon API v3](docs/API_V3_UTILITIES.md) supports utility
 inputs, preflighted processing, generator demand and opt-in output collection.
@@ -31,7 +31,7 @@ are not supported by this build.
 
 ## Install and start
 
-Install `raft_ocean-0.13.5.jar` in the matching NeoForge profile's `mods`
+Install `raft_ocean-0.13.6.jar` in the matching NeoForge profile's `mods`
 folder. Keep exactly one Raft Ocean jar installed. Sources jars are for
 developers. Use the same version on every multiplayer client and server.
 

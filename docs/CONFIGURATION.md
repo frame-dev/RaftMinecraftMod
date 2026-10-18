@@ -313,3 +313,9 @@ load bands and a six-powered-engine bypass. False restores older engine scaling.
 `navigation.engineFoundationCapacity` retains its saved value (default100, range1–1024).
 See [navigation details and testing](SAILING_AND_ENGINE_LOAD.md). Sail drive never
 stacks with sail count. Existing speed, wind, fuel and current multipliers remain.
+
+## Cooking batches — 0.13.6
+
+`survival.manualCooking` defaults to true: one recipe per Cook press. Set it to
+false for earlier automatic cooking and automation setups. Saved active pots
+resume one batch; idle pots wait. See [batch controls and migration](COOKING_BATCHES.md).

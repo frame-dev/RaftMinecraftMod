@@ -119,7 +119,7 @@ public final class SurvivalCheck {
             advance(pot, RaftPiece.Kind.COOKING_POT, 30);
             require(inventory.getItem(0).getCount() == 1 && inventory.getItem(3).getCount() == 8 && inventory.getItem(4).isEmpty(),
                     "Blocked cup byproduct prevents partial stew creation"); checks++;
-            inventory.setItem(5, ItemStack.EMPTY); advance(pot, RaftPiece.Kind.COOKING_POT, 20);
+            inventory.setItem(5, ItemStack.EMPTY); SurvivalMachines.startCooking(inventory,level); advance(pot, RaftPiece.Kind.COOKING_POT, 20);
             require(inventory.getItem(4).is(SurvivalContent.STEW.get()) && inventory.getItem(5).is(SurvivalContent.EMPTY_CUP.get())
                     && inventory.getItem(0).isEmpty() && inventory.getItem(1).isEmpty() && inventory.getItem(2).isEmpty() && inventory.getItem(6).isEmpty(),
                     "Pot consumes food/water/bowl once and returns reusable cup"); checks++;

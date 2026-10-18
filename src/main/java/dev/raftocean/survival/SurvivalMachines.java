@@ -28,6 +28,10 @@ public final class SurvivalMachines {
         RaftStorage inventory = raft.storage(pos);
         if (inventory == null) { return; }
         if (inventory.paused) { inventory.status="off"; return; }
+        if(kind==RaftPiece.Kind.COOKING_POT && dev.raftocean.config.RaftConfig.MANUAL_COOKING.get() && !inventory.cookingRequested){
+            if(!Set.of("recipe","cup","water","output","cook_changed").contains(inventory.status))
+                inventory.status=inventory.getItem(4).isEmpty()?"cook_ready":"cook_done";return;
+        }
         inventory.status = "supplies";
         acceptCup(inventory, kind);
         if (kind.purifier() || kind == RaftPiece.Kind.RAIN_COLLECTOR) {
@@ -74,6 +78,10 @@ public final class SurvivalMachines {
             if (results.size() > outputs.length) { rejectRecipe(inventory, true); return; }
             duration = holder.value().duration(); key = holder.id().identifier().toString();
         }
+        if(kind==RaftPiece.Kind.COOKING_POT && dev.raftocean.config.RaftConfig.MANUAL_COOKING.get()
+                && !inventory.work.isEmpty() && !key.equals(inventory.work)){
+            inventory.cookingRequested=false;reset(inventory);inventory.status="cook_changed";inventory.setChanged();return;
+        }
         inventory.duration = duration;
         if (!key.equals(inventory.work)) { inventory.work = key; inventory.progress = 0; }
         for (int i = 0; i < results.size(); i++) {
@@ -103,8 +111,28 @@ public final class SurvivalMachines {
                 else { inventory.getItem(slot).grow(results.get(i).getCount()); }
             }
             inventory.progress = 0;
+            if(kind==RaftPiece.Kind.COOKING_POT){inventory.cookingRequested=false;
+                if(dev.raftocean.config.RaftConfig.MANUAL_COOKING.get())inventory.status="cook_done";}
         }
         inventory.setChanged();
+    }
+    /** Queue exactly one validated recipe; no items, water or fuel commit on a button click. */
+    public static boolean startCooking(RaftStorage inventory,ServerLevel level){
+        if(inventory.kind()!=RaftPiece.Kind.COOKING_POT || inventory.paused || inventory.cookingRequested
+                || !dev.raftocean.config.RaftConfig.MANUAL_COOKING.get())return false;
+        boolean cup=inventory.getItem(2).is(SurvivalContent.FRESH_WATER.get());
+        if(inventory.cleanWater<=0 && !cup){inventory.status="water";return false;}
+        if(cup && inventory.cleanWater<CupTransfers.CAPACITY && !accepts(inventory.getItem(5),new ItemStack(SurvivalContent.EMPTY_CUP.get()))){inventory.status="cup";return false;}
+        var input=CraftingInput.of(4,1,List.of(inventory.getItem(0),inventory.getItem(1),new ItemStack(SurvivalContent.FRESH_WATER.get()),inventory.getItem(6)));
+        var holder=level.recipeAccess().getRecipeFor(ProcessingRecipe.type(RaftPiece.Kind.COOKING_POT),input,level).orElse(null);
+        if(holder==null){inventory.status="recipe";return false;}
+        var result=holder.value().assemble(input);
+        if(holder.value().byproducts().stream().anyMatch(s->!s.create().is(SurvivalContent.EMPTY_CUP.get()))
+                || !accepts(inventory.getItem(4),result)){inventory.status="output";return false;}
+        String key=holder.id().identifier().toString();
+        if(!key.equals(inventory.work))inventory.progress=0;
+        inventory.work=key;inventory.duration=holder.value().duration();inventory.cookingRequested=true;
+        inventory.status="cook_queued";inventory.setChanged();return true;
     }
     private static double speed(RaftPiece.Kind kind) {
         var cfg = dev.raftocean.config.RaftConfig.PROCESSING;
@@ -127,6 +155,7 @@ public final class SurvivalMachines {
     }
     private static void rejectRecipe(RaftStorage inventory, boolean supplied) {
         reset(inventory);
+        if(inventory.kind()==RaftPiece.Kind.COOKING_POT && dev.raftocean.config.RaftConfig.MANUAL_COOKING.get())inventory.cookingRequested=false;
         inventory.status = supplied ? "recipe" : "supplies";
     }
     private static void reset(RaftStorage inventory) { inventory.progress = 0; inventory.duration = 0; inventory.work = ""; }

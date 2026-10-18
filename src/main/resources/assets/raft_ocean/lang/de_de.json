@@ -848,5 +848,13 @@
   "raft_ocean.nav.sail_state.2": "Windkraft",
   "raft_ocean.nav.sail_state.3": "Windstill",
   "raft_ocean.config.navigation.engineLoadLimits": "Motorkapazitätsgrenzen",
-  "raft_ocean.nav.sail_state.4": "Antrieb aus"
+  "raft_ocean.nav.sail_state.4": "Antrieb aus",
+  "raft_ocean.ui.cook": "Kochen",
+  "raft_ocean.ui.cook_batch": "Portion",
+  "raft_ocean.ui.cook_tip": "Eine Portion kochen, dann stoppen. Nutze das bisherige Rezept mit Essen, Frischwasser und Schüssel. Pause erhält den Fortschritt. manualCooking deaktivieren, um automatisch zu kochen.",
+  "raft_ocean.ui.status.cook_ready": "Für eine Portion Kochen drücken",
+  "raft_ocean.ui.status.cook_done": "Fertig; für mehr erneut Kochen drücken",
+  "raft_ocean.ui.status.cook_changed": "Rezept geändert; erneut Kochen drücken",
+  "raft_ocean.ui.status.cook_queued": "Portion vorgemerkt",
+  "raft_ocean.config.survival.manualCooking": "Manuelle Kochportionen"
 }

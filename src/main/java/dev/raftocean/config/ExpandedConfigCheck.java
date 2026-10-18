@@ -56,7 +56,9 @@ public final class ExpandedConfigCheck {
                     }
                     default -> { }
                 }
-                perMachine.get(i).set(1.5);SurvivalMachines.process(raft,cell,kind,level);
+                perMachine.get(i).set(1.5);
+                if(kind==RaftPiece.Kind.COOKING_POT)SurvivalMachines.startCooking(storage,level);
+                SurvivalMachines.process(raft,cell,kind,level);
                 require(storage.progress==60,"Independent machine speed multiplies global processing speed: "+kind);checks++;
                 require(storage.cleanWater==1 && (kind!=RaftPiece.Kind.PURIFIER || storage.rawWater==1),"Speed does not prematurely consume water: "+kind);checks++;
                 perMachine.get(i).set(1.0);

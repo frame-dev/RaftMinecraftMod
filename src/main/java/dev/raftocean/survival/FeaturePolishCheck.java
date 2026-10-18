@@ -119,7 +119,8 @@ public final class FeaturePolishCheck {
             var ingredients = pot.storage(cell); ingredients.cleanWater = 1;
             ingredients.setItem(0, new ItemStack(Items.STONE)); ingredients.setItem(1, new ItemStack(Items.CARROT));
             ingredients.setItem(6, new ItemStack(Items.BOWL)); ingredients.setItem(3, new ItemStack(Items.OAK_PLANKS));
-            SurvivalMachines.tick(pot);
+            SurvivalMachines.startCooking(ingredients,level);
+            if(!RaftConfig.MANUAL_COOKING.get())SurvivalMachines.tick(pot);
             require(ingredients.status.equals("recipe") && ingredients.cleanWater == 1 && ingredients.fuelTicks == 0
                     && ingredients.getItem(6).is(Items.BOWL), "Invalid multi-input recipe preserves water, bowl and fuel"); checks++;
             var menu = new dev.raftocean.menu.SurvivalMenu(88,

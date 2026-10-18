@@ -1,3 +1,36 @@
+# Verification — 0.13.6 preview
+
+Checked2026-10-18: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.6.
+
+- New native cooking-batch suite64 assertions passes for all five loaded pot recipes,
+  idle fuel/supply conservation, one queued batch, duplicate requests, exact output,
+  explicit second batches, native menu ownership/carried-item rejection, pause,
+  actual raft save/load, older-tag migration, recipe switching, blocked cup/output,
+  physical cup return and automatic compatibility mode.
+- Full final build/bootstrap passed: build/cooking-0.13.6-final.log. Fresh Ocean
+  World9666 passed in build/cooking-0.13.6-verified.log using an isolated new level.
+  The combined earlier run failed its bootstrap configuration-speed fixture, which
+  still assumed automatic pot startup; the final fixture explicitly starts cooking
+  and the unchanged expected speed assertion passes. That test-only correction
+  followed the successful Ocean run; gameplay Java is unchanged between those proofs.
+- Existing crafting263374, research778, receiver1969, notebook133, propulsion1625,
+  navigation161, movement2904 and other survival/building/AI suites pass.
+- Native model parser and geometry/motion checks pass with existing955models and
+  57828elements,168fittedGUI transforms plus7inherited transforms. No model, texture,
+  recipe or loot files changed. Client code remains in client classes.
+- An additional full build/bootstrap with manualCooking=false passed, including
+  invalid-recipe feedback in automatic mode. Latest artifact evidence is
+  build/cooking-0.13.6-auto-verified.log. Packaged checks pass for858English/German
+  keys, sound/config presets,30research projects/62unlocks and7schematics/8gates.
+
+Pending: live Cook-button layout, actual co-op latency, older user saves and a full
+playthrough. Four-food pads and collecting a finished dish with a bowl afterward
+are not implemented. This delivery keeps the current two-food/water/bowl recipes.
+No new third-party integration test or public GitHub release is claimed.
+
+---
+
 # Verification — 0.13.5 preview
 
 Checked2026-10-18: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,

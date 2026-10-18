@@ -137,6 +137,7 @@ public final class RaftOcean {
                 LOGGER.info("Raft Ocean: {} runtime outpost trading assertions passed.",dev.raftocean.trading.OutpostCheck.run(event.getServer().overworld()));
                 int salvageChecks = dev.raftocean.salvage.SalvageCheck.run(event.getServer().overworld());
                 LOGGER.info("Raft Ocean: {} runtime salvage assertions passed.", salvageChecks);
+                LOGGER.info("Raft Ocean: {} runtime cooking-batch assertions passed.",dev.raftocean.survival.CookingBatchCheck.run(event.getServer().overworld()));
                 int survivalChecks = dev.raftocean.survival.SurvivalCheck.run(event.getServer().overworld());
                 LOGGER.info("Raft Ocean: {} runtime survival assertions passed.", survivalChecks);
                 LOGGER.info("Raft Ocean: {} runtime propulsion-load assertions passed.",dev.raftocean.navigation.NavigationLoadCheck.run(event.getServer().overworld()));

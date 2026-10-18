@@ -8,6 +8,22 @@
 
 - Updated: 2026-10-18.
 
+- Latest development: 0.13.6 preview, deliberate cooking-pot batches.
+  Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.6 requires matching peers.
+  Explicit Cook queues one validated existing recipe; duplicate/foreign requests
+  refused. Completion stops without consuming spare supplies. Pause/progress/fuel
+  and queued intent survive saves; old active pots resume one batch, idle pots wait.
+  Recipe changes cancel previous progress. Existing water/cup/bowl behavior and
+  all five pot recipes retained; manualCooking=false restores automatic processing.
+  Verified64cooking-batch assertions and9666fresh Ocean World assertions; full final
+  build/bootstrap passes. Existing navigation, movement, crafting and research retained.
+  See docs/COOKING_BATCHES.md and RELEASE_VERIFICATION.md. No assets or recipes added.
+  User speeds, difficulty delays, harder research and open-ended story unchanged.
+  Milestones1-11implemented;12preview maintenance. GitHub release remains0.13.0.
+  Pending live GUI/co-op/older-save testing. Four-food pads, post-cooking serving
+  and the recycling/trading economy remain future work.
+
 - Latest development: 0.13.5 preview, wind-limited sails and engine load management.
   Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
   ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.5 requires matching peers.

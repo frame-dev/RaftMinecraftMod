@@ -848,5 +848,13 @@
   "raft_ocean.nav.sail_state.2": "Wind drive",
   "raft_ocean.nav.sail_state.3": "No wind",
   "raft_ocean.config.navigation.engineLoadLimits": "Engine capacity limits",
-  "raft_ocean.nav.sail_state.4": "Drive off"
+  "raft_ocean.nav.sail_state.4": "Drive off",
+  "raft_ocean.ui.cook": "Cook",
+  "raft_ocean.ui.cook_batch": "Batch",
+  "raft_ocean.ui.cook_tip": "Prepare one batch, then stop. Use the existing food, fresh water and bowl recipe. Pause preserves progress. Disable manualCooking for automatic processing.",
+  "raft_ocean.ui.status.cook_ready": "Press Cook to prepare a batch",
+  "raft_ocean.ui.status.cook_done": "Batch finished; press Cook for another",
+  "raft_ocean.ui.status.cook_changed": "Recipe changed; press Cook again",
+  "raft_ocean.ui.status.cook_queued": "Batch queued",
+  "raft_ocean.config.survival.manualCooking": "Manual cooking batches"
 }

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.13.6 preview — deliberate cooking batches
+
+- Cook prepares one cooking-pot batch and stops after completion.
+- Saved queue and pause/resume retain progress and fuel across reloads.
+- Server preflight validates recipes, water, cup returns and output space.
+- Changing recipes cancels previous progress. Existing food/cup/bowl recipes remain.
+- Older active pots resume one batch; idle pots wait. Setting manualCooking to false
+  restores continuous automatic cooking. Storage indices and addon API3 retained.
+- English/German controls and handshake13.6; matching clients/server required.
+- Story, research difficulty, custom speeds and predator delays remain unchanged.
+
 ## 0.13.5 preview — sailing and engine capacity
 
 - Sails share a wind-limited drive budget, with crosswind steering, opposed-trim

@@ -24,6 +24,12 @@ The comparisons with the mod and the priority order are our engineering assessme
 
 ## Implemented follow-up
 
+0.13.6 adds the explicit-start/single-batch portion of priority5's
+[cooking interaction](COOKING_BATCHES.md), with saved progress and an automatic
+compatibility option. Current two-food/water/bowl recipes are retained; four-food
+pads and post-cooking serving remain future work. Priority4's recycler and trading
+economy remain unimplemented.
+
 0.13.5 implements priority3's [shared sails and engine load feedback/bands](SAILING_AND_ENGINE_LOAD.md),
 preserving the user's nominal speeds. It includes a legacy engine-scaling toggle;
 its averaged propulsion and slow-band speed intentionally differ from Raft's exact

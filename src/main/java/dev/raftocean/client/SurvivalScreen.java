@@ -15,10 +15,16 @@ public final class SurvivalScreen extends AbstractContainerScreen<SurvivalMenu> 
     private static final int INK = 0xFF152831, PANEL = 0xFF213B43, LIGHT = 0xFFECE9D5, MUTED = 0xFFABC4C4;
     private Button tab;
     private Button pause;
+    private Button cook;
     public SurvivalScreen(SurvivalMenu menu, Inventory inventory, Component title) { super(menu, inventory, title, 246, 222); }
 
     @Override protected void init() {
         super.init();
+        if(menu.kind()==RaftPiece.Kind.COOKING_POT){
+            cook=addRenderableWidget(Button.builder(Component.translatable("raft_ocean.ui.cook"),button->{
+                if(minecraft.gameMode!=null && menu.getCarried().isEmpty())minecraft.gameMode.handleInventoryButtonClick(menu.containerId,2);
+            }).bounds(leftPos+115,topPos+7,54,18).tooltip(Tooltip.create(Component.translatable("raft_ocean.ui.cook_tip"))).build());
+        }
         tab = addRenderableWidget(Button.builder(Component.translatable("raft_ocean.ui.supplies"), button -> {
             if (minecraft.gameMode != null && menu.getCarried().isEmpty()) {
                 minecraft.gameMode.handleInventoryButtonClick(menu.containerId, 0);
@@ -34,6 +40,9 @@ public final class SurvivalScreen extends AbstractContainerScreen<SurvivalMenu> 
     }
 
     @Override public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partial) {
+        if(cook!=null){cook.active=menu.getCarried().isEmpty() && !menu.paused() && !menu.cookingRequested()
+                    && dev.raftocean.config.RaftConfig.MANUAL_COOKING.get();
+            cook.setMessage(Component.translatable(menu.cookingRequested()?"raft_ocean.ui.cook_batch":"raft_ocean.ui.cook"));}
         tab.active = menu.getCarried().isEmpty();
         pause.visible = !menu.suppliesPage();
         pause.active = menu.getCarried().isEmpty();
@@ -126,7 +135,7 @@ public final class SurvivalScreen extends AbstractContainerScreen<SurvivalMenu> 
         }
     }
     @Override protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-        graphics.text(font, font.plainSubstrByWidth(title.getString(),154), 12, 12, LIGHT);
+        graphics.text(font, font.plainSubstrByWidth(title.getString(),menu.kind()==RaftPiece.Kind.COOKING_POT?96:154), 12, 12, LIGHT);
         graphics.text(font, playerInventoryTitle, 43, 125, MUTED);
         if (menu.suppliesPage()) {
             int y=96;

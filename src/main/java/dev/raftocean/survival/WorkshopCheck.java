@@ -56,6 +56,7 @@ public final class WorkshopCheck {
                 inventory.setItem(2,new ItemStack(SurvivalContent.FRESH_WATER.get()));inventory.setItem(6,new ItemStack(Items.BOWL));
                 inventory.setItem(3,new ItemStack(Items.OAK_PLANKS,4));
                 var colliders=raft.getCollisionBoxes();
+                SurvivalMachines.startCooking(inventory,level);
                 SurvivalMachines.process(raft,CELL,RaftPiece.Kind.COOKING_POT,level);raft.machines().sync();
                 require(raft.machines().at(CELL).working() && raft.machines().at(CELL).progress()>0 && !raft.machines().at(CELL).ready(),"Cooking drives shared working animation");checks++;
                 for(int step=0;step<40;step++){SurvivalMachines.process(raft,CELL,RaftPiece.Kind.COOKING_POT,level);}

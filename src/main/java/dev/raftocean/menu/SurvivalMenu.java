@@ -21,12 +21,12 @@ import net.neoforged.neoforge.registries.*;
 public final class SurvivalMenu extends AbstractContainerMenu {
     public static final DeferredRegister<MenuType<?>> TYPES = DeferredRegister.create(Registries.MENU, "raft_ocean");
     private static final Map<RaftPiece.Kind, DeferredHolder<MenuType<?>, MenuType<SurvivalMenu>>> REGISTERED = new EnumMap<>(RaftPiece.Kind.class);
-    public static final List<String> STATUSES = List.of("supplies", "working", "fuel", "output", "rain", "light", "water", "full", "cup", "power", "network", "off", "recipe");
+    public static final List<String> STATUSES = List.of("supplies", "working", "fuel", "output", "rain", "light", "water", "full", "cup", "power", "network", "off", "recipe", "cook_ready", "cook_done", "cook_changed", "cook_queued");
     static {
         for (var kind : RaftPiece.Kind.values()) {
             if (kind.machine()) {
                 REGISTERED.put(kind, TYPES.register(kind.id(), () -> new MenuType<>(
-                        (id, inventory) -> new SurvivalMenu(id, inventory, kind, new SimpleContainer(27), new SimpleContainerData(8)),
+                        (id, inventory) -> new SurvivalMenu(id, inventory, kind, new SimpleContainer(27), new SimpleContainerData(9)),
                         FeatureFlags.VANILLA_SET)));
             }
         }
@@ -52,11 +52,12 @@ public final class SurvivalMenu extends AbstractContainerMenu {
                     case 5 -> page;
                     case 6 -> storage.energy;
                     case 7 -> storage.paused ? 1 : 0;
+                    case 8 -> storage.cookingRequested ? 1 : 0;
                     default -> 0;
                 };
             }
             public void set(int index, int value) { if (index == 5) { page = Math.clamp(value, 0, 1); } }
-            public int getCount() { return 8; }
+            public int getCount() { return 9; }
         });
     }
 
@@ -83,6 +84,7 @@ public final class SurvivalMenu extends AbstractContainerMenu {
 
     public RaftPiece.Kind kind() { return kind; }
     public Map<Integer, Layout> layout() { return layout; }
+    public boolean cookingRequested(){return data.get(8)!=0;}
     public boolean paused() { return data.get(7) != 0; }
     public boolean suppliesPage() { return data.get(5) == 1; }
     public int progress() { return data.get(0); }
@@ -189,7 +191,12 @@ public final class SurvivalMenu extends AbstractContainerMenu {
 
     @Override public boolean stillValid(Player player) { return storage.stillValid(player); }
     @Override public boolean clickMenuButton(Player player, int button) {
-        if ((button != 0 && button != 1) || player.isSpectator() || !stillValid(player) || !getCarried().isEmpty()) { return false; }
+        if ((button < 0 || button > 2) || owner!=player || player.isSpectator() || !stillValid(player) || !getCarried().isEmpty()) { return false; }
+        if(button==2){
+            if(kind!=RaftPiece.Kind.COOKING_POT || !(storage instanceof RaftStorage machine)
+                    || !(owner.level() instanceof net.minecraft.server.level.ServerLevel level))return false;
+            boolean started=dev.raftocean.survival.SurvivalMachines.startCooking(machine,level);broadcastChanges();return started;
+        }
         if (button == 0) { data.set(5, suppliesPage() ? 0 : 1); }
         else {
             if (!(storage instanceof RaftStorage machine)) { return false; }

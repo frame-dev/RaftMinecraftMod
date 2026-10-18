@@ -3,6 +3,8 @@
 gameMode = "WORLD"
 
 [survival]
+	# Prepare one cooking-pot batch per Cook press; false restores automatic cooking.
+	manualCooking = true
 	preparedMealBonuses = true
 	mealBonusTicks = 2400
 	# Hydration restored by one fresh-water cup.

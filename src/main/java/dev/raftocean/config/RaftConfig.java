@@ -24,6 +24,7 @@ public final class RaftConfig {
     public static final ModConfigSpec.BooleanValue PEACEFUL_THIRST = bool("survival.thirstInPeaceful",true,"Allow thirst drain in Peaceful. Dehydration damage is always disabled there; false restores hydration.");
     public static final ModConfigSpec.BooleanValue THIRST = bool("survival.thirstEnabled", true, "Enable hydration drain and dehydration damage.");
     public static final ModConfigSpec.IntValue THIRST_PERIOD = integer("survival.thirstPeriodTicks",600,100,12000,"Ticks per thirst point; sprinting drains twice as fast.");
+    public static final ModConfigSpec.BooleanValue MANUAL_COOKING = bool("survival.manualCooking",true,"Cooking pots prepare one batch per Cook button press. False restores automatic pot processing. Existing ingredients and bowl recipes are retained.");
     public static final ModConfigSpec.DoubleValue PROCESSING = decimal("survival.processingSpeed",1,.1,4,"Machine processing speed multiplier; fuel still burns in real ticks.");
     public static final ModConfigSpec.DoubleValue CURRENT = decimal("navigation.currentMultiplier",1,0,3,"Multiply saved raft current; zero disables natural drift.");
     public static final ModConfigSpec.DoubleValue WIND = decimal("navigation.windMultiplier",1,0,2,"Wind strength multiplier.");

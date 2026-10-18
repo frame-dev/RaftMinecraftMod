@@ -22,6 +22,7 @@ public final class RaftStorage extends SimpleContainer {
     public RaftPiece.Kind kind() { return kind; }
     public boolean enabled;
     public boolean paused;
+    public boolean cookingRequested;
     public int trim;
     public String work = "";
     public float fuelSpeed = 1;

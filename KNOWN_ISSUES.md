@@ -1,4 +1,8 @@
-# Known limitations — 0.13.5 preview
+# Known limitations — 0.13.6 preview
+
+- Cooking pots now wait for Cook and stop after one batch. Existing automation can
+  retain continuous processing with survival.manualCooking=false. Four-food pads
+  and bowl collection after cooking remain future work; existing recipes are retained.
 
 - Automated checks pass, but live client appearance, real network latency,
   large-raft performance and a complete multiplayer playthrough still require

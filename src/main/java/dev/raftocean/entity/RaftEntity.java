@@ -898,6 +898,7 @@ public final class RaftEntity extends Entity {
                 entry.putInt("Progress", inventory.progress);
                 entry.putInt("Duration", inventory.duration);
                 entry.putBoolean("Paused", inventory.paused);
+                entry.putBoolean("CookingRequested", inventory.cookingRequested);
                 entry.putInt("Fuel", inventory.fuelTicks);
                 entry.putInt("FuelCapacity", inventory.fuelCapacity);
                 entry.putInt("RawWater", inventory.rawWater);
@@ -933,6 +934,7 @@ public final class RaftEntity extends Entity {
                 inventory.progress = Math.clamp(entry.getIntOr("Progress", 0), 0, 200000);
                 inventory.duration = Math.clamp(entry.getIntOr("Duration", 0), 0, 200000);
                 inventory.paused = entry.getBooleanOr("Paused", false);
+                inventory.cookingRequested = inventory.kind()==RaftPiece.Kind.COOKING_POT && entry.getBooleanOr("CookingRequested", inventory.progress>0);
                 inventory.fuelTicks = Math.clamp(entry.getIntOr("Fuel", 0), 0, 200000);
                 inventory.fuelCapacity = Math.clamp(entry.getIntOr("FuelCapacity", inventory.fuelTicks), 0, 200000);
                 inventory.rawWater = Math.clamp(entry.getIntOr("RawWater", 0), 0, 4);
