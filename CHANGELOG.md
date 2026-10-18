@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.13.5 preview — sailing and engine capacity
+
+- Sails share a wind-limited drive budget, with crosswind steering, opposed-trim
+  cancellation and no speed stacking or upwind propulsion. No cargo-mass sail penalty.
+- Engines use configurable full/half/stalled foundation-load bands; six fueled
+  enabled engines bypass capacity. Shared drive preserves the1.5m/s nominal base.
+- Stalled engines preserve fuel. Existing mounting, reverse, anchors and paddles remain.
+- Engine capacity/status and sail wind feedback added to bilingual controls.
+- engineLoadLimits=false restores earlier engine scaling; prior saves are retained.
+- User speeds, difficulty delays, research and open-ended story remain unchanged.
+- API3 unchanged; handshake13.5 requires matching peers.
+
+
 ## 0.13.4 preview — expedition notebook
 
 - Archive all 28 collected original field notes permanently without consuming books.

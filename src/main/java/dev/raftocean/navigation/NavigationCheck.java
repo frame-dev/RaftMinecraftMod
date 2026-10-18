@@ -122,9 +122,10 @@ public final class NavigationCheck {
             wheelMenu.clickMenuButton(player,9);require(navigation.heading()==raft.getYRot(),"Wheel reset holds present hull heading");checks++;
             require(!anchorMenu.clickMenuButton(player,9) && !driveMenu.clickMenuButton(player,4),"Fine controls cannot steer an anchor or engine menu");checks++;
             raft.storage(SAIL).enabled = false;
-            raft.setCurrent(.005,.002);raft.storage(SAIL).enabled=true;raft.storage(SAIL).trim=45;
+            raft.setCurrent(.005,.002);raft.storage(SAIL).enabled=true;navigation.target(true);
+            raft.storage(SAIL).trim=(int)Math.floor(RaftNavigation.normalize(navigation.windHeading()+90));
             Vec3 trimmed=navigation.target(true);
-            require(trimmed.x<0,"Trimmed close reach counter-steers default eastward current");checks++;
+            require(trimmed.x<0,"Legal crosswind trim counter-steers default eastward current");checks++;
             raft.storage(SAIL).enabled=false;
             raft.setCurrent(0,0);
             require(navigation.target(true).lengthSqr() == 0 && engine.fuelTicks == 0, "Idle unfueled raft has no drive"); checks++;

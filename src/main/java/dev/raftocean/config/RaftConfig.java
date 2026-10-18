@@ -27,6 +27,7 @@ public final class RaftConfig {
     public static final ModConfigSpec.DoubleValue PROCESSING = decimal("survival.processingSpeed",1,.1,4,"Machine processing speed multiplier; fuel still burns in real ticks.");
     public static final ModConfigSpec.DoubleValue CURRENT = decimal("navigation.currentMultiplier",1,0,3,"Multiply saved raft current; zero disables natural drift.");
     public static final ModConfigSpec.DoubleValue WIND = decimal("navigation.windMultiplier",1,0,2,"Wind strength multiplier.");
+    public static final ModConfigSpec.BooleanValue ENGINE_LOAD_LIMITS = bool("navigation.engineLoadLimits",true,"Engine capacity bands: full through capacity, half through 110%, then stall; six fueled enabled engines bypass load. False restores legacy additive engine scaling.");
     public static final ModConfigSpec.IntValue ENGINE_FOUNDATIONS = integer("navigation.engineFoundationCapacity",100,1,1024,"Foundation load per engine at full thrust; additional engines recover power on larger rafts.");
     public static final ModConfigSpec.DoubleValue MAX_SPEED = decimal("navigation.maxSpeed",.16,.02,.20,"Maximum requested horizontal blocks per tick.");
     public static final ModConfigSpec.DoubleValue TURN_SPEED = decimal("navigation.turnSpeed",.75,.1,1,"Maximum hull degrees per tick.");

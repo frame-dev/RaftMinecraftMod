@@ -833,5 +833,20 @@
   "raft_ocean.notebook.route": "Next signal",
   "raft_ocean.notebook.empty": "No entries recovered yet. Collect field-note books or read an island journal to add to your archive.",
   "raft_ocean.notebook.recorded": "Archived: %s",
-  "raft_ocean.notebook.overview": "Next known signal: %s\n\nJourney records: %s / %s\nField notes: %s / %s\n\nUse the receiver to follow the signal. Read island journals to advance your journey. Collected field notes remain here even after their books are lost.\n\nThe ocean still holds unanswered signals; this voyage has no final ending."
+  "raft_ocean.notebook.overview": "Next known signal: %s\n\nJourney records: %s / %s\nField notes: %s / %s\n\nUse the receiver to follow the signal. Read island journals to advance your journey. Collected field notes remain here even after their books are lost.\n\nThe ocean still holds unanswered signals; this voyage has no final ending.",
+  "raft_ocean.nav.load": "Load %s / %s",
+  "raft_ocean.nav.load_help": "Capacity counts enabled, fueled engines. Full power through capacity; half through 110%; then stalled. Six powered engines bypass the limit. Stalled engines preserve fuel. Match engine directions.",
+  "raft_ocean.nav.sail_help": "Extra sails do not stack speed. Opposing trims counteract each other. Sails can steer across the wind, but cannot drive upwind.",
+  "raft_ocean.nav.engine_state.0": "Stopped",
+  "raft_ocean.nav.engine_state.1": "Needs fuel / drive disabled",
+  "raft_ocean.nav.engine_state.2": "Full drive",
+  "raft_ocean.nav.engine_state.3": "Heavy load: half drive",
+  "raft_ocean.nav.engine_state.4": "Overloaded: stalled",
+  "raft_ocean.nav.engine_state.5": "Legacy load scaling",
+  "raft_ocean.nav.sail_state.0": "Folded",
+  "raft_ocean.nav.sail_state.1": "Headwind",
+  "raft_ocean.nav.sail_state.2": "Wind drive",
+  "raft_ocean.nav.sail_state.3": "No wind",
+  "raft_ocean.config.navigation.engineLoadLimits": "Engine capacity limits",
+  "raft_ocean.nav.sail_state.4": "Drive off"
 }

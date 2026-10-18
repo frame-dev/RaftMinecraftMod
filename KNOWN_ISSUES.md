@@ -1,4 +1,4 @@
-# Known limitations — 0.13.4 preview
+# Known limitations — 0.13.5 preview
 
 - Automated checks pass, but live client appearance, real network latency,
   large-raft performance and a complete multiplayer playthrough still require
@@ -20,5 +20,11 @@
 - Notebook archives are personal. Legacy field-note books must be retrieved once
   to archive them; prior journey and side-route records remain readable. Numeric
   receiver codes and multi-signal radar are not implemented.
+
+- Engine capacity and wind-limited sailing intentionally change earlier propulsion.
+  Existing overloaded rafts can stall. Add fueled aligned engines, change the saved
+  foundation capacity, or use engineLoadLimits=false for legacy engine scaling.
+  The exact original-game engine speed formula is not reproduced; custom base
+  speeds are preserved. See docs/SAILING_AND_ENGINE_LOAD.md.
 
 These are release limitations, not failures hidden by the automated checks.

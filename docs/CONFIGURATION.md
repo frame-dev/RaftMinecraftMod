@@ -305,3 +305,11 @@ ordinary menus for that gesture. It does not drain water reservoirs.
 configuration. It controls short wrapped machine/net/stash prompts under the
 crosshair. Hidden HUD, open screens and held items suppress these prompts.
 See [quick machine collection](QUICK_MACHINE_HARVEST.md) for behavior/tests.
+
+## Navigation capacity — 0.13.5
+
+`navigation.engineLoadLimits` defaults totrue: shared engine speed, full/half/stall
+load bands and a six-powered-engine bypass. False restores older engine scaling.
+`navigation.engineFoundationCapacity` retains its saved value (default100, range1–1024).
+See [navigation details and testing](SAILING_AND_ENGINE_LOAD.md). Sail drive never
+stacks with sail count. Existing speed, wind, fuel and current multipliers remain.

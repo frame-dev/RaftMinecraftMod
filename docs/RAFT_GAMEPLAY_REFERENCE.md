@@ -24,6 +24,11 @@ The comparisons with the mod and the priority order are our engineering assessme
 
 ## Implemented follow-up
 
+0.13.5 implements priority3's [shared sails and engine load feedback/bands](SAILING_AND_ENGINE_LOAD.md),
+preserving the user's nominal speeds. It includes a legacy engine-scaling toggle;
+its averaged propulsion and slow-band speed intentionally differ from Raft's exact
+engine speed formula. Native control/physics verification is recorded in RELEASE_VERIFICATION.md.
+
 0.13.4 adds the persistent personal [expedition notebook](EXPEDITION_NOTEBOOK.md),
 with field-note archiving, prior journey records and side-route logs. Numeric code
 entry and multi-signal radar remain future work.
@@ -35,7 +40,7 @@ See [mounted receiver](MOUNTED_RECEIVER.md).
 0.13.2 implements the first priority: seven story schematics, permanent discovery,
 material-plus-discovery research gates, older-journal recovery and crew sharing.
 See [story schematics](STORY_SCHEMATICS.md). The comparisons below describe the
-0.13.1 audit baseline; the remaining parts of priority2 and priorities3–6 remain future work.
+0.13.1 audit baseline; the remaining parts of priority2 and priorities4–6 remain future work.
 
 ## 1. Exploration should unlock technology
 

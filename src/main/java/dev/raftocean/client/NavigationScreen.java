@@ -46,6 +46,8 @@ public final class NavigationScreen extends AbstractContainerScreen<NavigationMe
                 default -> menu.enabled() ? "stop" : "start";
             };
             toggle.setMessage(Component.translatable("raft_ocean.nav." + action));
+            if(menu.kind()==RaftPiece.Kind.SAIL)toggle.setTooltip(Tooltip.create(Component.translatable("raft_ocean.nav.sail_help")));
+            if(menu.kind()==RaftPiece.Kind.ENGINE)toggle.setTooltip(Tooltip.create(Component.translatable("raft_ocean.nav.load_help")));
         }
         super.extractRenderState(graphics, x, y, partial);
     }
@@ -77,12 +79,20 @@ public final class NavigationScreen extends AbstractContainerScreen<NavigationMe
             graphics.text(font, Component.translatable("raft_ocean.ui.slot.fuel"), 21, 81, 0xFFE7A455);
             graphics.text(font, Component.translatable("raft_ocean.nav.fuel", menu.fuel()/10), 75, 67, 0xFFE7A455);
         }
+        if(menu.kind()==RaftPiece.Kind.ENGINE){
+            graphics.text(font,Component.translatable("raft_ocean.nav.load",menu.foundations(),menu.capacity()<0?"∞":Integer.toString(menu.capacity())),14,92,0xFF70C8D1);
+        }
+        if(menu.kind()==RaftPiece.Kind.SAIL && !menu.anchored()){
+            int row=0;for(var line:font.split(Component.translatable("raft_ocean.nav.sail_state."+menu.sailStatus()),58)){
+                if(row>=3)break;graphics.text(font,line,12,40+row*10,0xFFE7B97C);row++;
+            }
+        }
         String state = menu.anchored() ? "anchored" : menu.kind() == RaftPiece.Kind.STEERING_WHEEL ? "steer_hint"
                 : menu.kind() == RaftPiece.Kind.ENGINE && menu.enabled() && menu.fuel() == 0 ? "needs_fuel"
                 : menu.enabled() ? "enabled" : "disabled";
         if(menu.kind()!=RaftPiece.Kind.SAIL && menu.kind()!=RaftPiece.Kind.STEERING_WHEEL) {
             int lineY=104;
-            for(var line:font.split(Component.translatable("raft_ocean.nav."+state),120)){
+            for(var line:font.split(menu.kind()==RaftPiece.Kind.ENGINE && !menu.anchored()?Component.translatable("raft_ocean.nav.engine_state."+menu.engineStatus()):Component.translatable("raft_ocean.nav."+state),120)){
                 graphics.text(font,line,14,lineY,0xFFABC4C4);lineY+=9;
             }
         } else if(menu.anchored()) {

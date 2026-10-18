@@ -54,9 +54,37 @@ public final class RaftNavigation {
     }
     public static double sailDrive(double bearing, double windBearing, double strength) {
         double alignment = direction(bearing).dot(direction(windBearing));
-        // A broad reach produces useful lateral drive; pointing directly into the wind stalls.
-        double drive = alignment <= -.75 ? 0 : (.6 + .4 * alignment) * Math.min(1, (alignment + .75) / .25);
+        if(Math.abs(alignment)<1E-6)alignment=0;
+        // Crosswind still permits counter-steering; an upwind component cannot power the sail.
+        double drive=alignment < -1E-9 ? 0 : .6+.4*Math.max(0,alignment);
         return SAIL_SPEED * dev.raftocean.config.RaftConfig.SAIL_THRUST.get() * Math.clamp(strength, 0, 3) * drive;
+    }
+    public record EngineLoad(int foundations,int powered,int capacity,double scale,boolean limited) { }
+    public static double engineLoadScale(int foundations,int powered,int capacity){
+        if(powered<=0)return 0;
+        if(powered>=6)return 1;
+        long full=(long)powered*capacity;
+        return foundations<=full?1:10L*foundations<=11L*full?.5:0;
+    }
+    public EngineLoad engineLoad(){
+        int count=0;
+        if(raft.level() instanceof ServerLevel level && dev.raftocean.config.RaftConfig.ENGINE_THRUST.get()>0){
+            for(var entry:raft.pieces().entrySet())if(entry.getValue().kind()==RaftPiece.Kind.ENGINE){
+                var storage=raft.storage(entry.getKey());
+                if(storage.enabled && (storage.fuelTicks>0 || rating(level,entry.getKey(),storage).duration()>0))count++;
+            }
+        }
+        int foundations=raft.getBlocks().size(),perEngine=dev.raftocean.config.RaftConfig.ENGINE_FOUNDATIONS.get();
+        boolean limited=dev.raftocean.config.RaftConfig.ENGINE_LOAD_LIMITS.get();
+        int capacity=limited && count>=6?-1:Math.min(32767,count*perEngine);
+        return new EngineLoad(foundations,count,capacity,limited?engineLoadScale(foundations,count,perEngine):
+                Math.min(1,perEngine/(double)Math.max(1,foundations)),limited);
+    }
+    public int engineStatus(BlockPos pos){
+        var storage=raft.storage(pos);if(storage==null || !storage.enabled)return 0;
+        if(!(raft.level() instanceof ServerLevel level) || dev.raftocean.config.RaftConfig.ENGINE_THRUST.get()==0
+                || storage.fuelTicks<=0 && rating(level,pos,storage).duration()<=0)return 1;
+        var load=engineLoad();return !load.limited()?5:load.scale()==0?4:load.scale()<1?3:2;
     }
     public boolean stroke(Vec3 look) {
         Vec3 horizontal = new Vec3(look.x, 0, look.z);
@@ -74,9 +102,9 @@ public final class RaftNavigation {
         windHeading = normalize(-60 + 25 * Math.sin(level.getGameTime() / 6000.0));
         windStrength = (.85 + .15 * Math.sin(level.getGameTime() / 2800.0)) * (level.isRaining() ? 1.15 : 1) * dev.raftocean.config.RaftConfig.WIND.get();
         anchored = anchored(); engines = 0; sails = 0; running.clear();
-        Vec3 thrust = Vec3.ZERO;
+        Vec3 thrust = Vec3.ZERO, sailThrust=Vec3.ZERO;
+        var load=engineLoad();
         if (!anchored && afloat) {
-            double massScale = Math.clamp(Math.sqrt(108 / raft.getMass()), .25, 1);
             for (var entry : raft.pieces().entrySet()) {
                 var kind = entry.getValue().kind();
                 if (!kind.navigation()) { continue; }
@@ -85,15 +113,16 @@ public final class RaftNavigation {
                 if (kind == RaftPiece.Kind.SAIL) {
                     sails++;
                     double bearing = raft.getYRot() + storage.trim;
-                    thrust = thrust.add(direction(bearing).scale(sailDrive(bearing, windHeading, windStrength) * massScale));
-                } else if (kind == RaftPiece.Kind.ENGINE && dev.raftocean.config.RaftConfig.ENGINE_THRUST.get()>0 && fuel(level, entry.getKey(), storage)) {
+                    sailThrust = sailThrust.add(direction(bearing).scale(sailDrive(bearing, windHeading, windStrength)));
+                } else if (kind == RaftPiece.Kind.ENGINE && dev.raftocean.config.RaftConfig.ENGINE_THRUST.get()>0 && load.scale()>0 && fuel(level, entry.getKey(), storage)) {
                     engines++; running.add(entry.getKey());
                     double bearing = raft.getYRot() + entry.getValue().rotation() * 90 + storage.trim;
-                    double engineScale=Math.min(1,dev.raftocean.config.RaftConfig.ENGINE_FOUNDATIONS.get()/(double)raft.getBlocks().size());
+                    double engineScale=load.scale()/(load.limited()?Math.max(1,load.powered()):1);
                     thrust = thrust.add(direction(bearing).scale(ENGINE_SPEED * dev.raftocean.config.RaftConfig.ENGINE_THRUST.get() * Math.min(2, storage.fuelSpeed) * engineScale));
                 }
             }
         }
+        if(sails>0)thrust=thrust.add(sailThrust.scale(1.0/sails));
         Vec3 current = new Vec3(raft.getCurrentX(), 0, raft.getCurrentZ()).scale(dev.raftocean.config.RaftConfig.CURRENT.get());
         Vec3 result = anchored ? Vec3.ZERO : cap(current.add(thrust).add(paddle), dev.raftocean.config.RaftConfig.MAX_SPEED.get());
         paddle = anchored || !afloat ? Vec3.ZERO : paddle.scale(.94);
@@ -101,18 +130,26 @@ public final class RaftNavigation {
         return result;
     }
 
+    private record FuelRating(int duration,float speed) { }
+    private FuelRating rating(ServerLevel level,BlockPos pos,RaftStorage storage){
+        var stack=storage.getItem(1);
+        if(stack.isEmpty())return new FuelRating(0,0);
+        var remainder=stack.getCraftingRemainder();
+        if(remainder!=null && stack.getCount()!=1)return new FuelRating(0,0);
+        var reader=new FuelReader(BlockPos.containing(raft.stationPosition(pos,RaftPiece.Kind.ENGINE)));
+        reader.setLevel(level);reader.setItem(1,stack.copy());
+        boolean biofuel=stack.is(dev.raftocean.survival.Automation.BIOFUEL.get());
+        ItemStack rated=biofuel?new ItemStack(net.minecraft.world.item.Items.COAL):stack;
+        int duration=biofuel?dev.raftocean.config.RaftConfig.BIOFUEL_ENGINE_TICKS.get():reader.duration(level,rated);
+        float speed=reader.speed(level,rated);
+        return duration<=0 || !Float.isFinite(speed) || speed<=0?new FuelRating(0,0):new FuelRating(duration,speed);
+    }
     private boolean fuel(ServerLevel level, BlockPos pos, RaftStorage storage) {
         if (storage.fuelTicks == 0) {
-            ItemStack stack = storage.getItem(1);
-            var reader = new FuelReader(BlockPos.containing(raft.stationPosition(pos, RaftPiece.Kind.ENGINE)));
-            reader.setLevel(level); reader.setItem(1, stack.copy());
-            boolean biofuel = stack.is(dev.raftocean.survival.Automation.BIOFUEL.get());
-            // Biofuel uses coal engine speed and the configured canister burn time.
-            ItemStack rated = biofuel ? new ItemStack(net.minecraft.world.item.Items.COAL) : stack;
-            int duration = biofuel ? dev.raftocean.config.RaftConfig.BIOFUEL_ENGINE_TICKS.get() : reader.duration(level, rated);
-            float speed = reader.speed(level, rated);
-            var remainder = stack.getCraftingRemainder();
-            if (duration <= 0 || !Float.isFinite(speed) || speed <= 0 || remainder != null && stack.getCount() != 1) { return false; }
+            ItemStack stack=storage.getItem(1);var rated=rating(level,pos,storage);
+            int duration=rated.duration();float speed=rated.speed();
+            if(duration<=0)return false;
+            var remainder=stack.getCraftingRemainder();
             storage.fuelCapacity = storage.fuelTicks = Math.clamp((int)(duration * dev.raftocean.config.RaftConfig.ENGINE_FUEL.get()),1,200000);
             storage.fuelSpeed = Math.clamp(speed, .01F, 100F);
             stack.shrink(1);

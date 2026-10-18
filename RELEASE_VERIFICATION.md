@@ -1,3 +1,48 @@
+# Verification — 0.13.5 preview
+
+Checked2026-10-18: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+ModDevGradle2.0.147, Gradle9.2.1. API3 retained; handshake13.5.
+
+- Native propulsion-load suite1625 assertions passes, including connected fixture
+  construction. Covers non-stacking sails on the same hull, opposed crosswind trims,
+  upwind limits, no-wind/config-disabled feedback,100/101/110/111foundation boundaries,
+  configured capacity, six real fueled engines on1024foundations, net exclusion,
+  opposite engine directions, current while stalled, anchors and fuel conservation.
+- Existing navigation161 assertions pass for mounting/reverse, exact requested
+  base speeds, fuel, controls and save/load. The Ocean suite additionally checks
+  powered movement and player carry.
+- Full build/bootstrap/fresh Ocean World passed in navigation-0.13.5-checked.log:
+  9602ocean-world assertions. Final reloaded-world proof after fixture correction:
+  9606assertions in navigation-0.13.5-tracking-check.log, BUILD SUCCESSFUL.
+- Existing server movement2904, collision425, carry729, construction3641, building/API83,
+  machineAPI69, crafting263374, stations119, research778, crew53, receiver1969 and
+  notebook133 assertions pass, alongside survival, salvage, trading and AI suites.
+- Native models:955models/57828elements,168fittedGUI transforms plus7inherited
+  transforms. Geometry, textures, sounds, recipes and progression were not changed.
+- Packaged audit:850English/German keys, matching placeholders, sound/config presets;
+  30research projects/62unlocks;7schematics/8gates. All pass.
+
+Corrections made during verification:
+
+- An earlier steering assertion used an upwind trim permitted by the old formula.
+  It now checks legal crosswind counter-steering against the same current.
+- The receiver removal fixture used an above-height position and queried dropped
+  items in a chunk whose saved entities could be loaded but not actively tracked.
+  Moving inside valid height and waiting only for entity loading were insufficient.
+  The final fixture also waits, with a bounded timeout, for active entity ticking.
+  Actual charge conservation assertions remain intact; the repeated-world run passes.
+  Earlier failed smoke runs also hit shutdown errors; the final successful runs
+  supersede them. No gameplay inventory-drop implementation was changed.
+
+Final packaging/build/bootstrap evidence: build/navigation-0.13.5-package-verified.log.
+All runs use isolated build/bootstrap-smoke and build/ocean-smoke worlds; no user
+client/server world was tested or modified. Addon API signatures remain unchanged;
+no new third-party integration test is claimed. Live UI layout, real co-op latency
+and long-session/large-raft behavior still need local testing. Exact original-game
+engine speed formulas are deliberately not claimed: the custom base speeds remain.
+
+---
+
 # Verification — 0.13.4 preview
 
 Checked 2026-10-18 against Minecraft26.3, NeoForge26.3.0.48-beta, Java25,

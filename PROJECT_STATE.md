@@ -8,6 +8,29 @@
 
 - Updated: 2026-10-18.
 
+- Latest development: 0.13.5 preview, wind-limited sails and engine load management.
+  Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.5 requires matching peers.
+  Deployed sails average drive, do not stack speed, retain crosswind steering,
+  cannot drive upwind and no longer lose sail power to cargo mass.
+  Fueled enabled engines share capacity/speed; full through configured capacity,
+  half through110%, then stall; six powered engines bypass foundation load.
+  Native fuel, mounting direction, reverse, anchors, current and paddles retained.
+  Stalled engines conserve fuel/reserves. engineLoadLimits=false restores legacy
+  additive engine scaling; saved engineFoundationCapacity remains effective.
+  EN/DE engine load/status and sail wind/config feedback; all presets updated.
+  User base speeds1.5/1.0/1.8m/s, shark10min/bird5min, harder research and story retained.
+  Verified1625propulsion-load and161navigation assertions; full fresh Ocean9602,
+  corrected reloaded Ocean9606; native955models and850EN/DE keys pass.
+  Receiver smoke fixtures now use valid height and await active entity tracking;
+  gameplay drop handling unchanged. Earlier test failures are recorded in verification.
+  See docs/SAILING_AND_ENGINE_LOAD.md and RELEASE_VERIFICATION.md for evidence.
+  Milestones1-11implemented;12preview maintenance. GitHub release remains0.13.0.
+  Pending live control layout, large-raft handling and actual co-op latency tests.
+  Story stays open-ended; numeric codes, recycling/trading expansion, cooking and
+  hammer palette remain future work. No new textures or models in this change.
+
+
 - Latest development: 0.13.4 preview, persistent personal expedition notebook.
   Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
   ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.4 requires matching peers.

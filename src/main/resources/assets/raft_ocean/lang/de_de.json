@@ -833,5 +833,20 @@
   "raft_ocean.notebook.route": "Nächstes Signal",
   "raft_ocean.notebook.empty": "Noch keine Einträge geborgen. Sammle Notizbücher oder lies ein Inseltagebuch, um dein Archiv zu erweitern.",
   "raft_ocean.notebook.recorded": "Archiviert: %s",
-  "raft_ocean.notebook.overview": "Nächstes bekanntes Signal: %s\n\nReiseeinträge: %s / %s\nFundnotizen: %s / %s\n\nFolge dem Signal mit dem Empfänger. Lies Inseltagebücher, um die Reise fortzusetzen. Gesammelte Fundnotizen bleiben hier erhalten, auch wenn ihre Bücher verloren gehen.\n\nDer Ozean birgt weiterhin unbeantwortete Signale; diese Reise hat kein endgültiges Ende."
+  "raft_ocean.notebook.overview": "Nächstes bekanntes Signal: %s\n\nReiseeinträge: %s / %s\nFundnotizen: %s / %s\n\nFolge dem Signal mit dem Empfänger. Lies Inseltagebücher, um die Reise fortzusetzen. Gesammelte Fundnotizen bleiben hier erhalten, auch wenn ihre Bücher verloren gehen.\n\nDer Ozean birgt weiterhin unbeantwortete Signale; diese Reise hat kein endgültiges Ende.",
+  "raft_ocean.nav.load": "Last %s / %s",
+  "raft_ocean.nav.load_help": "Kapazität zählt eingeschaltete Motoren mit Treibstoff. Volle Kraft bis zur Kapazität; halbe bis 110%; danach Stillstand. Sechs versorgte Motoren heben das Limit auf. Überlastete Motoren sparen Treibstoff. Richte Motoren gleich aus.",
+  "raft_ocean.nav.sail_help": "Zusätzliche Segel erhöhen das Tempo nicht. Gegensätzliche Trimmungen wirken einander entgegen. Segel lenken quer zum Wind, treiben aber nicht gegen ihn an.",
+  "raft_ocean.nav.engine_state.0": "Gestoppt",
+  "raft_ocean.nav.engine_state.1": "Treibstoff fehlt / Antrieb aus",
+  "raft_ocean.nav.engine_state.2": "Volle Kraft",
+  "raft_ocean.nav.engine_state.3": "Hohe Last: halbe Kraft",
+  "raft_ocean.nav.engine_state.4": "Überlastet: Stillstand",
+  "raft_ocean.nav.engine_state.5": "Bisherige Lastskalierung",
+  "raft_ocean.nav.sail_state.0": "Gerefft",
+  "raft_ocean.nav.sail_state.1": "Gegenwind",
+  "raft_ocean.nav.sail_state.2": "Windkraft",
+  "raft_ocean.nav.sail_state.3": "Windstill",
+  "raft_ocean.config.navigation.engineLoadLimits": "Motorkapazitätsgrenzen",
+  "raft_ocean.nav.sail_state.4": "Antrieb aus"
 }

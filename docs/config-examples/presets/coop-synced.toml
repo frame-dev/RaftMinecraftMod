@@ -42,6 +42,8 @@ gameMode = "WORLD"
 	processingSpeed = 1.0
 
 [navigation]
+	# Capacity/slow/stall bands; false restores legacy engine scaling.
+	engineLoadLimits = true
 	# Engine fuel duration multiplier for newly consumed fuel.
 	engineFuelMultiplier = 1
 	# Engine thrust multiplier; zero stops engines without consuming fuel. Speed cap still applies.

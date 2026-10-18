@@ -22,7 +22,7 @@ public final class NavigationMenu extends AbstractContainerMenu {
     static {
         for (var kind : RaftPiece.Kind.values()) {
             if (kind.navigation()) { REGISTERED.put(kind, TYPES.register(kind.id(), () -> new MenuType<>(
-                    (id, inventory) -> new NavigationMenu(id, inventory, kind, new SimpleContainer(27), new SimpleContainerData(7), null, null), FeatureFlags.VANILLA_SET))); }
+                    (id, inventory) -> new NavigationMenu(id, inventory, kind, new SimpleContainer(27), new SimpleContainerData(11), null, null), FeatureFlags.VANILLA_SET))); }
         }
     }
     public static MenuType<NavigationMenu> type(RaftPiece.Kind kind) { return REGISTERED.get(kind).get(); }
@@ -45,11 +45,17 @@ public final class NavigationMenu extends AbstractContainerMenu {
                     case 4 -> (int)raft.navigation().windHeading();
                     case 5 -> raft.navigation().anchored() ? 1 : 0;
                     case 6 -> (int)(raft.navigation().windStrength() * 100);
+                    case 7 -> raft.getBlocks().size();
+                    case 8 -> raft.navigation().engineLoad().capacity();
+                    case 9 -> kind==RaftPiece.Kind.ENGINE?raft.navigation().engineStatus(pos):0;
+                    case 10 -> kind==RaftPiece.Kind.SAIL && state.enabled?(dev.raftocean.config.RaftConfig.SAIL_THRUST.get()==0?4:raft.navigation().windStrength()<=0?3:
+                            dev.raftocean.navigation.RaftNavigation.sailDrive(raft.getYRot()+state.trim,
+                                    raft.navigation().windHeading(),raft.navigation().windStrength())<=1E-9?1:2):0;
                     default -> 0;
                 };
             }
             public void set(int index, int value) { }
-            public int getCount() { return 7; }
+            public int getCount() { return 11; }
         }, raft, pos.immutable());
     }
     private NavigationMenu(int id, Inventory inventory, RaftPiece.Kind kind, Container storage, ContainerData data, RaftEntity raft, BlockPos pos) {
@@ -71,6 +77,10 @@ public final class NavigationMenu extends AbstractContainerMenu {
     public int wind() { return data.get(4); }
     public boolean anchored() { return data.get(5) != 0; }
     public int windPower() { return data.get(6); }
+    public int foundations(){return data.get(7);}
+    public int capacity(){return data.get(8);}
+    public int engineStatus(){return data.get(9);}
+    public int sailStatus(){return data.get(10);}
     @Override public boolean stillValid(Player player) { return storage.stillValid(player); }
     @Override public boolean clickMenuButton(Player player, int button) {
         if (raft == null || raft.level().isClientSide() || !stillValid(player) || button < 0 || button > 10) { return false; }

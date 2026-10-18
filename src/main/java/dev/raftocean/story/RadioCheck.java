@@ -33,11 +33,21 @@ public final class RadioCheck {
         for(var p:antennas)require(structure.add(p,new RaftPiece(RaftPiece.Kind.ADDON,0,false,RaftRadio.ANTENNA_ID.toString()),layout),"Antenna mounts without intersecting support");
         var seed=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());seed.putString("Layout",layout.encode());seed.putString("Structure",structure.encode());
         var raft=new RaftEntity(ModContent.RAFT.get(),level);raft.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),seed.buildResult()));
-        raft.setPos(8,level.getMaxY()+24,8);return raft;
+        raft.setPos(8,level.getMaxY()-16,8);return raft;
     }
     public static int run(ServerLevel level){
         checks=0;var rafts=new ArrayList<RaftEntity>();int limit=dev.raftocean.config.RaftConfig.PIECE_LIMIT.get();
+        // Loaded saved item entities must be visible before taking a before/after drop count.
+        boolean forced=level.setChunkForced(0,0,true);
+        level.getChunkSource().tick(()->true,false);
+        level.waitForEntities(new net.minecraft.world.level.ChunkPos(0,0),0);
         try{
+            long deadline=System.nanoTime()+30_000_000_000L;
+            level.getServer().managedBlock(()->{
+                level.getChunkSource().tick(()->true,false);
+                if(System.nanoTime()>deadline)throw new IllegalStateException("Radio fixture chunk never became entity-ticking");
+                return level.areEntitiesActuallyLoadedAndTicking(new net.minecraft.world.level.ChunkPos(0,0));
+            });
             dev.raftocean.config.RaftConfig.PIECE_LIMIT.set(Math.max(limit,400));
             var low=fixture(level,1,0,GOOD);rafts.add(low);
             require(RaftRadio.aerials(low.machineContext(new BlockPos(0,1,0)).orElseThrow()).status()==RaftRadio.HEIGHT,"Receiver at foundation level requests upper floor");
@@ -96,10 +106,10 @@ public final class RadioCheck {
                 RaftRadio.CONTROLLER.tick(ctx);
                 int droppedAfter=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,dropArea).stream().mapToInt(e->Batteries.charge(e.getItem())).sum();
                 require(!menu.stillValid(player) && state.getItem(0).isEmpty() && menu.value(10)==0,"Removed receiver invalidates its menu and empties installed inventory");
-                require(droppedAfter-droppedBefore==charge,"Removal drops the battery with its exact remaining charge and stale ticks spend nothing");
+                require(droppedAfter-droppedBefore==charge,"Removal drops exact charge: before="+droppedBefore+", after="+droppedAfter+", expected delta="+charge+", origin="+ctx.worldPosition());
             }
             return checks;
-        }finally{rafts.forEach(RaftEntity::discard);dev.raftocean.config.RaftConfig.PIECE_LIMIT.set(limit);}
+        }finally{rafts.forEach(RaftEntity::discard);dev.raftocean.config.RaftConfig.PIECE_LIMIT.set(limit);if(forced)level.setChunkForced(0,0,false);}
     }
     private RadioCheck() { }
 }
