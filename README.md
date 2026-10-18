@@ -3,7 +3,7 @@
 This update adds [larger story stages, 28 field-note books and more demanding
 research batches](docs/STORY_STAGE_PROGRESSION.md). Existing knowledge is retained.
 
-The addon API expands the [addon API to v3](docs/API_V3_UTILITIES.md): utility
+The [addon API v3](docs/API_V3_UTILITIES.md) supports utility
 inputs, preflighted processing, generator demand and opt-in output collection.
 A standalone starter SDK and three complete addon examples are available.
 
@@ -41,6 +41,9 @@ See [installation and multiplayer](INSTALLATION.md), [changes](CHANGELOG.md)
 and [known limitations](KNOWN_ISSUES.md). Existing 0.11.41 worlds retain their
 save format. Larger islands appear only in previously ungenerated chunks.
 
+The [Raft gameplay comparison](docs/RAFT_GAMEPLAY_REFERENCE.md) records verified
+reference mechanics, remaining gaps and the next implementation priorities.
+
 ## Included gameplay
 
 - Foundations, edge nets, upper floors, pillars, stairs, ladders, straight/
@@ -58,7 +61,7 @@ save format. Larger islands appear only in previously ungenerated chunks.
   water/fuel/power distribution and automation machines.
 - Cabin furniture, larger beds, lamps, tables and mounted decorations.
 - Shared-raft co-op, crew permissions, shared research and teammate rescue.
-- English/German localization, original sounds and addon API v2.
+- English/German localization, original sounds and addon API v3.
 
 ## Configuration and commands
 
@@ -96,7 +99,7 @@ Use a new `level-name` in the isolated ocean test server's properties for a
 fresh generation test; never remove a gameplay world.
 
 Build the [example addon](examples/raft-addon/README.md) after the main mod.
-See [API v2](docs/RAFT_ADDON_API.md), [machine guide](docs/MACHINE_ADDON_GUIDE.md)
+See [API v3](docs/API_V3_UTILITIES.md), [machine guide](docs/MACHINE_ADDON_GUIDE.md)
 and [compatibility](docs/MOD_COMPATIBILITY.md).
 
 The release ZIP includes addon source examples for reference. Building them

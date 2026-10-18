@@ -8,6 +8,14 @@
 
 - Updated: 2026-10-18.
 
+- Wiki gameplay comparison completed against selected indexed German/English
+  Raft wiki articles; homepage fetch blocked. See docs/RAFT_GAMEPLAY_REFERENCE.md.
+  Next priority: persistent story-site schematic discovery gating advanced research,
+  followed by mounted receiver/notebook, navigation limits, recycling/trading,
+  cooking interactions and hammer palette. These features are proposals, not new
+  runtime implementations. Custom speeds, attack delays, harder research and open
+  story retained. This reference/documentation pass leaves version0.13.1 unchanged.
+
 - Latest development: 0.13.1 preview, staged story exploration and research balance.
   Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
   ModDevGradle2.0.147, Gradle9.2.1. API3/protocol13.0 retained.

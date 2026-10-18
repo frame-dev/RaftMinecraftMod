@@ -15,3 +15,13 @@ https://github.com/frame-dev/RaftMinecraftMod after each change task.
 
 Project versions, milestones and outstanding live testing are recorded in
 PROJECT_STATE.md. Keep the story open-ended.
+
+
+# Gameplay direction
+
+Use the Raft wiki as the gameplay reference requested by the user. The reviewed
+comparison, sources and implementation priorities are in
+`docs/RAFT_GAMEPLAY_REFERENCE.md`. Compare actual code behavior before claiming
+parity. Preserve the user's specific speed, difficulty-delay and harder-research
+choices unless they change those instructions. Keep assets and lore original and
+the story open-ended. Implement and validate one bounded gameplay change at a time.
