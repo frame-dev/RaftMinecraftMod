@@ -49,6 +49,8 @@ public final class RaftOcean {
         dev.raftocean.survival.DivingContent.initialize();
         dev.raftocean.survival.Automation.initialize();
         dev.raftocean.survival.Batteries.initialize();
+        dev.raftocean.story.RaftRadio.initialize();
+        dev.raftocean.menu.RadioMenu.TYPES.register(modEventBus);
         dev.raftocean.archery.ArcheryContent.initialize();
         dev.raftocean.progression.Research.initialize();
         dev.raftocean.progression.StorySchematics.initialize();
@@ -92,6 +94,7 @@ public final class RaftOcean {
     }
 
     private void onCommonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(dev.raftocean.story.RaftRadio::register);
         event.enqueueWork(() -> dev.raftocean.archery.ArcheryContent.ARROWS.forEach(
                 arrow -> net.minecraft.world.level.block.DispenserBlock.registerProjectileBehavior(arrow.get())));
         LOGGER.info("Raft Ocean: common setup complete.");
@@ -106,6 +109,8 @@ public final class RaftOcean {
                 LOGGER.info("Raft Ocean: {} runtime collision assertions passed.", collisionChecks);
                 int nativeMovementChecks = dev.raftocean.entity.RaftMovementValidationCheck.run(event.getServer().overworld());
                 LOGGER.info("Raft Ocean: {} native movement validation assertions passed.",nativeMovementChecks);
+                int radioChecks=dev.raftocean.story.RadioCheck.run(event.getServer().overworld());
+                LOGGER.info("Raft Ocean: {} runtime receiver assertions passed.",radioChecks);
                 int assertions = dev.raftocean.command.RaftCarryCheck.run(event.getServer().overworld(),
                         net.minecraft.world.phys.Vec3.ZERO);
                 LOGGER.info("Raft Ocean: {} runtime carry assertions passed.", assertions);

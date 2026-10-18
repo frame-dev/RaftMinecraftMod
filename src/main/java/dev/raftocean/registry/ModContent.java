@@ -74,6 +74,8 @@ public final class ModContent {
                         output.accept(GRAPPLING_HOOK.get()); output.accept(REINFORCED_HOOK.get());
                         output.accept(PADDLE.get());
                         output.accept(dev.raftocean.story.IslandContent.RECEIVER.get());
+                        output.accept(dev.raftocean.story.RaftRadio.ITEM.get());
+                        output.accept(dev.raftocean.story.RaftRadio.ANTENNA_ITEM.get());
                         output.accept(dev.raftocean.story.IslandContent.ANTENNA.get());
                         output.accept(dev.raftocean.story.IslandContent.LONG_RECEIVER.get());
                         output.accept(dev.raftocean.story.IslandContent.KEY.get());

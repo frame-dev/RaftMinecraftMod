@@ -10,6 +10,11 @@
     "raft_ocean:binding_paste"
   ],
   "result": {
-    "id": "raft_ocean:tidal_battery"
+    "id": "raft_ocean:tidal_battery",
+    "components": {
+      "minecraft:custom_data": {
+        "RaftBatteryCharge": 1000
+      }
+    }
   }
 }

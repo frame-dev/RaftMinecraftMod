@@ -65,9 +65,24 @@ public final class ModelAssetCheck {
         if(models<216 || elements<1000){throw new IllegalStateException("Fine model assets are missing");}
         int expectedItems=JsonParser.parseString(Files.readString(Path.of("src/main/resources/assets/raft_ocean/model_coverage.json"))).getAsJsonObject().getAsJsonArray("items").size();
         expectedItems += JsonParser.parseString(Files.readString(Path.of("src/main/resources/assets/raft_ocean/model_coverage.json"))).getAsJsonObject().getAsJsonArray("item_variants").size();
+        var coverage=JsonParser.parseString(Files.readString(Path.of("src/main/resources/assets/raft_ocean/model_coverage.json"))).getAsJsonObject();
+        int inherited=0;
+        if(coverage.has("inherited_item_models"))for(var value:coverage.getAsJsonArray("inherited_item_models")){
+            String name=value.getAsString();
+            boolean registered=false;for(var item:coverage.getAsJsonArray("items"))if(item.getAsString().equals(name))registered=true;
+            var alias=JsonParser.parseString(Files.readString(Path.of("src/main/resources/assets/raft_ocean/models/item/"+name+".json"))).getAsJsonObject();
+            if(!registered || alias.has("elements") || !alias.has("parent") || !alias.get("parent").getAsString().startsWith("raft_ocean:"))
+                throw new IllegalStateException("Invalid inherited item model: "+name);
+            var parent=JsonParser.parseString(Files.readString(Path.of("src/main/resources/assets/raft_ocean/models/"+alias.get("parent").getAsString().split(":",2)[1]+".json"))).getAsJsonObject();
+            if(!parent.has("elements") || !parent.has("display") || !parent.getAsJsonObject("display").has("gui"))
+                throw new IllegalStateException("Inherited parent lacks a checked GUI transform: "+name);
+            inherited++;
+        }
+        expectedItems-=inherited;
         if(inventoryModels!=expectedItems){throw new IllegalStateException("Missing inventory fit checks: "+inventoryModels);}
         System.out.println(models+" models and "+elements+" elements accepted by the native Minecraft model parser.");
         System.out.println(inventoryModels+" GUI silhouettes fitted and centered using native ItemTransform matrices.");
+        System.out.println(inherited+" inherited item models reuse fitted parent GUI silhouettes.");
         verifyMachineMotion();
         verifyMachineAlignment();
         verifyPolygonMeshes();
@@ -133,7 +148,18 @@ public final class ModelAssetCheck {
     }
 
     private static void verifyMachineAlignment() throws Exception {
-        var layouts=JsonParser.parseString(Files.readString(Path.of("build/model-layouts.json"))).getAsJsonObject();
+        // Build directly from current geometry; a fresh checkout has no smoke-run export.
+        var layouts=new com.google.gson.JsonObject();
+        for(var kind:RaftPiece.Kind.values()){
+            var values=new com.google.gson.JsonArray();
+            for(var box:new RaftPiece(kind,0,false).boxes(new net.minecraft.core.BlockPos(0,1,0))){
+                var bounds=new com.google.gson.JsonArray();
+                for(double coordinate:new double[]{box.minX,box.minY-RaftEntity.DECK_HEIGHT,box.minZ,
+                        box.maxX,box.maxY-RaftEntity.DECK_HEIGHT,box.maxZ})bounds.add(coordinate);
+                values.add(bounds);
+            }
+            layouts.add(kind.id(),values);
+        }
         int checks=0;
         for(var entry:layouts.entrySet()){
             var boxes=new java.util.ArrayList<AABB>();

@@ -1,0 +1,4 @@
+// Verify/package without replacing the class/resource directories of a live client.
+allprojects {
+    layout.buildDirectory.set(layout.projectDirectory.dir('build/visual-art-verification'))
+}

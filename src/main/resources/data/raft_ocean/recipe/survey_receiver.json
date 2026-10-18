@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "WWW",
+    "GRG",
+    "BFB"
+  ],
+  "key": {
+    "W": "#raft_ocean:compat/copper_wires",
+    "G": "minecraft:glass",
+    "R": "raft_ocean:radio_receiver",
+    "B": "raft_ocean:timber_brace",
+    "F": "raft_ocean:scrap_fasteners"
+  },
+  "result": {
+    "id": "raft_ocean:survey_receiver"
+  }
+}

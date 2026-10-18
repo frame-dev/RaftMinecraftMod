@@ -135,6 +135,13 @@
     "roasted_roots",
     "root_skewer",
     "salt_water_cup",
+    "schematic_bioenergy",
+    "schematic_deepwater",
+    "schematic_power_storage",
+    "schematic_reef_armaments",
+    "schematic_signal_array",
+    "schematic_tide_drive",
+    "schematic_waterworks",
     "scrap",
     "scrap_arrow",
     "scrap_fasteners",
@@ -148,7 +155,9 @@
     "steel_arrow",
     "stone_anchor_bundle",
     "stormsteel_bow",
+    "survey_antenna",
     "survey_log",
+    "survey_receiver",
     "tidal_battery",
     "tidal_diving_hood",
     "timber_brace",
@@ -934,6 +943,9 @@
     "station_window_wall",
     "station_wooden_chair",
     "station_woven_rug",
+    "survey_antenna",
+    "survey_receiver",
+    "survey_receiver_active",
     "trading_post",
     "tree_bark",
     "tree_leaves"
@@ -1035,6 +1047,16 @@
     "reef_laminated_bow_pull_3",
     "stormsteel_bow_pull_1",
     "stormsteel_bow_pull_2",
-    "stormsteel_bow_pull_3"
+    "stormsteel_bow_pull_3",
+    "survey_receiver_active"
+  ],
+  "inherited_item_models": [
+    "schematic_bioenergy",
+    "schematic_deepwater",
+    "schematic_power_storage",
+    "schematic_reef_armaments",
+    "schematic_signal_array",
+    "schematic_tide_drive",
+    "schematic_waterworks"
   ]
 }

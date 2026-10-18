@@ -1,3 +1,46 @@
+# Verification — 0.13.3 preview
+
+Checked2026-10-18: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+ModDevGradle2.0.147, Gradle9.2.1. API3 retained; handshake13.3.
+
+- Final build/bootstrap/Ocean run passed:1965receiver assertions (including support
+  fixture construction),778research,53crew/rescue,263374crafting,988survival and existing server
+  movement/carry/collision/construction/crafting/navigation/AI/automation suites.
+- Fresh Ocean World7840 includes valid/invalid antenna layouts, extra antennas,
+  mounted/hull rotations, exact portable drain, off/undercharge conservation,
+  real structure scanning/caching, channel-button authorization, menu ownership,
+  reach, save/load, antenna cache invalidation and exact charged-battery drops.
+- Loaded crafting verifies charged basic-cell output and unchanged advanced-cell
+  defaults. Research verifies early ownership and prior power-owner access.
+- First compile corrected a client screen method's public visibility. Initial
+  coverage/removal checks were corrected to count icons once and verify dropped
+  components after native removal. Final successful runs supersede those attempts.
+- Final asset-only build after overlap cleanup and inherited-model metadata repair
+  passed955models/57828elements,168fittedGUI transforms plus7validated inherited
+  folio transforms,243motion and18797fill/mount checks. Runtime Java is unchanged
+  from the successful full server run. Alignment checks now derive live piece
+  geometry instead of requiring an untracked smoke-export file; final portability
+  build passed (build/radio-0.13.3-build-portability.log).
+- Packaged exact registry coverage165items/782blocks/7renderers passed; new models
+  remain original. Surface audit1045models/215881faces/75meshes passed against0.13.2
+  with no unsafe UVs/coplanar opaque overdraw and baseline envelopes retained.
+- Packaged research30projects/62unique unlocks, complete recipe rewards; seven
+  existing schematic IDs/eight project gates retained.826EN/DE keys, placeholders,
+  sounds and configuration presets passed.
+
+Evidence: build/radio-0.13.3-verified.log and build/radio-0.13.3-final-assets.log.
+Native world tests used an isolated fresh level. No user worlds or runtime client
+output folders were modified. The prior0.13.2 example-addon proof is carried
+forward; no additional external addon was installed for this feature.
+
+Pending: client radar/tooltip presentation, visual mounting, battery/slot control
+flow and real multiplayer latency. Single-channel explicit scanning is an original
+Minecraft adaptation; numeric code entry, persistent notebook and multiple island
+blips are not implemented in this preview. Existing handheld locators remain usable.
+This build has not been published as a new GitHub release.
+
+## Earlier verification records
+
 # Verification — 0.13.2 preview
 
 Checked2026-10-18 with Minecraft26.3, NeoForge26.3.0.48-beta, Java25,

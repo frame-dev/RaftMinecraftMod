@@ -8,6 +8,26 @@
 
 - Updated: 2026-10-18.
 
+- Latest development: 0.13.3 preview, mounted survey receiver and three antennas.
+  Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1. API3, handshake13.3 requires matching peers.
+  Upper-deck antenna triangles, native battery slot, saved settings, on/off,
+  personal-known story channel controls, bounded/cached scans and animated radar
+  oriented to installed console/hull. Existing handheld receivers remain usable.
+  Receiver/antenna/basic cell join early electrical research; basic recipe1000charge.
+  Old power-project holders retain basic-cell crafting. Advanced power stays gated.
+  Uses existing API placement/collision/inventory/lifecycle; no new piece enum values.
+  Verified build/bootstrap1965receiver,778research,53crew,263374crafting,988survival;
+  fresh Ocean World7840 includes full powered radio tests; other native suites pass.
+  Final asset-only build:955models/57828elements,168fittedGUIs+7inheritedGUIaliases;
+  coverage165items/782blocks/7renderers,1045models surface audit/UV/bounds passed;
+  research30projects/62unlocks,826bilingual keys. Evidence build/radio-0.13.3-verified.log
+  and build/radio-0.13.3-final-assets.log. See docs/MOUNTED_RECEIVER.md.
+  Milestones1-11implemented;12preview build ready. GitHub release remains0.13.0.
+  Pending: client radar/models/control layout and real co-op latency. Notebook,
+  numeric-code entry and multi-signal mapping remain future work. Story open-ended.
+
+
 - Latest development: 0.13.2 preview, persistent story schematic research gates.
   Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
   ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.2 requires matching peers.

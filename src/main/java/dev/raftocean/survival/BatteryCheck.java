@@ -28,7 +28,7 @@ public final class BatteryCheck {
             RaftConfig.AUTOMATION.set(true);RaftConfig.BATTERY_CHARGE_RATE.set(20);RaftConfig.GENERATOR_ENERGY.set(2000);
             RaftConfig.PURIFIER_ENERGY.set(8);RaftConfig.ELECTRIC_PURIFY_TICKS.set(100);RaftConfig.PROCESSING.set(1D);
             var basic=new ItemStack(Batteries.BASIC.get());var advanced=new ItemStack(Batteries.ADVANCED.get());
-            require(Batteries.charge(basic)==0 && Batteries.capacity(basic)==1000 && Batteries.capacity(advanced)==4000 && basic.getMaxStackSize()==1,"Crafted cells start empty, have distinct capacities and cannot stack");checks++;
+            require(Batteries.charge(basic)==0 && Batteries.capacity(basic)==1000 && Batteries.capacity(advanced)==4000 && basic.getMaxStackSize()==1,"New component-free cell stacks start empty, have distinct capacities and cannot stack");checks++;
             CustomData.update(DataComponents.CUSTOM_DATA,basic,tag -> {tag.putInt("RaftBatteryCharge",-10);tag.putString("OtherModData","keep");});
             require(Batteries.charge(basic)==0,"Malformed negative charge cannot generate energy");checks++;
             Batteries.setCharge(basic,100000);require(Batteries.charge(basic)==1000 && basic.get(DataComponents.CUSTOM_DATA).copyTag().getString("OtherModData").orElseThrow().equals("keep"),"Charge clamps to capacity and preserves unrelated item data");checks++;
@@ -95,7 +95,7 @@ public final class BatteryCheck {
             for(int i=0;i<3;i++) {
                 var grid=new ArrayList<ItemStack>();ingredients.get(i).forEach(item -> grid.add(new ItemStack(item)));while(grid.size()<9)grid.add(ItemStack.EMPTY);
                 var input=CraftingInput.of(3,3,grid);var result=level.recipeAccess().getRecipeFor(RecipeType.CRAFTING,input,level).orElseThrow().value().assemble(input);
-                require(result.is(outputs.get(i)) && result.getCount()==1 && Batteries.charge(result)==0,"Loaded battery/charger crafting produces a single new uncharged item");checks++;
+                require(result.is(outputs.get(i)) && result.getCount()==1 && Batteries.charge(result)==(i==0?1000:0),"Loaded basic battery crafts charged; advanced battery and charger retain their existing empty defaults");checks++;
             }
             return checks;
         } finally {

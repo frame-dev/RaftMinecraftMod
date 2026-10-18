@@ -31,5 +31,5 @@ with zipfile.ZipFile(artifact) as package:
         for locale,lang in labels.items():
             assert lang.get('item.raft_ocean.'+name) and lang.get('raft_ocean.island.'+plan['island']),(locale,name)
             for key in ('discovered','help','locked','requirement'):assert lang.get('raft_ocean.schematic.'+key)
-    assert 'raft-movement-13.2' in (ROOT/'src/main/java/dev/raftocean/network/RaftMovementSync.java').read_text(encoding='utf-8')
+    assert 'raft-movement-'+version.split('.',1)[1] in (ROOT/'src/main/java/dev/raftocean/network/RaftMovementSync.java').read_text(encoding='utf-8')
 print('Story schematics verified: 7 stable plans, 8 gated projects, guaranteed loot, original models and bilingual guidance; starter projects ungated.')

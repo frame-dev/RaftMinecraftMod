@@ -58,6 +58,8 @@ public final class StorySchematicCheck {
             }
             var old=player(level);old.setData(Research.KNOWLEDGE,1<<topic("engine"));
             require(Research.state(old,topic("engine"))==2 && !StorySchematics.known(old,1),"Existing researched engines stay learned without new paper");
+            old.setData(Research.KNOWLEDGE,1<<topic("power"));
+            require(Research.allowed(old,new ItemStack(dev.raftocean.survival.Batteries.BASIC.get())),"Old power project retains basic battery crafting after early electronics migration");
             old.setData(Research.KNOWLEDGE,0);old.setData(Research.MATERIALS,Research.ALL_MATERIALS);old.getAbilities().instabuild=true;
             require(Research.state(old,topic("engine"))==1,"Creative may learn without exploration gates");
             old.getAbilities().instabuild=false;dev.raftocean.config.RaftConfig.RESEARCH.set(false);

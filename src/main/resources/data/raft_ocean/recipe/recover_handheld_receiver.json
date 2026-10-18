@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "raft_ocean:survey_receiver"
+  ],
+  "result": {
+    "id": "raft_ocean:radio_receiver"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " W ",
+    "IWI",
+    " B "
+  ],
+  "key": {
+    "W": "#raft_ocean:compat/copper_wires",
+    "I": "#raft_ocean:compat/iron_ingots",
+    "B": "raft_ocean:timber_brace"
+  },
+  "result": {
+    "id": "raft_ocean:survey_antenna"
+  }
+}

@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.13.3 — 2026-10-18 — mounted survey receiver
+
+- Original receiver console and three-antenna hardware use the existing raft API,
+  with shared placement/support/collision, saved battery inventory and crew access.
+- Upper-deck antenna triangles, portable charge, on/off, known story channels,
+  bounded/cached scans and a console-relative animated radar with setup feedback.
+- Basic Tidal Battery moves to early signal research and crafts with1000charge;
+  previous power-project owners retain access. Advanced power remains story-gated.
+- Added console/antenna recipes and a handheld recovery recipe; existing handheld
+  receivers and journey saves remain usable. The eastern ending remains unresolved.
+- Native models fitted to inventory, coplanar face overlaps removed, and inherited
+  schematic folios included in exact registry coverage. EN/DE labels; handshake13.3.
+
+
 ## 0.13.2 — 2026-10-18 — story schematic progression
 
 - Seven original schematic folios in guaranteed main story chests gate eight

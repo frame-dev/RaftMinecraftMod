@@ -124,6 +124,10 @@ public final class Research {
     public static int blockedProject(Player player,ItemStack output){
         if(!dev.raftocean.config.RaftConfig.RESEARCH.get() || player.getAbilities().instabuild){return -1;}
         migrate(player);int mask=player.getData(KNOWLEDGE);
+        // Basic cells moved to early electronics; owners of the old power project retain access.
+        if(output.is(dev.raftocean.survival.Batteries.BASIC.get())){
+            for(int i=0;i<TOPICS.length;i++)if(TOPICS[i].id().equals("power") && (mask&1<<i)!=0)return -1;
+        }
         for(int topic=0;topic<TOPICS.length;topic++){
             if(output.is(tag("research/unlocks/"+TOPICS[topic].id())) && (mask&1<<topic)==0){return topic;}
         }
