@@ -84,6 +84,9 @@ public final class Research {
     public static int state(Player player,int topic){
         if(topic<0 || topic>=TOPICS.length){return -1;}migrate(player);
         if((player.getData(KNOWLEDGE)&1<<topic)!=0){return 2;}
+        int schematic=StorySchematics.required(topic);
+        if(schematic>=0 && !StorySchematics.known(player,schematic) && !player.getAbilities().instabuild
+                && dev.raftocean.config.RaftConfig.RESEARCH.get())return 3;
         int required=requiredMaterialsMask(topic);
         return required==0 || (player.getData(MATERIALS)&required)==required?1:0;
     }
@@ -104,6 +107,7 @@ public final class Research {
     public static void unlockAll(net.minecraft.server.level.ServerPlayer player){
         player.setData(SCHEMA,1);
         player.setData(MATERIALS,ALL_MATERIALS);
+        player.setData(StorySchematics.DISCOVERED,StorySchematics.ALL);
         player.setData(KNOWLEDGE,ALL_PROJECTS);
         dev.raftocean.crew.CrewAccess.publish(player);
         ResearchRecipes.reconcile(player,true);

@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.13.2 — 2026-10-18 — story schematic progression
+
+- Seven original schematic folios in guaranteed main story chests gate eight
+  advanced research projects, while starter survival and initial travel remain open.
+- Discovery is recorded automatically in player inventory, retained on death/save,
+  and separate from studying materials and explicitly learning recipes.
+- Research menu shows missing-plan guidance and source island; server rejects
+  premature Learn actions. Existing research/JEI output visibility is retained.
+- Crew discovery sharing respects the existing toggle and guest roles, persists
+  in crew data and loads older crew saves with no new field required.
+- Previously learned recipes stay learned; reading existing main island journals
+  recovers plan discoveries for older looted islands. Admin unlock includes plans.
+- Original folio models and EN/DE labels; protocol13.2 requires matching peers.
+
+
 ## 0.13.1 — 2026-10-18 — staged story exploration
 
 - Seven strictly increasing story island widths, from 129 to 249 blocks, with

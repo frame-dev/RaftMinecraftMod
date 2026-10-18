@@ -29,12 +29,15 @@ public final class CrewAccess {
         if(data.role(player.level(),home.raft(),player.getUUID()).equals("guest"))return;
         // Migrate legacy research before publishing its bits into a crew's current schema.
         Research.state(player,0);
-        data.share(player.level(),home.raft(),player.getData(Research.KNOWLEDGE),player.getData(Research.MATERIALS));
+        data.share(player.level(),home.raft(),player.getData(Research.KNOWLEDGE),player.getData(Research.MATERIALS),player.getData(dev.raftocean.progression.StorySchematics.DISCOVERED));
         var crew=data.crew(player.level(),home.raft());
         int k=player.getData(Research.KNOWLEDGE)|crew.knowledge();
         int m=player.getData(Research.MATERIALS)|crew.materials();
-        if(k!=player.getData(Research.KNOWLEDGE) || m!=player.getData(Research.MATERIALS)) {
+        int s=player.getData(dev.raftocean.progression.StorySchematics.DISCOVERED)|crew.schematics();
+        if(k!=player.getData(Research.KNOWLEDGE) || m!=player.getData(Research.MATERIALS)
+                || s!=player.getData(dev.raftocean.progression.StorySchematics.DISCOVERED)) {
             player.setData(Research.KNOWLEDGE,k);player.setData(Research.MATERIALS,m);
+            player.setData(dev.raftocean.progression.StorySchematics.DISCOVERED,s);
             dev.raftocean.progression.ResearchRecipes.reconcile(player,true);
         }
     }

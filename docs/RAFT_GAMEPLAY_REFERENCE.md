@@ -1,6 +1,6 @@
 # Raft gameplay reference and implementation priorities
 
-Reviewed 2026-10-18 against the current 0.13.1 source. This is a comparison and
+Initially reviewed 2026-10-18 against the 0.13.1 source. This is a comparison and
 implementation direction, not a claim that the features below are implemented.
 The user wants the mod's survival loop and progression to feel closer to Raft.
 
@@ -21,6 +21,13 @@ The comparisons with the mod and the priority order are our engineering assessme
 - Harder 2–4-sample research batches, with prior research retained.
 - Large, irregular story islands with increasing stage footprints and extra notes.
 - Server-authoritative moving rafts, co-op, existing saves and the addon API.
+
+## Implemented follow-up
+
+0.13.2 implements the first priority: seven story schematics, permanent discovery,
+material-plus-discovery research gates, older-journal recovery and crew sharing.
+See [story schematics](STORY_SCHEMATICS.md). The comparisons below describe the
+0.13.1 audit baseline; priorities2–6 remain future work.
 
 ## 1. Exploration should unlock technology
 
@@ -45,7 +52,7 @@ steps. Persist discovery at acquisition, keep it if the paper is lost, support c
 sharing and an operator unlock, and preserve existing learned recipes. No starter
 water/food or initial receiver gate may depend on reaching a later island. Define
 and test the entire dependency graph before adding gates; do not reset old saves.
-This is a proposed feature, not present in 0.13.1.
+Implemented in0.13.2; it was not present in the0.13.1 audit baseline.
 
 ## 2. Receiver and notebook should connect exploration
 

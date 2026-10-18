@@ -42,9 +42,16 @@ public final class ResearchScreen extends AbstractContainerScreen<ResearchMenu> 
         for(int row=0;row<6;row++){
             int index=page*6+row;rows[row].visible=!materials && index<count();
             if(rows[row].visible){int state=menu.state(index);rows[row].active=state==1;
-                String key=state==2?"raft_ocean.research.known":(Research.requiredMaterialCount(index)==0?"raft_ocean.research.free":"raft_ocean.research.learn");
+                String key=state==3?"raft_ocean.schematic.locked":state==2?"raft_ocean.research.known":(Research.requiredMaterialCount(index)==0?"raft_ocean.research.free":"raft_ocean.research.learn");
                 rows[row].setMessage(Component.translatable(key));
                 String tooltip=Research.requiredMaterialCount(index)==0?Component.translatable("raft_ocean.research.description."+Research.TOPICS[index].id()).getString()+"\n"+Component.translatable("raft_ocean.research.free.help").getString():Component.translatable("raft_ocean.research.description."+Research.TOPICS[index].id()).getString();
+                int schematic=dev.raftocean.progression.StorySchematics.required(index);
+                if(schematic>=0){
+                    var plan=dev.raftocean.progression.StorySchematics.PLANS.get(schematic);
+                    tooltip+="\n"+Component.translatable("raft_ocean.schematic.requirement",
+                            Component.translatable("item.raft_ocean.schematic_"+plan.id()),
+                            Component.translatable("raft_ocean.island."+plan.island())).getString();
+                }
                 rows[row].setTooltip(Tooltip.create(Component.literal(tooltip)));
             }
         }
@@ -64,7 +71,7 @@ public final class ResearchScreen extends AbstractContainerScreen<ResearchMenu> 
         graphics.text(font,Component.translatable("raft_ocean.research.input"),12,45,0xFFECE9D5);
         for(int row=0;row<6;row++){
             int index=page*6+row;if(index>=count()){break;}
-            int color=materials?(menu.materialKnown(index)?0xFF70DDA2:0xFFABC4C4):(menu.state(index)==0?0xFFABC4C4:0xFF70DDA2);
+            int color=materials?(menu.materialKnown(index)?0xFF70DDA2:0xFFABC4C4):(menu.state(index)==1 || menu.state(index)==2?0xFF70DDA2:0xFFABC4C4);
             Component label=Component.translatable("raft_ocean.research."+(materials?"material.":"topic.")+
                     (materials?ResearchCatalog.MATERIALS[index].id():Research.TOPICS[index].id()));
             if(materials){

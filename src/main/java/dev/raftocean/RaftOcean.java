@@ -51,6 +51,7 @@ public final class RaftOcean {
         dev.raftocean.survival.Batteries.initialize();
         dev.raftocean.archery.ArcheryContent.initialize();
         dev.raftocean.progression.Research.initialize();
+        dev.raftocean.progression.StorySchematics.initialize();
         dev.raftocean.menu.ResearchMenu.TYPES.register(modEventBus);
         dev.raftocean.registry.ModSounds.SOUNDS.register(modEventBus);
         ModContent.BLOCKS.register(modEventBus);

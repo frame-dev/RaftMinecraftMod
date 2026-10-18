@@ -77,6 +77,7 @@ public final class ModContent {
                         output.accept(dev.raftocean.story.IslandContent.ANTENNA.get());
                         output.accept(dev.raftocean.story.IslandContent.LONG_RECEIVER.get());
                         output.accept(dev.raftocean.story.IslandContent.KEY.get());
+                        dev.raftocean.progression.StorySchematics.display(output::accept);
                         output.accept(dev.raftocean.story.IslandContent.RADIO_LOG.get());
                         output.accept(dev.raftocean.story.IslandContent.WATCH_LOG.get());
                         output.accept(dev.raftocean.story.IslandContent.GARDEN_LOG.get());

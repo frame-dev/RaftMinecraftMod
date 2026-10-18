@@ -45,6 +45,15 @@
           ]
         }
       ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "raft_ocean:schematic_power_storage"
+        }
+      ]
     }
   ]
 }

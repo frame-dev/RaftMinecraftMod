@@ -1,4 +1,4 @@
-# Install Raft Ocean 0.13.1
+# Install Raft Ocean 0.13.2
 
 This is a preview release for Minecraft Java 26.3, NeoForge 26.3.0.48-beta
 and 64-bit Java 25. It does not run on Fabric or older Minecraft versions.
@@ -7,9 +7,9 @@ and 64-bit Java 25. It does not run on Fabric or older Minecraft versions.
 
 1. Install Java 25 and create a Minecraft 26.3 NeoForge profile using the
    pinned NeoForge version above.
-2. Put only `raft_ocean-0.13.1.jar` in that profile's `mods` folder. Remove
+2. Put only `raft_ocean-0.13.2.jar` in that profile's `mods` folder. Remove
    the previous Raft Ocean jar so exactly one version is installed.
-3. Start the profile and verify **Raft Ocean 0.13.1** in the Mods screen.
+3. Start the profile and verify **Raft Ocean 0.13.2** in the Mods screen.
 4. Create a world and select the **Ocean World** preset. You should begin
    on a starter raft in the ocean.
 
@@ -34,7 +34,7 @@ enabled for a normal public server; isolated development tests use a separate
 local server configuration.
 
 Players can use the shared-raft/co-op systems. Crew permissions, shared
-research and rescue settings are configurable. All peers need 0.13.1 so research costs and story content match; the movement protocol remains 13.0.
+research and rescue settings are configurable. All peers need 0.13.2 so research costs and story content match; the movement handshake is now 13.2.
 
 ## Updating an existing world
 

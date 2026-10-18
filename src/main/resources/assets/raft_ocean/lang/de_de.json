@@ -791,5 +791,16 @@
   "raft_ocean.story.field.6.2.context": "Hier blieb ein Bericht unserer Mannschaft zurück. Die nächste Peilung steht im Hauptjournal der Insel. Diese Seite ergänzt die Geschichte, ohne ein neues Ziel zu nennen.",
   "raft_ocean.story.field.6.3.title": "Feldnotiz 7.4",
   "raft_ocean.story.field.6.3.page": "Mara: 'Bringt das Verzeichnis' mag Auftrag oder Warnung sein. Hinter dem Archiv kennen wir keine sicheren Koordinaten. Hört weiter zu. Zeichnet keinen Hafen in unbekannte See.",
-  "raft_ocean.story.field.6.3.context": "Hier blieb ein Bericht unserer Mannschaft zurück. Die nächste Peilung steht im Hauptjournal der Insel. Diese Seite ergänzt die Geschichte, ohne ein neues Ziel zu nennen."
+  "raft_ocean.story.field.6.3.context": "Hier blieb ein Bericht unserer Mannschaft zurück. Die nächste Peilung steht im Hauptjournal der Insel. Diese Seite ergänzt die Geschichte, ohne ein neues Ziel zu nennen.",
+  "raft_ocean.schematic.discovered": "Bauplan entdeckt: %s. Erforsche die Materialien und lerne dann das Rezept.",
+  "raft_ocean.schematic.help": "Die Entdeckung bleibt gespeichert. Bewahre den Plan auf; lerne seine Projekte am Forschungstisch.",
+  "raft_ocean.schematic.locked": "Erkunden",
+  "raft_ocean.schematic.requirement": "Bauplan: %s — Fundort: %s.",
+  "item.raft_ocean.schematic_signal_array": "Signalvermessung",
+  "item.raft_ocean.schematic_tide_drive": "Gezeitenantriebsplan",
+  "item.raft_ocean.schematic_bioenergy": "Gartentreibstoffnotizen",
+  "item.raft_ocean.schematic_waterworks": "Wasserwerksdiagramme",
+  "item.raft_ocean.schematic_power_storage": "Leuchtfeuer-Energiebuch",
+  "item.raft_ocean.schematic_deepwater": "Tiefwasserausrüstung",
+  "item.raft_ocean.schematic_reef_armaments": "Riffwaffenpläne"
 }

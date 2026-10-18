@@ -141,6 +141,16 @@ public final class IslandCheck {
                 var chest=(ChestBlockEntity)level.getBlockEntity(chestPos);
                 boolean found=false;for(int slot=0;slot<chest.getContainerSize();slot++){if(chest.getItem(slot).is(logs.get(stage))){found=true;}}
                 check(found,"Story chest native loot contains original journal: "+name);
+                boolean schematic=false;
+                for(int slot=0;slot<chest.getContainerSize();slot++){
+                    if(chest.getItem(slot).is(dev.raftocean.progression.StorySchematics.item(stage)))schematic=true;
+                }
+                check(schematic,"Native story chest contains its guaranteed research schematic: "+name);
+                player.getInventory().setItem(16,new ItemStack(dev.raftocean.progression.StorySchematics.item(stage)));
+                player.getInventory().tick();
+                check(dev.raftocean.progression.StorySchematics.known(player,stage)
+                        && player.getInventory().getItem(16).getCount()==1,"Acquired island schematic records permanent discovery: "+name);
+                player.getInventory().setItem(16,ItemStack.EMPTY);
                 var detail=template.filterBlocks(BlockPos.ZERO,placement,landmark,false).getFirst();
                 BlockPos detailPos=new BlockPos(target.getX()-size/2,49,target.getZ()-size/2).offset(detail.pos());
                 check(level.getBlockState(detailPos).is(landmark),"New decorative landmark survives actual chunk generation: "+name);

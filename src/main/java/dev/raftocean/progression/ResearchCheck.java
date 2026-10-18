@@ -22,7 +22,7 @@ public final class ResearchCheck {
         if (!condition) { throw new IllegalStateException(message); } checks++;
     }
     public static int run(ServerLevel level) {
-        checks=0;
+        checks=StorySchematicCheck.run(level);
         var player=new NativeResearchPlayer(level);
         var other=new FakePlayer(level,new GameProfile(UUID.randomUUID(),"ResearchOther"));
         var raft=new RaftEntity(ModContent.RAFT.get(),level);
@@ -85,6 +85,13 @@ public final class ResearchCheck {
                 require(!menu.clickMenuButton(player,ResearchMenu.STUDY_SAMPLE) && menu.getSlot(0).getItem().getCount()==1,"Previously studied material is never consumed again");
                 require(Research.materialKnown(player,material) && menu.materialKnown(material),"Material checklist is synchronized");
             }
+            int engineTopic=StorySchematicCheck.topic("engine");
+            require(menu.state(engineTopic)==3 && !menu.clickMenuButton(player,engineTopic)
+                    && menu.getSlot(0).getItem().getCount()==1,"Real research menu refuses forged learn clicks without a schematic");
+            player.getInventory().setItem(16,new ItemStack(StorySchematics.item(1)));player.getInventory().tick();
+            require(menu.state(engineTopic)==1 && (player.getData(Research.KNOWLEDGE)&1<<engineTopic)==0,
+                    "Automatic discovery updates the live menu without learning its recipe");
+            player.getInventory().setItem(16,ItemStack.EMPTY);
             require(Research.state(player,1)==1 && inventoryMenu.getSlot(0).getItem().isEmpty(),"Researching materials alone does not learn recipes");
             require(menu.clickMenuButton(player,0) && !menu.clickMenuButton(player,0),"Learning a recipe is explicit and cannot repeat");
             require(menu.clickMenuButton(player,1) && player.getInventory().getItem(0).getCount()==2,"Learning costs no additional ingredients");
@@ -101,6 +108,7 @@ public final class ResearchCheck {
             require(crafting.getSlot(0).getItem().is(wire),"Creative crafting bypasses research");other.getAbilities().instabuild=false;
             dev.raftocean.config.RaftConfig.RESEARCH.set(false);crafting.getSlot(2).set(crafting.getSlot(2).getItem().copy());
             require(crafting.getSlot(0).getItem().is(wire),"Synced config disables crafting restrictions");dev.raftocean.config.RaftConfig.RESEARCH.set(true);
+            player.setData(StorySchematics.DISCOVERED,StorySchematics.ALL);
             for(int topic=2;topic<Research.TOPICS.length;topic++){
                 require(Research.state(player,topic)==0 || Research.state(player,topic)==1,"Prerequisite graph can be traversed");
                 require(menu.clickMenuButton(player,topic) && menu.getSlot(0).getItem().getCount()==1,"Projects reuse known materials without consuming them");
@@ -121,7 +129,7 @@ public final class ResearchCheck {
             previous.setData(Research.MATERIALS,Research.ALL_MATERIALS);
             previous.setData(Research.KNOWLEDGE,(1<<24)-1);
             for(int topic=0;topic<Research.TOPICS.length;topic++){
-                require(Research.state(previous,topic)==(topic<24?2:1),"Saved 24-project progress preserves old unlocks and leaves appended projects ready to learn");
+                require(Research.state(previous,topic)==(topic<24?2:StorySchematics.required(topic)>=0?3:1),"Saved 24-project progress preserves old unlocks and leaves appended projects ready to learn");
             }
             require(previous.getData(Research.KNOWLEDGE)==(1<<24)-1,"Opening expanded research does not auto-learn new projects");
 

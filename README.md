@@ -1,7 +1,8 @@
-# Raft Ocean — 0.13.1 preview
+# Raft Ocean — 0.13.2 preview
 
-This update adds [larger story stages, 28 field-note books and more demanding
-research batches](docs/STORY_STAGE_PROGRESSION.md). Existing knowledge is retained.
+This update adds [persistent story schematic discoveries](docs/STORY_SCHEMATICS.md)
+before advanced research can be learned. Existing knowledge, larger story stages
+and the 28 bilingual field-note books are retained.
 
 The [addon API v3](docs/API_V3_UTILITIES.md) supports utility
 inputs, preflighted processing, generator demand and opt-in output collection.
@@ -28,7 +29,7 @@ are not supported by this build.
 
 ## Install and start
 
-Install `raft_ocean-0.13.1.jar` in the matching NeoForge profile's `mods`
+Install `raft_ocean-0.13.2.jar` in the matching NeoForge profile's `mods`
 folder. Keep exactly one Raft Ocean jar installed. Sources jars are for
 developers. Use the same version on every multiplayer client and server.
 
@@ -84,7 +85,7 @@ and Gradle JVM. Use the wrapper. Close the development client before rebuilding.
 ./gradlew.bat runClient
 ```
 
-Output: `build/libs/raft_ocean-0.13.1.jar`. Development client launches install
+Output: `build/libs/raft_ocean-0.13.2.jar`. Development client launches install
 the pinned JEI build for testing. The first build downloads dependencies;
 cached builds can use `--offline`. Server launch: `./gradlew.bat runServer`.
 Read `INSTALLATION.md`; Minecraft EULA acceptance remains your choice.

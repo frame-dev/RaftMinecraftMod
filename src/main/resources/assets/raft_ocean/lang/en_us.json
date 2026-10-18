@@ -791,5 +791,16 @@
   "raft_ocean.story.field.6.2.context": "Recovered at lookout. The main island journal carries the next signal bearing. This page adds testimony, not a new destination.",
   "raft_ocean.story.field.6.3.title": "Field note 7.4",
   "raft_ocean.story.field.6.3.page": "Mara: 'Bring the register' may be an instruction or a warning. We have no reliable coordinates beyond this archive. Keep listening; do not draw a safe harbor where we know only sea.",
-  "raft_ocean.story.field.6.3.context": "Recovered at rock grotto. The main island journal carries the next signal bearing. This page adds testimony, not a new destination."
+  "raft_ocean.story.field.6.3.context": "Recovered at rock grotto. The main island journal carries the next signal bearing. This page adds testimony, not a new destination.",
+  "raft_ocean.schematic.discovered": "Schematic discovered: %s. Research its materials, then learn the recipe.",
+  "raft_ocean.schematic.help": "Discovery is saved permanently. Keep or store this folio; learn its projects at the research table.",
+  "raft_ocean.schematic.locked": "Explore",
+  "raft_ocean.schematic.requirement": "Schematic: %s — found at %s.",
+  "item.raft_ocean.schematic_signal_array": "Signal Survey Folio",
+  "item.raft_ocean.schematic_tide_drive": "Tide-drive Plans",
+  "item.raft_ocean.schematic_bioenergy": "Garden Fuel Notes",
+  "item.raft_ocean.schematic_waterworks": "Waterworks Diagrams",
+  "item.raft_ocean.schematic_power_storage": "Beacon Power Ledger",
+  "item.raft_ocean.schematic_deepwater": "Deepwater Equipment Folio",
+  "item.raft_ocean.schematic_reef_armaments": "Reef Armament Plans"
 }

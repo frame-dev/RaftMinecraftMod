@@ -1,0 +1,59 @@
+[
+  {
+    "id": "signal_array",
+    "island": "radio_tower",
+    "loot": "radio",
+    "projects": [
+      "antenna"
+    ]
+  },
+  {
+    "id": "tide_drive",
+    "island": "glasswatch",
+    "loot": "watch",
+    "projects": [
+      "wheel",
+      "engine"
+    ]
+  },
+  {
+    "id": "bioenergy",
+    "island": "garden_relay",
+    "loot": "garden",
+    "projects": [
+      "bioenergy"
+    ]
+  },
+  {
+    "id": "waterworks",
+    "island": "echo_vault",
+    "loot": "vault",
+    "projects": [
+      "waterworks"
+    ]
+  },
+  {
+    "id": "power_storage",
+    "island": "ember_beacon",
+    "loot": "ember_beacon",
+    "projects": [
+      "power"
+    ]
+  },
+  {
+    "id": "deepwater",
+    "island": "tideworks_haven",
+    "loot": "tideworks_haven",
+    "projects": [
+      "diving"
+    ]
+  },
+  {
+    "id": "reef_armaments",
+    "island": "starfall_archive",
+    "loot": "starfall_archive",
+    "projects": [
+      "armaments"
+    ]
+  }
+]

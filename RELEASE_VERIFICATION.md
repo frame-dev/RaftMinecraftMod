@@ -1,3 +1,40 @@
+# Verification — 0.13.2 preview
+
+Checked2026-10-18 with Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+ModDevGradle2.0.147 and Gradle9.2.1. API3 retained; handshake13.2 requires matching
+clients and server. No geometry, world-template or propulsion changes.
+
+- Final build/bootstrap/fresh Ocean World run passed. Research768 includes native
+  non-hotbar inventory acquisition, all eight premature-study refusals, discovery
+  without materials/automatic learning, lost paper, duplicate acquisition, player
+  save/reload, actual death attachment copy, live menu actions and journal recovery.
+- Crew/rescue53 includes guest exclusion, discovery union, sharing disabled and
+  re-enabled, old crew codec defaults, save/reload and replacement-raft retention.
+- Fresh Ocean World5824 checks include all seven guaranteed schematic items in
+  actual native-generated main journal chests and inventory discovery afterward,
+  existing journals/keys/puzzles, all28 field-note books and island/trail checks.
+- Existing suites passed: crafting262811, movement2904, carry729, collision425,
+  construction3641, machineAPI69, survival971, plus station/navigation/trading/
+  salvage/creature/config and structural/building checks. No external addon loaded.
+- Native existing model checks952models/57779elements,165GUI silhouettes,
+  243motion and18797fill/mount checks passed. New folios alias the already checked
+  original journal model; their definitions/parents and labels passed asset audit.
+- Packaged schematic audit: seven stable IDs, eight unique project gates,
+  guaranteed loot, ungated starter projects, original model references and both
+  language labels. Research30projects/60unlocks and recipe discovery rewards passed.
+- Localization804English/German keys, placeholder parity, sounds/config passed.
+
+Evidence: build/schematics-0.13.2-verified.log. The earlier successful first build
+is superseded by that final run. No user worlds or runtime client outputs changed.
+
+Pending: client folio appearance, Explore/tooltips in both languages, and shared
+acquisition under real network latency. Arbitrary mod/addon compatibility remains
+unverified. Existing unlearned advanced projects need discovery; older learned
+projects remain unlocked and old main journals provide a recovery path.
+This is a preview build, not a newly published GitHub release.
+
+## Earlier verification records
+
 # Verification — 0.13.1 preview
 
 Checked on 2026-10-18 with Minecraft 26.3, NeoForge 26.3.0.48-beta, Java 25,

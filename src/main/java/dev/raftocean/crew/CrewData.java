@@ -11,12 +11,14 @@ import net.minecraft.world.level.saveddata.SavedDataType;
 
 /** Separate save preserves existing raft homes and stable research bit assignments. */
 public final class CrewData extends SavedData {
-    public record Crew(UUID captain,Map<UUID,String> roles,int knowledge,int materials) {
+    public record Crew(UUID captain,Map<UUID,String> roles,int knowledge,int materials,int schematics) {
+        public Crew(UUID captain,Map<UUID,String> roles,int knowledge,int materials){this(captain,roles,knowledge,materials,0);}
         public static final Codec<Crew> CODEC=RecordCodecBuilder.create(i->i.group(
                 UUIDUtil.CODEC.fieldOf("captain").forGetter(Crew::captain),
                 Codec.unboundedMap(UUIDUtil.STRING_CODEC,Codec.STRING).fieldOf("roles").forGetter(Crew::roles),
                 Codec.INT.fieldOf("knowledge").forGetter(Crew::knowledge),
-                Codec.INT.fieldOf("materials").forGetter(Crew::materials)).apply(i,Crew::new));
+                Codec.INT.fieldOf("materials").forGetter(Crew::materials),
+                Codec.intRange(0,dev.raftocean.progression.StorySchematics.ALL).optionalFieldOf("schematics",0).forGetter(Crew::schematics)).apply(i,Crew::new));
     }
     public static final Codec<CrewData> CODEC=Codec.unboundedMap(UUIDUtil.STRING_CODEC,Crew.CODEC)
             .xmap(CrewData::new,d->d.crews);
@@ -45,19 +47,23 @@ public final class CrewData extends SavedData {
         if(crew==null || !crew.captain.equals(captain) || crew.captain.equals(player)
                 || home==null || !home.raft().equals(raft) || !Set.of("crew","guest").contains(role))return false;
         var roles=new HashMap<>(crew.roles);roles.put(player,role);
-        crews.put(raft,new Crew(crew.captain,Map.copyOf(roles),crew.knowledge,crew.materials));setDirty();return true;
+        crews.put(raft,new Crew(crew.captain,Map.copyOf(roles),crew.knowledge,crew.materials,crew.schematics));setDirty();return true;
     }
     public void guest(ServerLevel level,UUID raft,UUID player) {
         Crew crew=crew(level,raft);
         if(crew==null || crew.captain.equals(player))return;
         var roles=new HashMap<>(crew.roles);roles.put(player,"guest");
-        crews.put(raft,new Crew(crew.captain,Map.copyOf(roles),crew.knowledge,crew.materials));setDirty();
+        crews.put(raft,new Crew(crew.captain,Map.copyOf(roles),crew.knowledge,crew.materials,crew.schematics));setDirty();
     }
     public void share(ServerLevel level,UUID raft,int knowledge,int materials) {
+        share(level,raft,knowledge,materials,0);
+    }
+    public void share(ServerLevel level,UUID raft,int knowledge,int materials,int schematics) {
         Crew c=crew(level,raft);if(c==null)return;
         int k=(c.knowledge|knowledge)&dev.raftocean.progression.Research.ALL_PROJECTS;
         int m=(c.materials|materials)&dev.raftocean.progression.Research.ALL_MATERIALS;
-        if(k!=c.knowledge || m!=c.materials) {crews.put(raft,new Crew(c.captain,c.roles,k,m));setDirty();}
+        int s=(c.schematics|schematics)&dev.raftocean.progression.StorySchematics.ALL;
+        if(k!=c.knowledge || m!=c.materials || s!=c.schematics) {crews.put(raft,new Crew(c.captain,c.roles,k,m,s));setDirty();}
     }
     public void replace(UUID old,UUID replacement) {
         Crew crew=crews.remove(old);if(crew!=null){crews.put(replacement,crew);setDirty();}

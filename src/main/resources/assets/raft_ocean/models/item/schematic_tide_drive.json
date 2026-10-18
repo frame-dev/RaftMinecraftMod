@@ -1,0 +1,6 @@
+{
+  "parent": "raft_ocean:item/radio_log",
+  "textures": {
+    "cover": "raft_ocean:block/fine_teal"
+  }
+}

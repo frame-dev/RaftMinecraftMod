@@ -8,13 +8,31 @@
 
 - Updated: 2026-10-18.
 
+- Latest development: 0.13.2 preview, persistent story schematic research gates.
+  Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.2 requires matching peers.
+  Seven guaranteed island folios gate eight advanced projects; collection records
+  discovery without consuming paper or learning recipes. Material batches retained.
+  Same-raft research sharing includes discoveries; guest restrictions/config apply.
+  Discovery survives player save/death and crew save/replacement; older crew saves
+  default the new field to zero. Previously learned projects remain learned.
+  Main journals recover matching discoveries for older already-looted islands.
+  Admin research unlock includes all plans; starter receiver/sailing/survival ungated.
+  English/German hints and original journal-parent folio models; story open-ended.
+  Verified768research,53crew/rescue,5824fresh Ocean World assertions; prior server
+  suites and build pass. Catalog/loot/model-label audit7plans/8projects;804locale keys.
+  See docs/STORY_SCHEMATICS.md; evidence build/schematics-0.13.2-verified.log.
+  Milestones1-11implemented;12preview build ready. GitHub release remains0.13.0.
+  Next bounded feature: mounted receiver/notebook. Pending live client folios/UI,
+  crew sync under real latency, third-party combinations and older movement checks.
+
+
 - Wiki gameplay comparison completed against selected indexed German/English
   Raft wiki articles; homepage fetch blocked. See docs/RAFT_GAMEPLAY_REFERENCE.md.
-  Next priority: persistent story-site schematic discovery gating advanced research,
-  followed by mounted receiver/notebook, navigation limits, recycling/trading,
-  cooking interactions and hammer palette. These features are proposals, not new
-  runtime implementations. Custom speeds, attack delays, harder research and open
-  story retained. This reference/documentation pass leaves version0.13.1 unchanged.
+  First priority (now implemented in0.13.2): persistent story-site schematic discovery
+  gating advanced research, followed by mounted receiver/notebook, navigation limits, recycling/trading,
+  cooking interactions and hammer palette. The remaining features are proposals. Custom speeds, attack delays, harder research and open
+  story retained. The original reference pass left version0.13.1 unchanged.
 
 - Latest development: 0.13.1 preview, staged story exploration and research balance.
   Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
