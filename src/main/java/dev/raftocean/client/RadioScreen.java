@@ -17,6 +17,8 @@ public final class RadioScreen extends AbstractContainerScreen<RadioMenu> {
     private void send(int button){if(minecraft.gameMode!=null)minecraft.gameMode.handleInventoryButtonClick(menu.containerId,button);}
     @Override protected void init(){
         super.init();
+        addRenderableWidget(Button.builder(Component.translatable("raft_ocean.notebook.open"),b->send(5))
+                .bounds(leftPos+180,topPos+9,88,18).build());
         power=addRenderableWidget(Button.builder(Component.empty(),b->send(0)).bounds(leftPos+145,topPos+112,120,18).build());
         scan=addRenderableWidget(Button.builder(Component.translatable("raft_ocean.radio.scan"),b->send(1)).bounds(leftPos+145,topPos+133,120,18)
                 .tooltip(Tooltip.create(Component.translatable("raft_ocean.radio.scan_help"))).build());
@@ -52,7 +54,7 @@ public final class RadioScreen extends AbstractContainerScreen<RadioMenu> {
         g.pose().popMatrix();
     }
     @Override protected void extractLabels(GuiGraphicsExtractor g,int x,int y){
-        g.text(font,font.plainSubstrByWidth(title.getString(),250),12,13,0xFFECE9D5);
+        g.text(font,font.plainSubstrByWidth(title.getString(),160),12,13,0xFFECE9D5);
         int channel=Math.clamp(menu.value(5),0,ReceiverItem.DESTINATIONS.length);
         Component name=Component.translatable(channel==ReceiverItem.DESTINATIONS.length?"raft_ocean.radio.open_channel":"raft_ocean.island."+ReceiverItem.DESTINATIONS[channel]);
         g.text(font,font.plainSubstrByWidth(name.getString(),120),145,38,0xFF70C8D1);

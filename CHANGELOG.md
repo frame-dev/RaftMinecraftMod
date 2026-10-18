@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.13.4 preview — expedition notebook
+
+- Archive all 28 collected original field notes permanently without consuming books.
+- Read the archive through the receiver, sneak-use journals or `/raftnotebook`.
+- Journey overview, recovered main journals and optional-route logs share a paged,
+  bilingual screen; existing journey progress remains readable after upgrading.
+- Personal server-owned data survives saves and death; no future notes are granted.
+- Original story remains open-ended. Numeric code entry is still future work.
+- API3 unchanged; handshake13.4 requires matching clients/server.
+
+
 ## 0.13.3 — 2026-10-18 — mounted survey receiver
 
 - Original receiver console and three-antenna hardware use the existing raft API,

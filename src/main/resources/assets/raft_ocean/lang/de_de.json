@@ -824,5 +824,14 @@
   "raft_ocean.radio.status.5": "Signal erfasst",
   "raft_ocean.radio.status.6": "Suchen drücken; kein Signal gespeichert",
   "raft_ocean.radio.status.7": "Der östliche Kanal bleibt offen",
-  "raft_ocean.radio.status.8": "Ozeanwelt benötigt"
+  "raft_ocean.radio.status.8": "Ozeanwelt benötigt",
+  "raft_ocean.notebook.title": "Expeditionsnotizbuch",
+  "raft_ocean.notebook.open": "Notizbuch",
+  "raft_ocean.notebook.tab.0": "Reise",
+  "raft_ocean.notebook.tab.1": "Fundnotizen",
+  "raft_ocean.notebook.tab.2": "Nebenrouten",
+  "raft_ocean.notebook.route": "Nächstes Signal",
+  "raft_ocean.notebook.empty": "Noch keine Einträge geborgen. Sammle Notizbücher oder lies ein Inseltagebuch, um dein Archiv zu erweitern.",
+  "raft_ocean.notebook.recorded": "Archiviert: %s",
+  "raft_ocean.notebook.overview": "Nächstes bekanntes Signal: %s\n\nReiseeinträge: %s / %s\nFundnotizen: %s / %s\n\nFolge dem Signal mit dem Empfänger. Lies Inseltagebücher, um die Reise fortzusetzen. Gesammelte Fundnotizen bleiben hier erhalten, auch wenn ihre Bücher verloren gehen.\n\nDer Ozean birgt weiterhin unbeantwortete Signale; diese Reise hat kein endgültiges Ende."
 }

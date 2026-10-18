@@ -28,6 +28,8 @@ public final class Exploration {
         return ModContent.ITEMS.registerItem(id,p->new Item(p.stacksTo(1)) {
             @Override public InteractionResult use(Level level,Player player,InteractionHand hand) {
                 if(!level.isClientSide()) {
+                    if(player.isSpectator())return InteractionResult.FAIL;
+                    if(player.isShiftKeyDown()){ExpeditionNotebook.open(player);return InteractionResult.SUCCESS_SERVER;}
                     player.setData(DISCOVERIES,player.getData(DISCOVERIES)|1<<bit);
                     player.sendSystemMessage(Component.translatable("raft_ocean.exploration.log."+bit));
                 }

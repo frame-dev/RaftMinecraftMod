@@ -55,8 +55,9 @@ public final class RadioCheck {
                 var menu=new RadioMenu(4,player.getInventory(),ctx);
                 require(!menu.getSlot(0).mayPlace(new ItemStack(Items.COAL)) && menu.getSlot(0).mayPlace(new ItemStack(Batteries.BASIC.get())),"Radio socket only accepts portable batteries");
                 var battery=new ItemStack(Batteries.BASIC.get());Batteries.setCharge(battery,100);state.setItem(0,battery);
-                require(!menu.clickMenuButton(other,0) && !menu.clickMenuButton(player,99),"Foreign owners and invalid button IDs are refused");
+                require(!menu.clickMenuButton(other,0) && !menu.clickMenuButton(other,5) && !menu.clickMenuButton(player,99),"Foreign owners and invalid button IDs are refused");
                 require(menu.clickMenuButton(player,0) && state.getInt("enabled")==1,"Valid owner switches on");
+                require(menu.clickMenuButton(player,5) && Batteries.charge(battery)==100 && state.getInt("enabled")==1,"Notebook control preserves radio power and battery");
                 for(int i=0;i<40;i++)menu.broadcastChanges();
                 require(Batteries.charge(battery)==100,"Opening and refreshing UI does not multiply energy drain");
                 require(!menu.clickMenuButton(player,3) && state.getInt("channel")==0,"Future story channels cannot be selected before discovery");
@@ -83,7 +84,7 @@ public final class RadioCheck {
                 var saved=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());raft.saveWithoutId(saved);
                 var restored=new RaftEntity(ModContent.RAFT.get(),level);rafts.add(restored);restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),saved.buildResult()));
                 require(Batteries.charge(restored.machineContext(RECEIVER).orElseThrow().state().getItem(0))==Batteries.charge(battery),"Native raft save retains installed battery components");
-                player.setPos(ctx.worldPosition().add(20,0,0));require(!menu.stillValid(player) && !menu.clickMenuButton(player,0),"Moving out of reach closes controls");
+                player.setPos(ctx.worldPosition().add(20,0,0));require(!menu.stillValid(player) && !menu.clickMenuButton(player,0) && !menu.clickMenuButton(player,5),"Moving out of reach closes controls");
                 player.setPos(ctx.worldPosition());int charge=Batteries.charge(battery);
                 require(raft.removeStructuralPiece(GOOD.getFirst()),"An antenna can be removed independently");
                 RaftRadio.CONTROLLER.tick(ctx);

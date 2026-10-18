@@ -1,4 +1,4 @@
-# Known limitations — 0.13.3 preview
+# Known limitations — 0.13.4 preview
 
 - Automated checks pass, but live client appearance, real network latency,
   large-raft performance and a complete multiplayer playthrough still require
@@ -16,5 +16,9 @@
   world light blocks or guarantee normal block-light effects on mob spawning.
 - The matching NeoForge build is beta. This package is a preview release,
   not a claim of a bug-free production mod or fully completed visual playtesting.
+
+- Notebook archives are personal. Legacy field-note books must be retrieved once
+  to archive them; prior journey and side-route records remain readable. Numeric
+  receiver codes and multi-signal radar are not implemented.
 
 These are release limitations, not failures hidden by the automated checks.

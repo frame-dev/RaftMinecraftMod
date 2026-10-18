@@ -113,7 +113,9 @@ tasks.matching { it.name in ['runBootstrapSmoke', 'runOceanSmoke'] }.configureEa
         def log = checkLog.asFile.exists() ? checkLog.asFile.getText('UTF-8') : ''
         def finished = oceanRun
                 ? (log =~ /Raft Ocean: \d+ runtime ocean-world assertions passed\./).find()
-                : (log =~ /Raft Ocean: \d+ runtime carry assertions passed\./).find()
+                : (log =~ /Raft Ocean: \d+ runtime notebook assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime receiver assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime carry assertions passed\./).find()
                     && (log =~ /Raft Ocean: \d+ runtime collision assertions passed\./).find()
                     && (log =~ /Raft Ocean: \d+ native movement validation assertions passed\./).find()
                     && (log =~ /Raft Ocean: \d+ runtime construction assertions passed\./).find()

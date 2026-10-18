@@ -24,8 +24,12 @@ The comparisons with the mod and the priority order are our engineering assessme
 
 ## Implemented follow-up
 
+0.13.4 adds the persistent personal [expedition notebook](EXPEDITION_NOTEBOOK.md),
+with field-note archiving, prior journey records and side-route logs. Numeric code
+entry and multi-signal radar remain future work.
+
 0.13.3 adds the mounted battery-powered receiver/antennas and radar portion of
-priority2; a persistent notebook and numeric code entry remain future work.
+priority2; the notebook follows in0.13.4.
 See [mounted receiver](MOUNTED_RECEIVER.md).
 
 0.13.2 implements the first priority: seven story schematics, permanent discovery,

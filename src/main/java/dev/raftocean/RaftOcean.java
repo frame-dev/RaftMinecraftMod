@@ -25,6 +25,12 @@ public final class RaftOcean {
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.CLIENT, dev.raftocean.config.RaftConfig.CLIENT_SPEC);
         dev.raftocean.story.IslandContent.register(modEventBus);
         dev.raftocean.story.Exploration.initialize();
+        dev.raftocean.story.ExpeditionNotebook.initialize();
+        dev.raftocean.menu.NotebookMenu.initialize();
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.story.ExpeditionNotebook::onTick);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.story.ExpeditionNotebook::onPickup);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.story.ExpeditionNotebook::onUse);
+        NeoForge.EVENT_BUS.addListener(dev.raftocean.story.ExpeditionNotebook::registerCommand);
         dev.raftocean.trading.OutpostTrading.initialize();
         NeoForge.EVENT_BUS.addListener(dev.raftocean.trading.OutpostTrading::onStop);
         dev.raftocean.crew.CrewRescue.initialize();
@@ -109,6 +115,7 @@ public final class RaftOcean {
                 LOGGER.info("Raft Ocean: {} runtime collision assertions passed.", collisionChecks);
                 int nativeMovementChecks = dev.raftocean.entity.RaftMovementValidationCheck.run(event.getServer().overworld());
                 LOGGER.info("Raft Ocean: {} native movement validation assertions passed.",nativeMovementChecks);
+                LOGGER.info("Raft Ocean: {} runtime notebook assertions passed.",dev.raftocean.story.NotebookCheck.run(event.getServer().overworld()));
                 int radioChecks=dev.raftocean.story.RadioCheck.run(event.getServer().overworld());
                 LOGGER.info("Raft Ocean: {} runtime receiver assertions passed.",radioChecks);
                 int assertions = dev.raftocean.command.RaftCarryCheck.run(event.getServer().overworld(),

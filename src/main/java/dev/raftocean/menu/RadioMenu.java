@@ -55,7 +55,8 @@ public final class RadioMenu extends AbstractContainerMenu {
     @Override public void broadcastChanges(){if(context!=null && stillValid(owner))RaftRadio.refresh(context);super.broadcastChanges();}
     @Override public void clicked(int slot,int button,ContainerInput action,Player player){if(stillValid(player))super.clicked(slot,button,action,player);}
     @Override public boolean clickMenuButton(Player player,int button){
-        if(context==null || !stillValid(player) || button<0 || button>4)return false;
+        if(context==null || !stillValid(player) || button<0 || button>5)return false;
+        if(button==5){ExpeditionNotebook.open(player);return true;}
         var s=context.state();int old=Math.clamp(s.getInt("channel"),0,ReceiverItem.DESTINATIONS.length);
         int max=Math.clamp(player.getData(IslandContent.JOURNEY),0,ReceiverItem.DESTINATIONS.length);
         if(button==0)s.setInt("enabled",s.getInt("enabled")==0?1:0);

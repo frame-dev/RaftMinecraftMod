@@ -8,6 +8,24 @@
 
 - Updated: 2026-10-18.
 
+- Latest development: 0.13.4 preview, persistent personal expedition notebook.
+  Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.4 requires matching peers.
+  Archives28 authored field-note books without consumption; masks survive save/death.
+  Journey overview, old journey-derived main journals and three discovered side logs
+  use a paged EN/DE native screen. Open via /raftnotebook, mounted receiver header
+  or sneak-use journals. Server personal masks are short-safe; no storage or unlocks.
+  Pickup/use capture immediately; legacy/chest inventory recovery every20ticks/on open.
+  Older saves retain journey/side logs; old side-note books must be retrieved once.
+  Custom speeds, difficulty delays, harder research and open-ended story retained.
+  See docs/EXPEDITION_NOTEBOOK.md. Numeric codes/multi-signal radar remain future work.
+  Verified build/bootstrap133notebook,1969receiver,263374crafting,778research;
+  fresh Ocean World7977; native955models and835EN/DE keys pass.
+  Evidence build/notebook-0.13.4-final.log and RELEASE_VERIFICATION.md.
+  Milestones1-11implemented;12preview maintenance. GitHub release remains0.13.0.
+  Pending client notebook layout, text paging and actual co-op/relog testing.
+
+
 - Latest development: 0.13.3 preview, mounted survey receiver and three antennas.
   Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
   ModDevGradle2.0.147, Gradle9.2.1. API3, handshake13.3 requires matching peers.

@@ -1,8 +1,10 @@
-# Raft Ocean — 0.13.3 preview
+# Raft Ocean — 0.13.4 preview
 
-This update adds a [mounted receiver console and three-antenna setup](docs/MOUNTED_RECEIVER.md),
-with portable battery power, a receiver-relative radar and story-channel controls.
-Persistent story schematic progression and the open-ended story are retained.
+This update adds a [persistent expedition notebook](docs/EXPEDITION_NOTEBOOK.md).
+Collected field notes remain readable after their books are lost, alongside recovered
+journey records, optional-route logs and the next known story destination.
+Open it with `/raftnotebook`, from the mounted receiver, or by sneaking while using
+an island journal. The receiver and open-ended schematic progression are retained.
 
 The [addon API v3](docs/API_V3_UTILITIES.md) supports utility
 inputs, preflighted processing, generator demand and opt-in output collection.
@@ -29,7 +31,7 @@ are not supported by this build.
 
 ## Install and start
 
-Install `raft_ocean-0.13.3.jar` in the matching NeoForge profile's `mods`
+Install `raft_ocean-0.13.4.jar` in the matching NeoForge profile's `mods`
 folder. Keep exactly one Raft Ocean jar installed. Sources jars are for
 developers. Use the same version on every multiplayer client and server.
 
@@ -85,7 +87,7 @@ and Gradle JVM. Use the wrapper. Close the development client before rebuilding.
 ./gradlew.bat runClient
 ```
 
-Output: `build/libs/raft_ocean-0.13.3.jar`. Development client launches install
+Output: `build/libs/raft_ocean-0.13.4.jar`. Development client launches install
 the pinned JEI build for testing. The first build downloads dependencies;
 cached builds can use `--offline`. Server launch: `./gradlew.bat runServer`.
 Read `INSTALLATION.md`; Minecraft EULA acceptance remains your choice.

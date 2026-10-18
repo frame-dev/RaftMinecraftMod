@@ -1,3 +1,38 @@
+# Verification — 0.13.4 preview
+
+Checked 2026-10-18 against Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+ModDevGradle2.0.147 and Gradle9.2.1. API3 retained; handshake13.4.
+
+- Final build/bootstrap/fresh Ocean World run passed. Notebook133 assertions cover
+  all28 native note loot tables, component/count conservation, duplicate records,
+  both menu data halves, personal isolation, inventory/cursor recovery, save/load,
+  actual death attachment copy, read-only clicks, spectator restrictions, registered
+  non-operator command and sneak/normal journal actions. Opening checks capture
+  the native menu provider with a test player; they do not simulate rendered UI.
+- Receiver1969 checks include notebook-button owner/reach validation and unchanged
+  power/charge, alongside the existing antenna, scan and rotation tests.
+- Fresh Ocean World7977 assertions pass in build/ocean-smoke/ocean_world_0_13_4_notebook;
+  this includes all notebook checks and existing story generation/exploration tests.
+- Existing server suites pass:425collision,2904movement,729carry,3641construction,
+  83building/API,69machineAPI,263374crafting,119stations,778research,53crew/rescue,
+  41outpost,111salvage,970survival,161navigation,593creature/config.
+- Native asset checks pass:955models/57828elements,168fittedGUI transforms and
+  7validated inherited transforms. No geometry, texture, recipe or balance changes.
+- Packaged audits pass:835English/German keys with placeholder parity, sound/config
+  checks;30research projects/62unlocks;7stable schematic IDs/8research gates.
+- Initial 127-assertion build passed. A first launch stalled inside Gradle filesystem
+  watching and was stopped before compilation; disabling watching resolved it.
+  Final command: gradlew.bat -I tools/isolated-visual-build.gradle build
+  runBootstrapSmoke runOceanSmoke --offline --no-parallel --no-watch-fs -x downloadAssets.
+  Evidence: build/notebook-0.13.4-final.log, BUILD SUCCESSFUL.
+
+Pending: live client text layout/paging, actual network synchronization/co-op,
+legacy stored-book recovery in the user's save and full playthrough. The native
+opening checks do not establish visual correctness. Existing movement/collision
+live-testing limits remain. No public GitHub release is created for this change.
+
+---
+
 # Verification — 0.13.3 preview
 
 Checked2026-10-18: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
