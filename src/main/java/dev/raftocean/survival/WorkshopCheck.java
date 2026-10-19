@@ -93,8 +93,9 @@ public final class WorkshopCheck {
         } finally {planter.storage(CELL).clearContent();planter.discard();}
         var sync=new net.neoforged.neoforge.event.OnDatapackSyncEvent(level.getServer().getPlayerList(),null);
         ProcessingRecipe.onSync(sync);
-        require(sync.getRecipeTypesToSend().size()==8 && sync.getRecipeTypesToSend().contains(ProcessingRecipe.type(RaftPiece.Kind.BIOREFINER))
+        require(sync.getRecipeTypesToSend().size()==9 && sync.getRecipeTypesToSend().contains(ProcessingRecipe.type(RaftPiece.Kind.BIOREFINER))
                 && sync.getRecipeTypesToSend().contains(ProcessingRecipe.type(RaftPiece.Kind.BASIC_PURIFIER))
+                && sync.getRecipeTypesToSend().contains(JuicingRecipe.TYPE.get())
                 && sync.getRecipeTypesToSend().contains(ProcessingRecipe.type(RaftPiece.Kind.DRYING_RACK)),"All custom machine recipe types synchronize without JEI on the server");checks++;
         for(var crop:List.of(Items.SUGAR_CANE,Items.KELP)){
             var raft=SurvivalCheck.create(level,RaftPiece.Kind.PLANTER);var soil=raft.storage(CELL);

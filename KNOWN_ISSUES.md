@@ -1,4 +1,9 @@
-# Known limitations — 0.13.7 preview
+# Known limitations — 0.13.8 preview
+
+- Juicers use native portable batteries, four food slots and separate glass serving.
+  Wired/foreign energy, bonus-water reserves and invalid-recipe leftovers are absent.
+  Dismantling spills an unserved portion. Glasses are intentionally reusable.
+  Live new-screen/JEI appearance and user-save/co-op testing remain outstanding.
 
 - Salvage recycling adds a portable-battery compactor and five bale purchases.
   Coins, shop reputation, special trading fish and recycling JEI category are future

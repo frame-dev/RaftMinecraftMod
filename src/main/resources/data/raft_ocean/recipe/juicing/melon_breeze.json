@@ -1,0 +1,13 @@
+{
+  "type": "raft_ocean:juicing",
+  "ingredients": [
+    "minecraft:melon_slice",
+    "minecraft:melon_slice",
+    "minecraft:melon_slice",
+    "minecraft:apple"
+  ],
+  "result": {
+    "id": "raft_ocean:melon_breeze"
+  },
+  "duration": 1800
+}

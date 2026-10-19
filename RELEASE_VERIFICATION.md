@@ -1,3 +1,57 @@
+# Verification — 0.13.8 preview
+
+Checked2026-10-19: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.8.
+
+- Full build/bootstrap pass: build/juicer-0.13.8-final.log. A separate fresh
+  Ocean run passes9873assertions in build/juicer-0.13.8-ocean.log, including
+  the same127-assertion juicer suite. Isolated world: ocean_world_0_13_8_juicer.
+  No gameplay/source changes followed those successful runs; user worlds and
+  active client outputs were not modified.
+- Native juicer coverage includes all three actual loaded four-food recipes,
+  role-slot filters/private liquid access, explicit single starts, foreign/carried
+  controls, pause and real raft serialization, empty batteries, disabled config,
+  exact four-food completion, idle conservation, ready-liquid reload, missing
+  glasses, wrong/full outputs, exact physical-glass serving, duplicate requests,
+  speed/charge accounting, output merging, hydration caps, bonus disable, native
+  drinking-glass return, recipe-change cancellation, moving reach and detached
+  handles. Dismantle checks await active entity tracking and prove four remaining
+  food drops with zero new filled drinks. Fixtures clean up their own new drops.
+- Existing crafting263891, research784, movement2904, carry729, collision425,
+  notebook133, receiver1969, outposts50, compactor30, cooking64, survival968,
+  propulsion1625, navigation161 and creature/config593 assertions pass.
+  Crafting audit covers159mod plus1266other/vanilla recipes,12006placements,
+  16019ingredient alternatives and621recipes fitting2×2. Glass bottles remain
+  craftable. Native machine synchronization explicitly verifies all nine types.
+- Native model parser accepts966models/58064elements;178GUI silhouettes fitted
+  and centered plus7inherited aliases. Packaged172items/787blocks/7renderers,
+  atlas-safe surfaces and all prior model envelopes pass. Three world juicer
+  variants span exactly the normalized unit cube; separate inventory geometry
+  preserves the physical1.5/.875height/width ratio. New models reuse original
+  textures; no Raft game assets are copied.
+- Packaged912English/German keys/placeholder parity, three original sounds,
+  config preset ranges,30research projects/64unlocks and7schematics/8gates pass.
+  The native juicing serializer and optional JEI category are packaged. Recipe
+  sync works without JEI; live JEI appearance/reload remains a client playtest.
+- Initial checks caught a removed JEI CATALYST enum (verified and corrected to
+  CRAFTING_STATION in the installed31.9.0.58source), a glass-bottle recipe conflict
+  (fixed with a distinct five-glass recipe), an extra unused world-model GUI
+  transform (removed after splitting world/inventory models), and an old test
+  expecting eight sync types (updated to verify nine including juicing).
+  The final full build/bootstrap and fresh Ocean runs pass; no failed check remains.
+- Runtime JAR SHA256:
+  1C83D0E4157438C58F03865D471E3AE1C41690FB933014D3B5F2E6694F3874B2.
+  Runtime and sources JARs copied to build/libs match their isolated build hashes.
+  Known host Perflib/JNA hardware-report diagnostics recur without failing suites.
+
+Pending: live juicer-panel/JEI appearance, actual co-op latency, full survival
+balance and older user saves. Native portable batteries only for the juicer;
+no wired/foreign energy support, bonus-water reserve or invalid-recipe leftovers.
+Glasses are intentionally reusable. Unserved liquid spills on dismantle.
+No public GitHub release or third-party technology-mod playtest is claimed.
+
+---
+
 # Verification — 0.13.7 preview
 
 Checked2026-10-18: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,

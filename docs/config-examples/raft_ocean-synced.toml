@@ -3,6 +3,9 @@
 gameMode = "WORLD"
 
 [survival]
+	juicingEnabled = true
+	juicerSpeed = 1
+	juiceHydration = 12
 	# Prepare one cooking-pot batch per Cook press; false restores automatic cooking.
 	manualCooking = true
 	preparedMealBonuses = true

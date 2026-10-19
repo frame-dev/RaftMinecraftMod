@@ -131,6 +131,7 @@ tasks.matching { it.name in ['runBootstrapSmoke', 'runOceanSmoke'] }.configureEa
                     && (log =~ /Raft Ocean: \d+ runtime survival assertions passed\./).find()
                     && (log =~ /Raft Ocean: \d+ runtime cooking-batch assertions passed\./).find()
                     && (log =~ /Raft Ocean: \d+ runtime compactor assertions passed\./).find()
+                    && (log =~ /Raft Ocean: \d+ runtime juicer assertions passed\./).find()
                     && (log =~ /Raft Ocean: \d+ runtime navigation assertions passed\./).find()
                     && (log =~ /Raft Ocean: \d+ runtime propulsion-load assertions passed\./).find()
                     && (log =~ /Raft Ocean: \d+ runtime creature\/config assertions passed\./).find()

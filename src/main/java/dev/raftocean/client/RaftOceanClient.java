@@ -68,6 +68,7 @@ public final class RaftOceanClient {
         event.register(dev.raftocean.menu.ResearchMenu.TYPE.get(), ResearchScreen::new);
         event.register(dev.raftocean.menu.RadioMenu.TYPE.get(), RadioScreen::new);
         event.register(dev.raftocean.menu.CompactorMenu.TYPE.get(), CompactorScreen::new);
+        event.register(dev.raftocean.menu.JuicerMenu.TYPE.get(), JuicerScreen::new);
         event.register(dev.raftocean.menu.NotebookMenu.TYPE.get(), NotebookScreen::new);
         for (var kind : dev.raftocean.entity.RaftPiece.Kind.values()) {
             if (kind.machine()) { event.register(dev.raftocean.menu.SurvivalMenu.type(kind), SurvivalScreen::new); }

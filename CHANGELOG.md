@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.13.8 preview — juicer and reusable prepared drinks
+
+- Battery-powered Raft Juicer with four food pads and explicit Blend/Pause/Serve.
+- Three original crop drinks: Melon Breeze, Orchard Cooler and Shoreberry Tonic.
+- Separate post-blend glass serving; drinking restores hydration and returns a glass.
+- Atomic completion/serving, saved queue/pause/ready portions and idle power safety.
+- Recipe changes cancel prior work; no automatic repeat or free bottled dismantle drops.
+- Native data-pack recipe type, optional JEI category, recipe links and reload support.
+- Original idle/blending/ready models, tall inventory model and custom drink models.
+- Electrical research recipe, a bottle-safe glass recipe, configurable speed/hydration.
+- English/German guidance, API3 retained and handshake13.8 for matching peers.
+- Speeds, predator delays, harder research and open-ended story remain unchanged.
+
 ## 0.13.7 preview — surplus recycling and outpost purchases
 
 - Original battery-powered Salvage Compactor and bound Salvage Bale models.

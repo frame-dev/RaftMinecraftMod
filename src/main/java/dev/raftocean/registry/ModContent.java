@@ -77,6 +77,11 @@ public final class ModContent {
                         output.accept(dev.raftocean.story.RaftRadio.ITEM.get());
                         output.accept(dev.raftocean.salvage.SalvageCompactor.ITEM.get());
                         output.accept(dev.raftocean.salvage.SalvageCompactor.BALE.get());
+                        output.accept(dev.raftocean.survival.RaftJuicer.ITEM.get());
+                        output.accept(dev.raftocean.survival.RaftJuicer.GLASS.get());
+                        output.accept(dev.raftocean.survival.RaftJuicer.MELON.get());
+                        output.accept(dev.raftocean.survival.RaftJuicer.ORCHARD.get());
+                        output.accept(dev.raftocean.survival.RaftJuicer.BERRY.get());
                         output.accept(dev.raftocean.story.RaftRadio.ANTENNA_ITEM.get());
                         output.accept(dev.raftocean.story.IslandContent.ANTENNA.get());
                         output.accept(dev.raftocean.story.IslandContent.LONG_RECEIVER.get());

@@ -1,10 +1,11 @@
-# Raft Ocean — 0.13.7 preview
+# Raft Ocean — 0.13.8 preview
 
-This update adds a [battery-powered salvage compactor](docs/SALVAGE_RECYCLING.md).
-Turn renewable surplus materials into salvage bales, then barter them for seeds,
-food crops, decorations and diving equipment at outposts. Mixed batches retain
-inputs until completion and pause safely without power or output space.
-Deliberate cooking, sailing, cooperative building and the open-ended story remain.
+This update adds a [battery-powered juicer and prepared drinks](docs/JUICER_AND_DRINKS.md).
+Blend four crop/fruit portions, save or pause a batch, then serve the finished
+portion into a reusable glass. Three original drinks restore hydration and give
+short expedition bonuses. The machine includes custom models, a dedicated panel,
+data-pack recipes and optional JEI links. Recycling, cooking, sailing, cooperative
+building and the open-ended story remain available.
 
 The [addon API v3](docs/API_V3_UTILITIES.md) supports utility
 inputs, preflighted processing, generator demand and opt-in output collection.
@@ -31,7 +32,7 @@ are not supported by this build.
 
 ## Install and start
 
-Install `raft_ocean-0.13.7.jar` in the matching NeoForge profile's `mods`
+Install `raft_ocean-0.13.8.jar` in the matching NeoForge profile's `mods`
 folder. Keep exactly one Raft Ocean jar installed. Sources jars are for
 developers. Use the same version on every multiplayer client and server.
 

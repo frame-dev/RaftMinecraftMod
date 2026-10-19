@@ -1,0 +1,13 @@
+{
+  "type": "raft_ocean:juicing",
+  "ingredients": [
+    "minecraft:sweet_berries",
+    "minecraft:sweet_berries",
+    "minecraft:carrot",
+    "minecraft:beetroot"
+  ],
+  "result": {
+    "id": "raft_ocean:shoreberry_tonic"
+  },
+  "duration": 1800
+}

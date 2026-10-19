@@ -5,6 +5,7 @@
     "raft_ocean:tidal_battery",
     "raft_ocean:survey_receiver",
     "raft_ocean:survey_antenna",
-    "raft_ocean:salvage_compactor"
+    "raft_ocean:salvage_compactor",
+    "raft_ocean:raft_juicer"
   ]
 }

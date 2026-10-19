@@ -24,6 +24,14 @@ The comparisons with the mod and the priority order are our engineering assessme
 
 ## Implemented follow-up
 
+0.13.8 adds a missing everyday machine: the [juicer and prepared drinks](JUICER_AND_DRINKS.md).
+Four foods, portable battery power, explicit blending and separate post-processing
+glass serving follow the core juicer interaction. Three recipes and visual assets
+are original. Reusable glasses and Minecraft effect bonuses are deliberate mod
+differences; Raft's bonus-water meter and invalid-recipe leftovers are absent.
+Reference rechecked2026-10-19: [Juicer](https://raft.fandom.com/wiki/Juicer),
+[Drinking Glass](https://raft.fandom.com/wiki/Drinking_Glass).
+
 0.13.7 adds priority4's [surplus recycling loop](SALVAGE_RECYCLING.md): original
 battery-powered compactor, exact mixed-material bales and five outpost purchases.
 Native stock migration preserves used offers and restock deadlines. This implements

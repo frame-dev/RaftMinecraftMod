@@ -20,7 +20,7 @@ public final class RaftMovementSync {
     private RaftMovementSync() { }
 
     public static void register(RegisterPayloadHandlersEvent event) {
-        event.registrar("raft-movement-13.7").executesOn(net.neoforged.neoforge.network.registration.HandlerThread.NETWORK)
+        event.registrar("raft-movement-13.8").executesOn(net.neoforged.neoforge.network.registration.HandlerThread.NETWORK)
                 .playToServer(RaftMovementFrame.TYPE, RaftMovementFrame.STREAM_CODEC,
                 (frame, context) -> {
                     if (context.player() instanceof ServerPlayer player) { accept(player, frame); }

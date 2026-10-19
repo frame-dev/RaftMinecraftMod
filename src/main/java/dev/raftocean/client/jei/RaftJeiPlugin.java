@@ -25,6 +25,7 @@ public final class RaftJeiPlugin implements IModPlugin {
             RaftPiece.Kind.PLANTER,RaftPiece.Kind.TREE_PLANTER,RaftPiece.Kind.COOKING_POT,RaftPiece.Kind.BIOREFINER);
     private final Map<RaftPiece.Kind,IRecipeType<ProcessingRecipe>> types=new EnumMap<>(RaftPiece.Kind.class);
     private final Map<RaftPiece.Kind,List<ProcessingRecipe>> shown=new EnumMap<>(RaftPiece.Kind.class);
+    private List<dev.raftocean.survival.JuicingRecipe> shownJuice=List.of();
     private IJeiRuntime runtime;
     private final Set<net.minecraft.world.item.crafting.RecipeHolder<net.minecraft.world.item.crafting.CraftingRecipe>> hiddenCrafting=new HashSet<>();
     public RaftJeiPlugin() {
@@ -32,18 +33,23 @@ public final class RaftJeiPlugin implements IModPlugin {
     }
     @Override public Identifier getPluginUid(){return Identifier.fromNamespaceAndPath("raft_ocean","machines");}
     @Override public void registerCategories(IRecipeCategoryRegistration registration){
+        registration.addRecipeCategories(new JuicerCategory(registration.getJeiHelpers().getGuiHelper()));
         for(var kind:KINDS){registration.addRecipeCategories(new MachineCategory(kind,types.get(kind),registration.getJeiHelpers().getGuiHelper()));}
     }
     private List<ProcessingRecipe> recipes(RaftPiece.Kind kind){
         return MachineRecipeCache.recipes.byType(ProcessingRecipe.type(kind)).stream().map(holder->holder.value()).toList();
     }
+    private List<dev.raftocean.survival.JuicingRecipe> juices(){return MachineRecipeCache.recipes.byType(dev.raftocean.survival.JuicingRecipe.TYPE.get()).stream().map(h->h.value()).toList();}
     @Override public void registerRecipes(IRecipeRegistration registration){
+        shownJuice=juices();registration.addRecipes(JuicerCategory.TYPE,shownJuice);
+        registration.addIngredientInfo(dev.raftocean.survival.RaftJuicer.ITEM.get(),Component.translatable("raft_ocean.juicer.jei_help"));
         for(var kind:KINDS){var list=recipes(kind);shown.put(kind,list);registration.addRecipes(types.get(kind),list);}
         for(var kind:RaftPiece.Kind.values()){
             if(kind.machine()){registration.addIngredientInfo(ModContent.structuralItem(kind),Component.translatable("raft_ocean.jei.help."+kind.id()));}
         }
     }
     @Override public void registerRecipeCatalysts(IRecipeCatalystRegistration registration){
+        registration.addCraftingStation(JuicerCategory.TYPE,dev.raftocean.survival.RaftJuicer.ITEM.get());
         for(var kind:KINDS){registration.addCraftingStation(types.get(kind),ModContent.structuralItem(kind));}
         registration.addCraftingStation(RecipeTypes.CAMPFIRE_COOKING,ModContent.structuralItem(RaftPiece.Kind.GRILL));
         registration.addCraftingStation(RecipeTypes.CAMPFIRE_COOKING,ModContent.structuralItem(RaftPiece.Kind.BASIC_GRILL));
@@ -59,9 +65,12 @@ public final class RaftJeiPlugin implements IModPlugin {
         this.runtime=runtime;MachineRecipeCache.changed=this::refresh;
         dev.raftocean.client.ResearchRecipeVisibility.changed=this::refreshResearch;
         refresh();
-        LOGGER.info("Raft Ocean JEI: eight processing categories and machine recipe links are available.");
+        LOGGER.info("Raft Ocean JEI: nine processing categories and machine recipe links are available.");
     }
     @Override public void registerGuiHandlers(IGuiHandlerRegistration registration){
+        registration.addGuiContainerHandler(dev.raftocean.client.JuicerScreen.class,new IGuiContainerHandler<dev.raftocean.client.JuicerScreen>(){
+            @Override public Collection<IGuiClickableArea> getGuiClickableAreas(dev.raftocean.client.JuicerScreen screen,double x,double y){return List.of(IGuiClickableArea.createBasic(12,75,206,6,JuicerCategory.TYPE));}
+        });
         registration.addGuiContainerHandler(SurvivalScreen.class,new IGuiContainerHandler<SurvivalScreen>() {
             @Override public Collection<IGuiClickableArea> getGuiClickableAreas(SurvivalScreen screen,double x,double y){
                 if(screen.getMenu().suppliesPage()){return List.of();}
@@ -78,6 +87,12 @@ public final class RaftJeiPlugin implements IModPlugin {
     private void refresh(){
         if(runtime==null){return;}
         refreshResearch();
+        var currentJuice=juices();
+        if(!shownJuice.equals(currentJuice)){
+            runtime.getRecipeManager().hideRecipes(JuicerCategory.TYPE,shownJuice);
+            runtime.getRecipeManager().addRecipes(JuicerCategory.TYPE,currentJuice);
+            runtime.getRecipeManager().unhideRecipes(JuicerCategory.TYPE,currentJuice);shownJuice=currentJuice;
+        }
         for(var kind:KINDS){
             var previous=shown.getOrDefault(kind,List.of());var current=recipes(kind);
             if(previous.equals(current)){continue;}
@@ -101,5 +116,5 @@ public final class RaftJeiPlugin implements IModPlugin {
         if(!hide.isEmpty())runtime.getRecipeManager().hideRecipes(RecipeTypes.CRAFTING,hide);
         hiddenCrafting.clear();hiddenCrafting.addAll(current);
     }
-    @Override public void onRuntimeUnavailable(){runtime=null;MachineRecipeCache.changed=()->{};dev.raftocean.client.ResearchRecipeVisibility.changed=()->{};hiddenCrafting.clear();shown.clear();}
+    @Override public void onRuntimeUnavailable(){runtime=null;MachineRecipeCache.changed=()->{};dev.raftocean.client.ResearchRecipeVisibility.changed=()->{};hiddenCrafting.clear();shown.clear();shownJuice=List.of();}
 }

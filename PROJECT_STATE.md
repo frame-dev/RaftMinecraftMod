@@ -6,7 +6,32 @@
 
 
 
-- Updated: 2026-10-18.
+- Updated: 2026-10-19.
+
+- Latest development: 0.13.8 preview, battery juicer and reusable prepared drinks.
+  Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.8 requires matching peers.
+  Native API-backed juicer has four crop pads, explicit Blend/Pause/Serve,
+  portable battery, saved ready liquid and a separate physical-glass transaction.
+  Three original recipes take90powered seconds by default and restore12hydration;
+  optional meal-duration bonuses: speed/night vision/resistance. Glasses return
+  after drinking. No auto-repeat, early food consumption or free dismantle bottles.
+  Old electrical research gains juicer crafting; five-glass recipe preserves vanilla
+  bottles. Native recipes sync without JEI; optional ninth JEI category links
+  ingredients/results/power and refreshes data-pack changes. EN/DE panel/tooltips.
+  Idle/working/ready models use a normalized world envelope with an independently
+  fitted tall inventory model; all drinks/glasses have original custom models.
+  Verified127juicer assertions,9873fresh Ocean assertions, full build/bootstrap,
+  263891crafting and784research checks. Native966models/58064elements,
+  178fittedGUI plus7inherited aliases;172items/787blocks/7renderers;
+  912EN/DE keys,30projects/64unlocks and7plans/8gates pass package audits.
+  See docs/JUICER_AND_DRINKS.md and RELEASE_VERIFICATION.md, including fixed
+  initial JEI enum, vanilla recipe conflict and test/transform expectation failures.
+  User speeds, predator delays, harder research and open-ended story retained.
+  Milestones1-11implemented;12preview maintenance. GitHub release remains0.13.0.
+  Pending live GUI/JEI appearance, real co-op latency and older user-save testing.
+  Wired/foreign juicer power, bonus-water reserves and invalid-recipe leftovers
+  remain absent; reusable glasses are a deliberate difference from the reference.
 
 - Latest development: 0.13.7 preview, surplus recycling and outpost bale purchases.
   Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,

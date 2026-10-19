@@ -42,6 +42,7 @@ public record ProcessingRecipe(ShapelessRecipe ingredients, int duration, List<I
     }
     public static RecipeType<ProcessingRecipe> type(RaftPiece.Kind kind) { return TYPES_BY_KIND.get(kind).get(); }
     public static void onSync(net.neoforged.neoforge.event.OnDatapackSyncEvent event) {
+        event.sendRecipes(JuicingRecipe.TYPE.get());
         for(var type:TYPES_BY_KIND.values()){event.sendRecipes(type.get());}
     }
     @Override public boolean matches(CraftingInput input, Level level) { return ingredients.matches(input, level); }

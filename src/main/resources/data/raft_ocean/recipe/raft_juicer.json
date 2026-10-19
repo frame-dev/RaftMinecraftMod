@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "GWG",
+    "PFP",
+    "BBB"
+  ],
+  "key": {
+    "G": "#raft_ocean:compat/glass",
+    "W": "#raft_ocean:compat/copper_wires",
+    "P": "raft_ocean:metal_plate",
+    "F": "raft_ocean:scrap_fasteners",
+    "B": "raft_ocean:timber_brace"
+  },
+  "result": {
+    "id": "raft_ocean:raft_juicer"
+  }
+}

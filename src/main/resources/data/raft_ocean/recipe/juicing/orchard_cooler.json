@@ -1,0 +1,13 @@
+{
+  "type": "raft_ocean:juicing",
+  "ingredients": [
+    "minecraft:apple",
+    "minecraft:apple",
+    "minecraft:melon_slice",
+    "minecraft:melon_slice"
+  ],
+  "result": {
+    "id": "raft_ocean:orchard_cooler"
+  },
+  "duration": 1800
+}
