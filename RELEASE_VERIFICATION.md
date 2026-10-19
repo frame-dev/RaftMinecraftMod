@@ -1,5 +1,16 @@
 # Verification — 0.13.8 preview
 
+Publication verified2026-10-19: [v0.13.8 preview](https://github.com/frame-dev/RaftMinecraftMod/releases/tag/v0.13.8)
+is public, non-draft and marked pre-release. The remote tag resolves to the tested
+source55ce5c7f275b4ee3703e04d525647605e158e86b. All seven uploaded asset sizes
+and GitHub SHA256 digests match local files. Previous release assets are intact.
+The standalone0.13.8SDK build passes in build/release-0.13.8-sdk.log. Release and
+SDK archives pass CRC, per-file checksums, embedded-JAR identity and privacy
+whitelist checks. The manifest date is2026-10-19 with the tested source commit;
+TOML configuration examples are included. Expanded staging stays under build/;
+versioned ZIPs and checksums are retained in releases/. No gameplay code was changed or JAR
+rebuilt for publication; the build evidence below predates this publication.
+
 Checked2026-10-19: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
 ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.8.
 
@@ -48,7 +59,8 @@ Pending: live juicer-panel/JEI appearance, actual co-op latency, full survival
 balance and older user saves. Native portable batteries only for the juicer;
 no wired/foreign energy support, bonus-water reserve or invalid-recipe leftovers.
 Glasses are intentionally reusable. Unserved liquid spills on dismantle.
-No public GitHub release or third-party technology-mod playtest is claimed.
+The build checks above preceded publication; the release is now verified above.
+No third-party technology-mod playtest is claimed.
 
 ---
 

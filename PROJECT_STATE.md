@@ -8,6 +8,19 @@
 
 - Updated: 2026-10-19.
 
+- Published release: v0.13.8 preview on2026-10-19.
+  https://github.com/frame-dev/RaftMinecraftMod/releases/tag/v0.13.8
+  GitHub confirms public(non-draft), pre-release status and source tag55ce5c7.
+  Seven uploaded assets verified against local SHA256 digests: playable JAR,
+  sources, documentation ZIP, standalone SDK, two ZIP checksum sidecars and
+  SHA256SUMS.txt. Existing0.13.0release/tag/assets left intact.
+  Source/runtime artifacts are the previously verified0.13.8build; no gameplay
+  changes were made for publication. Standalone SDK builds successfully.
+  Packaging now accepts an explicit user-timezone date and includes documented
+  TOML config examples. Manifest records the exact tested source commit.
+  Milestone12:0.13.8preview publication complete; live GUI/JEI/co-op/older-save
+  testing and preview maintenance remain. Targets and open-ended story unchanged.
+
 - Latest development: 0.13.8 preview, battery juicer and reusable prepared drinks.
   Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
   ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.8 requires matching peers.

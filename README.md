@@ -32,6 +32,9 @@ are not supported by this build.
 
 ## Install and start
 
+Download the [0.13.8 preview release](https://github.com/frame-dev/RaftMinecraftMod/releases/tag/v0.13.8)
+for the playable JAR, documentation bundle, sources, standalone addon SDK and checksums.
+
 Install `raft_ocean-0.13.8.jar` in the matching NeoForge profile's `mods`
 folder. Keep exactly one Raft Ocean jar installed. Sources jars are for
 developers. Use the same version on every multiplayer client and server.
