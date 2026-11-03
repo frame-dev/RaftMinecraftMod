@@ -1,3 +1,58 @@
+# Verification — 0.13.9 preview
+
+Checked2026-11-03: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.9.
+
+- Full final build/bootstrap passes in build/hammer-0.13.9-final-verified.log. The new native
+  hammer suite passes581assertions, including every palette entry against direct
+  placement shapes/coordinates at all four rotation offsets, and no grant/spend
+  while browsing. Five bootstrap-only test buildables add30matrix assertions.
+- Fresh Ocean World passes10424assertions in
+  build/hammer-0.13.9-final-verified.log. The new level is
+  ocean_world_0_13_9_hammer_final; its native catalog hammer suite has551checks.
+  Both JavaExec and completion-message guards pass. No gameplay/source change
+  followed these successful proofs; user worlds and active client output stay intact.
+- Hammer coverage includes native item serialization, exact one-piece foundation,
+  net and wall placement, no held-item swaps, full/blocked and empty supplies,
+  component-preserving inputs, research visibility/stale saved choices, real owned
+  raft guest permissions, legacy plank repairs, config disable/re-enable, replacing
+  held hammer, foreign/carried/malformed menu requests, safe non-buildable IDs,
+  offhand/creative behavior, translation and73degree hull rotation, reach and
+  bounded hand-only request encoding. Client menu validity tolerates synchronized
+  held-stack refreshes; server sessions retain strict hammer reference ownership.
+  Repair/dismantle routing is retained.
+- Existing crafting263891, research784, movement2904, carry729, collision425,
+  notebook133, receiver1969, outposts50, compactor30, juicer127, cooking64,
+  survival971, propulsion1625, navigation161 and creature/config593 checks pass.
+  All159mod and1266other/vanilla crafting recipes remain covered;12006placement
+  cases,16019ingredient alternatives,621recipes fitting2×2. Recipes are unchanged.
+- Existing966models/58064elements and178fittedGUI+7inherited silhouettes pass
+  native parsing. Package coverage172items/787blocks/7renderers, atlas-safe
+  surfaces and prior model envelopes pass. No model/texture/sound assets changed.
+  English/German930key/placeholder parity, original sound files and bounded
+  config examples pass;30research projects/64unlocks and7plans/8gates retained.
+- Early failures were corrected: the first permission fixture used an unclaimed
+  raft, which intentionally has no guest role; it now establishes actual ownership
+  and asserts guest status before testing denial. A new test's local net variable
+  shadowed a qualified package name; renamed. The first fresh Ocean run completed
+  all10424assertions but exited on the default60second watchdog during synchronous
+  OutpostIslandCheck chunk generation. Only the ignored isolated test server's
+  max-tick-time was increased to180000; a new fresh world then passes. Production
+  watchdog/server defaults were not changed. No failed final check remains.
+- Final runtime JAR SHA256:
+  1FABCBC40A86586444282C838D9FE69A9FB5087B2FB2BB9BD57186A610D62CF8.
+  Runtime and sources JARs copied to build/libs match isolated build outputs.
+  Known host Perflib/JNA hardware-report warnings recur without suite failures.
+
+Pending: live palette appearance, remapped keys, real co-op latency, older user
+saves and full playthrough. Building uses already crafted ordinary pieces, without
+raw-material crafting, remote storage supply, radial controls or hammer-based
+reinforcement. Existing item placement remains supported. No GitHub release or
+new third-party addon compatibility playtest is claimed; published release remains
+v0.13.8. Source, item and addon API identities remain compatible.
+
+---
+
 # Verification — 0.13.8 preview
 
 Publication verified2026-10-19: [v0.13.8 preview](https://github.com/frame-dev/RaftMinecraftMod/releases/tag/v0.13.8)

@@ -1,4 +1,9 @@
-# Known limitations — 0.13.8 preview
+# Known limitations — 0.13.9 preview
+
+- The hammer palette uses already crafted pieces, with an item count per choice.
+  Raw-material construction, a radial wheel, remote storage supply and hammer
+  reinforcement are future work. Sneak-use keeps its existing dismantle action.
+  Live palette appearance and real co-op latency still need testing.
 
 - Juicers use native portable batteries, four food slots and separate glass serving.
   Wired/foreign energy, bonus-water reserves and invalid-recipe leftovers are absent.

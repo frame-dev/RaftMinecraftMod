@@ -6,7 +6,33 @@
 
 
 
-- Updated: 2026-10-19.
+- Updated: 2026-11-03.
+
+- Latest development:0.13.9preview, categorized building hammer palette.
+  Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.9 requires matching peers.
+  DefaultB or use in air opens Structure/Equipment/Cabin/Addon selection, with
+  synchronized ordinary-piece counts and research-aware visibility. Each hammer
+  saves its own choice. Actual placement consumes one crafted piece from the
+  backpack/hotbar without swapping the held hammer; creative needs no supply.
+  Ghosts, eligible rotation, overlap/support/limits, wall corners and addon callbacks
+  reuse normal placement. Repair clears build mode; legacy repair/rotate and
+  deliberate sneak dismantle remain. Component-modified supplies are preserved.
+  Server rejects unknown research, forged choices, stale/foreign menu sessions,
+  missing supplies, out-of-reach placement, guests, dead/spectator/downed builders.
+  Config building.hammerPalette=false restores legacy behavior and retains choices.
+  Verified581bootstrap hammer assertions; fresh Ocean10424(551hammer assertions,
+  without bootstrap-only test addons). Full build/bootstrap and packaged audits pass:
+  263891crafting,784research,2904movement,425collision; existing survival retained.
+  Existing966models/58064elements,178fittedGUI+7inherited,172items/787blocks/
+  7renderers unchanged;930EN/DE keys,30projects/64unlocks and7plans/8gates pass.
+  See docs/HAMMER_PALETTE.md and RELEASE_VERIFICATION.md, including resolved
+  test-fixture, compile-test-variable and isolated watchdog failures.
+  User speeds, predator delays, harder research and open-ended story retained.
+  Milestones1-11implemented;12preview maintenance. GitHub release remains0.13.8.
+  Pending live palette/key/GUI appearance and real co-op/older-save testing.
+  Raw-material building, radial controls, remote storage supply and hammer-based
+  reinforcement remain future work. No new GitHub release published for this task.
 
 - Published release: v0.13.8 preview on2026-10-19.
   https://github.com/frame-dev/RaftMinecraftMod/releases/tag/v0.13.8

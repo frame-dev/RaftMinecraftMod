@@ -167,6 +167,7 @@ gameMode = "WORLD"
 	baitCap = 16
 
 [building]
+	hammerPalette = true
 	# Limit new structural pieces per raft; existing saves remain intact. Technical ceiling is 512.
 	pieceLimit = 512
 	#Maximum foundations placed per raft; lowering this preserves existing builds. Native save/network ceiling is 1024.

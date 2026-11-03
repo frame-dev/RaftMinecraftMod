@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.13.9 preview — categorized building hammer
+
+- A native hammer palette selects structure, equipment, cabin and addon pieces.
+- Press the configurable Hammer Palette key(defaultB), or use the hammer in air.
+- Select a crafted piece, keep the hammer equipped and place from backpack/hotbar.
+- Shared ghosts/rotation/support/collision and exact one-item successful commits.
+- Research-aware choices, missing-supply ghosts, per-hammer persistent selection.
+- Default repair/rotation and deliberate sneak dismantling retain existing behavior.
+- Safe component-preserving supplies, crew restrictions and stale-session rejection.
+- Config disable restores legacy hammer behavior without erasing its saved choice.
+- Existing models/recipes, API3, survival, speeds, delays and story retained.
+- English/German guidance and handshake13.9 for matching clients/server.
+
 ## 0.13.8 preview — juicer and reusable prepared drinks
 
 - Battery-powered Raft Juicer with four food pads and explicit Blend/Pause/Serve.

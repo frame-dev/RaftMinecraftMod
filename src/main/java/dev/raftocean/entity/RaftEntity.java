@@ -529,6 +529,8 @@ public final class RaftEntity extends Entity {
     }
     public Placement placement(Player player,ItemStack held,Pick pick,int rotationOffset) {
         if(pick==null){return null;}
+        boolean hammerBuild=held.is(ModContent.BUILDING_HAMMER.get());
+        if(hammerBuild){held=dev.raftocean.building.BuildingHammer.preview(player,held);if(held.isEmpty())return null;}
         boolean foundation=held.is(ModContent.FOUNDATION.get());
         var kind=ModContent.structuralKind(held);
         if(!foundation && kind==null){return null;}
@@ -580,7 +582,9 @@ public final class RaftEntity extends Entity {
             if(!cornerJoin || !entry.getKey().equals(target)){obstacles.addAll(structure.boxes(entry.getKey(),entry.getValue()));}
         }
         String failure="";
-        if(foundation && layout.cells().size()>=dev.raftocean.config.RaftConfig.FOUNDATION_LIMIT.get()){failure="limit";}
+        if(hammerBuild && !dev.raftocean.progression.Research.allowed(player,held)){failure="research";}
+        else if(hammerBuild && !player.getAbilities().instabuild && dev.raftocean.building.BuildingHammer.count(player,held)==0){failure="materials";}
+        else if(foundation && layout.cells().size()>=dev.raftocean.config.RaftConfig.FOUNDATION_LIMIT.get()){failure="limit";}
         else if(!clearForPiece(boxes) || obstacles.stream().anyMatch(old->boxes.stream().anyMatch(box->old.intersects(box.deflate(1E-5))))){failure="blocked";}
         else if(foundation ? structure.pieces().containsKey(target) || !layout.canAdd(target,structure.platforms())
                 : cornerJoin?!structure.canReplaceWallCorner(target,piece,layout):!structure.canAdd(target,piece,layout)){failure="connected";}
@@ -593,6 +597,9 @@ public final class RaftEntity extends Entity {
         if(!dev.raftocean.crew.CrewAccess.allowed(player,this)) {
             player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("raft_ocean.crew.denied"));
             return InteractionResult.FAIL;
+        }
+        if(held.is(ModContent.BUILDING_HAMMER.get()) && !player.isShiftKeyDown() && !dev.raftocean.building.BuildingHammer.selection(held).isEmpty()){
+            return level().isClientSide()?InteractionResult.SUCCESS:placeWithHammer(player,hand);
         }
         if (held.is(ModContent.PADDLE.get())) { return ModContent.PADDLE.get().use(level(), player, hand); }
         boolean add = held.is(ModContent.FOUNDATION.get());
@@ -713,7 +720,27 @@ public final class RaftEntity extends Entity {
             publishLayout();
             return InteractionResult.SUCCESS_SERVER;
         }
-        Placement plan=placement(player,held,pick,dev.raftocean.network.RaftBuildRotationSync.rotation((net.minecraft.server.level.ServerPlayer)player));
+        return placeBuilding(player,held,pick);
+    }
+
+    /** Shared commit: the selected inventory stack stays in its own slot; the held hammer never swaps. */
+    public InteractionResult placeWithHammer(Player player,InteractionHand hand){
+        if(level().isClientSide() || isRemoved() || !player.isAlive() || player.isSpectator() || player.isShiftKeyDown()
+                || !dev.raftocean.crew.CrewAccess.allowed(player,this))return InteractionResult.FAIL;
+        var chosen=dev.raftocean.building.BuildingHammer.selection(player.getItemInHand(hand));if(chosen.isEmpty())return InteractionResult.FAIL;
+        if(!dev.raftocean.progression.Research.allowed(player,chosen)){
+            player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("raft_ocean.build.research"));return InteractionResult.FAIL;
+        }
+        var supply=player.getAbilities().instabuild?chosen:dev.raftocean.building.BuildingHammer.supply(player,chosen);
+        if(supply.isEmpty()){
+            player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("raft_ocean.build.materials"));return InteractionResult.FAIL;
+        }
+        var result=placeBuilding(player,supply,pick(player));if(result.consumesAction())player.getInventory().setChanged();return result;
+    }
+    private InteractionResult placeBuilding(Player player,ItemStack held,Pick pick){
+        if(!(player instanceof net.minecraft.server.level.ServerPlayer server) || isRemoved() || !player.isAlive() || player.isSpectator()
+                || !dev.raftocean.crew.CrewAccess.allowed(player,this))return InteractionResult.FAIL;
+        Placement plan=placement(player,held,pick,dev.raftocean.network.RaftBuildRotationSync.rotation(server));
         if(plan==null || !plan.valid()){
             String reason=plan==null?"aim":plan.failure();
             player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("raft_ocean.build."+reason,

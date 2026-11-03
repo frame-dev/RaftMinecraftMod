@@ -205,6 +205,7 @@ public final class OceanWorldCheck {
         checks += dev.raftocean.survival.CookingBatchCheck.run(level);
         checks += dev.raftocean.salvage.CompactorCheck.run(level);
         checks += dev.raftocean.survival.JuicerCheck.run(level);
+        checks += dev.raftocean.building.HammerCheck.run(level);
         checks += dev.raftocean.trading.OutpostCheck.run(level);
         checks += dev.raftocean.story.ExplorationCheck.run(level);
         checks += dev.raftocean.trading.OutpostIslandCheck.run(level);

@@ -24,7 +24,7 @@ public final class ModContent {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(RaftOcean.MOD_ID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(RaftOcean.MOD_ID);
     public static final DeferredItem<Item> FOUNDATION = ITEMS.registerSimpleItem("foundation");
-    public static final DeferredItem<Item> BUILDING_HAMMER = ITEMS.registerSimpleItem("building_hammer", p -> p.stacksTo(1));
+    public static final DeferredItem<Item> BUILDING_HAMMER = ITEMS.registerItem("building_hammer", p -> new dev.raftocean.building.BuildingHammer(p.stacksTo(1)));
     public static final DeferredItem<Item> SCRAP = ITEMS.registerSimpleItem("scrap");
     public static final DeferredItem<Item> DRIFT_LEAF = ITEMS.registerSimpleItem("drift_leaf");
     public static final DeferredItem<Item> PLANT_FIBER = ITEMS.registerSimpleItem("plant_fiber");

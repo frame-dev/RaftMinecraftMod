@@ -29,6 +29,11 @@ public final class RaftOceanClient {
     private static final KeyMapping ROTATE_BUILD = new KeyMapping(
             "key.raft_ocean.rotate_build",InputConstants.KEY_R,BUILD_CATEGORY);
 
+    private static final KeyMapping HAMMER_MENU=new KeyMapping("key.raft_ocean.hammer_menu",InputConstants.KEY_B,BUILD_CATEGORY);
+
+    public static Component hammerKey(){return HAMMER_MENU.getTranslatedKeyMessage();}
+    public static Component rotateKey(){return ROTATE_BUILD.getTranslatedKeyMessage();}
+
     private RaftOceanClient() {
     }
 
@@ -36,16 +41,23 @@ public final class RaftOceanClient {
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
         event.registerCategory(BUILD_CATEGORY);
         event.register(ROTATE_BUILD);
+        event.register(HAMMER_MENU);
     }
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
         var game=Minecraft.getInstance();
+        while(HAMMER_MENU.consumeClick()){
+            var player=game.player;if(player==null || game.level==null || game.gui.screen()!=null)continue;
+            boolean offhand=!player.getMainHandItem().is(ModContent.BUILDING_HAMMER.get());
+            if(!(offhand?player.getOffhandItem():player.getMainHandItem()).is(ModContent.BUILDING_HAMMER.get()))continue;
+            net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(new dev.raftocean.network.HammerMenuPayload(offhand));
+        }
         while(ROTATE_BUILD.consumeClick()) {
             var player=game.player;
             if(player==null || game.level==null || game.gui.screen()!=null){continue;}
-            var kind=ModContent.structuralKind(player.getMainHandItem());
-            if(kind==null){kind=ModContent.structuralKind(player.getOffhandItem());}
+            var kind=ModContent.structuralKind(dev.raftocean.building.BuildingHammer.preview(player,player.getMainHandItem()));
+            if(kind==null){kind=ModContent.structuralKind(dev.raftocean.building.BuildingHammer.preview(player,player.getOffhandItem()));}
             if(kind==null || !kind.rotatable()){continue;}
             int rotation=dev.raftocean.client.render.RaftPlacementGhost.rotateBuild();
             net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(
@@ -69,6 +81,7 @@ public final class RaftOceanClient {
         event.register(dev.raftocean.menu.RadioMenu.TYPE.get(), RadioScreen::new);
         event.register(dev.raftocean.menu.CompactorMenu.TYPE.get(), CompactorScreen::new);
         event.register(dev.raftocean.menu.JuicerMenu.TYPE.get(), JuicerScreen::new);
+        event.register(dev.raftocean.menu.HammerMenu.TYPE.get(), HammerScreen::new);
         event.register(dev.raftocean.menu.NotebookMenu.TYPE.get(), NotebookScreen::new);
         for (var kind : dev.raftocean.entity.RaftPiece.Kind.values()) {
             if (kind.machine()) { event.register(dev.raftocean.menu.SurvivalMenu.type(kind), SurvivalScreen::new); }
@@ -98,7 +111,7 @@ public final class RaftOceanClient {
                     || !(game.hitResult instanceof net.minecraft.world.phys.EntityHitResult hit)
                     || !(hit.getEntity() instanceof dev.raftocean.entity.RaftEntity raft)
                     || !dev.raftocean.client.render.RaftPlacementGhost.belongsTo(raft)) {return;}
-            var item=game.player.getMainHandItem();var offhand=game.player.getOffhandItem();
+            var item=dev.raftocean.building.BuildingHammer.preview(game.player,game.player.getMainHandItem());var offhand=dev.raftocean.building.BuildingHammer.preview(game.player,game.player.getOffhandItem());
             if(!item.is(ModContent.FOUNDATION.get()) && ModContent.structuralKind(item)==null
                     && !offhand.is(ModContent.FOUNDATION.get()) && ModContent.structuralKind(offhand)==null){return;}
             var label=ghost.valid() && ghost.piece()!=null && ghost.piece().kind().rotatable()

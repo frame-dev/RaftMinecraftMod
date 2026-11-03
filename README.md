@@ -1,11 +1,10 @@
-# Raft Ocean — 0.13.8 preview
+# Raft Ocean — 0.13.9 preview
 
-This update adds a [battery-powered juicer and prepared drinks](docs/JUICER_AND_DRINKS.md).
-Blend four crop/fruit portions, save or pause a batch, then serve the finished
-portion into a reusable glass. Three original drinks restore hydration and give
-short expedition bonuses. The machine includes custom models, a dedicated panel,
-data-pack recipes and optional JEI links. Recycling, cooking, sailing, cooperative
-building and the open-ended story remain available.
+This update adds a [building hammer palette](docs/HAMMER_PALETTE.md).
+Choose crafted pieces by category, keep the hammer equipped and place from your
+backpack with the existing ghosts, support, collision and crew checks. Repair,
+rotation and deliberate sneak dismantling remain available. The juicer, recycling,
+cooperative sailing and open-ended story are retained.
 
 The [addon API v3](docs/API_V3_UTILITIES.md) supports utility
 inputs, preflighted processing, generator demand and opt-in output collection.
@@ -32,10 +31,11 @@ are not supported by this build.
 
 ## Install and start
 
-Download the [0.13.8 preview release](https://github.com/frame-dev/RaftMinecraftMod/releases/tag/v0.13.8)
-for the playable JAR, documentation bundle, sources, standalone addon SDK and checksums.
+The latest published [0.13.8 preview release](https://github.com/frame-dev/RaftMinecraftMod/releases/tag/v0.13.8)
+contains the earlier playable JAR, documentation bundle, sources, SDK and checksums.
+The 0.13.9 development preview below adds the hammer palette and is not a GitHub release yet.
 
-Install `raft_ocean-0.13.8.jar` in the matching NeoForge profile's `mods`
+Install `raft_ocean-0.13.9.jar` in the matching NeoForge profile's `mods`
 folder. Keep exactly one Raft Ocean jar installed. Sources jars are for
 developers. Use the same version on every multiplayer client and server.
 

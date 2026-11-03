@@ -24,6 +24,13 @@ The comparisons with the mod and the priority order are our engineering assessme
 
 ## Implemented follow-up
 
+0.13.9 adds priority6's [categorized hammer palette](HAMMER_PALETTE.md): persistent
+selection, crafted-piece inventory counts, research visibility and shared placement
+with ghosts, rotation, support, collision, crew checks and repair access. It spends
+existing crafted pieces rather than raw materials. Radial controls, raw-material
+construction and hammer reinforcement remain future work. Reference rechecked
+2026-11-03: [Building Hammer](https://raft.fandom.com/wiki/Building_Hammer).
+
 0.13.8 adds a missing everyday machine: the [juicer and prepared drinks](JUICER_AND_DRINKS.md).
 Four foods, portable battery power, explicit blending and separate post-processing
 glass serving follow the core juicer interaction. Three recipes and visual assets
@@ -163,15 +170,16 @@ walkable sea-level collection pieces; a full basic net allows debris to pass.
 Sources: [Building Hammer](https://raft.fandom.com/wiki/Building_Hammer),
 [Simple Collection Net](https://raft.fandom.com/wiki/Simple_Collection_Net).
 
-Current mod: individual buildable items select placement, while the hammer
-repairs/removes and a brace reinforces foundations. Shared ghosts, support,
-collision and resource handling already exist. The hammer is registered as a
-simple item; there is no hammer build-selection interface in that registration.
+Current mod (0.13.9): individual buildable items remain supported, with a new
+categorized hammer palette that places ordinary crafted pieces from the backpack.
+The hammer stays in hand; repair/rotate mode and deliberate sneak dismantling
+remain available. Native addon registrations join the palette. Research visibility,
+exact item consumption, support/overlap and crew checks remain server-owned.
 
-Recommended building pass: categorized hammer palette, material costs and
-unlocks before placement, consistent rotation and ghosts, clear support feedback,
-and repair/reinforcement modes. Reuse the server's existing placement validation
-and test stairs, corners, upper floors and moving co-op placement.
+Next building pass: optional raw-material costs, radial controls and reinforcement
+selection. Current recipes and item consumption must retain a migration path;
+validate crafting remainders and multi-output yields before granting direct builds.
+Do not bypass current stairs, corners, upper floors or moving co-op validation.
 
 ## Delivery order and acceptance
 

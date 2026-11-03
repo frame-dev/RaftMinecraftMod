@@ -59,6 +59,7 @@ public final class RaftOcean {
         dev.raftocean.salvage.SalvageCompactor.initialize();
         dev.raftocean.survival.RaftJuicer.initialize();
         dev.raftocean.menu.JuicerMenu.initialize();
+        dev.raftocean.menu.HammerMenu.initialize();
         dev.raftocean.menu.CompactorMenu.initialize();
         dev.raftocean.menu.RadioMenu.TYPES.register(modEventBus);
         dev.raftocean.archery.ArcheryContent.initialize();
@@ -79,6 +80,7 @@ public final class RaftOcean {
         modEventBus.addListener(this::onCommonSetup);
         modEventBus.addListener(dev.raftocean.network.RaftMovementSync::register);
         modEventBus.addListener(dev.raftocean.network.RaftBuildRotationSync::register);
+        modEventBus.addListener(dev.raftocean.network.HammerMenuPayload::register);
         NeoForge.EVENT_BUS.addListener(this::onServerStarting);
         NeoForge.EVENT_BUS.addListener(dev.raftocean.survival.Thirst::onTick);
         NeoForge.EVENT_BUS.addListener(dev.raftocean.progression.ResearchRecipes::onTick);
@@ -143,6 +145,7 @@ public final class RaftOcean {
                 LOGGER.info("Raft Ocean: {} runtime outpost trading assertions passed.",dev.raftocean.trading.OutpostCheck.run(event.getServer().overworld()));
                 LOGGER.info("Raft Ocean: {} runtime compactor assertions passed.",dev.raftocean.salvage.CompactorCheck.run(event.getServer().overworld()));
                 LOGGER.info("Raft Ocean: {} runtime juicer assertions passed.",dev.raftocean.survival.JuicerCheck.run(event.getServer().overworld()));
+                LOGGER.info("Raft Ocean: {} runtime hammer palette assertions passed.",dev.raftocean.building.HammerCheck.run(event.getServer().overworld()));
                 int salvageChecks = dev.raftocean.salvage.SalvageCheck.run(event.getServer().overworld());
                 LOGGER.info("Raft Ocean: {} runtime salvage assertions passed.", salvageChecks);
                 LOGGER.info("Raft Ocean: {} runtime cooking-batch assertions passed.",dev.raftocean.survival.CookingBatchCheck.run(event.getServer().overworld()));
