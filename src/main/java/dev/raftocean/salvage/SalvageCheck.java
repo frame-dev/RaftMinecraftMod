@@ -114,15 +114,29 @@ public final class SalvageCheck {
                 SalvageHookEntity hook = GrapplingHookItem.active(player);
                 require(hook != null && player.getMainHandItem().getDamageValue() == 1, "Hook cast and durability"); checks++;
                 require(hook.range() == (item == ModContent.GRAPPLING_HOOK.get() ? 24 : 40), "Hook tier range"); checks++;
-                item.use(level, player, InteractionHand.MAIN_HAND);
-                require(GrapplingHookItem.active(player) == hook && player.getMainHandItem().getDamageValue() == 1,
-                        "Second use reels the same cast"); checks++;
                 DebrisEntity target = fixed(level, player.position().add(14, 1, 0), List.of(new ItemStack(Items.OAK_LOG, 2)));
                 require(hook.attach(target) && target.claimed(), "Exclusive hook attachment"); checks++;
                 var other = new SalvageHookEntity(ModContent.SALVAGE_HOOK.get(), level);
                 require(!other.attach(target) && !target.collect(new SimpleContainer(27)), "Other collectors cannot steal claimed debris"); checks++;
                 int before = player.getInventory().countItem(Items.OAK_LOG);
-                hook.reel();
+                var nearby = fixed(level, player.position().add(2, 0, 0), List.of(new ItemStack(Items.STICK)));
+                try {
+                    Vec3 beforeReel = hook.position();
+                    require(nearby.interact(player, InteractionHand.MAIN_HAND, Vec3.ZERO).consumesAction()
+                                    && !nearby.isRemoved() && GrapplingHookItem.active(player) == hook
+                                    && player.getMainHandItem().getDamageValue() == 1,
+                            "Using a cast hook while aiming at nearby debris reels without picking it up or charging wear");
+                    checks++;
+                    hook.tick();
+                    require(hook.position().distanceToSqr(player.position()) < beforeReel.distanceToSqr(player.position()),
+                            "The debris interaction starts retrieval of the existing cast");
+                    checks++;
+                } finally {
+                    nearby.discard();
+                }
+                require(item.use(level, player, InteractionHand.MAIN_HAND).consumesAction()
+                                && GrapplingHookItem.active(player) == hook && player.getMainHandItem().getDamageValue() == 1,
+                        "Using the hook in open air still reels the same cast"); checks++;
                 for (int tick = 0; tick < 100 && !hook.isRemoved(); tick++) {
                     player.setPos(player.position().add(.02, 0, .008)); hook.tick();
                 }
@@ -134,7 +148,10 @@ public final class SalvageCheck {
                 var remaining = fixed(level, player.position(), List.of(new ItemStack(ModContent.SCRAP.get())));
                 require(cancellation.attach(remaining), "Cancellation fixture attachment"); checks++;
                 cancellation.discard();
-                require(!remaining.claimed() && !remaining.isRemoved() && remaining.collect(player, null), "Cancelled hook releases intact loot"); checks++;
+                require(!remaining.claimed() && !remaining.isRemoved()
+                                && remaining.interact(player, InteractionHand.MAIN_HAND, Vec3.ZERO).consumesAction()
+                                && remaining.isRemoved() && GrapplingHookItem.active(player) == null,
+                        "An idle hook in hand still allows ordinary pickup after a cancelled cast"); checks++;
                 other.discard();
             }
             checks += blockedOverflow(level, player);

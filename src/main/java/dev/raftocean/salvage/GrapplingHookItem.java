@@ -17,13 +17,18 @@ public final class GrapplingHookItem extends Item {
         return hook;
     }
     public static void forget(SalvageHookEntity hook) { ACTIVE.values().removeIf(value -> value == hook); }
+    static boolean reelActive(Player player) {
+        SalvageHookEntity hook = active(player);
+        if (hook == null) { return false; }
+        hook.reel();
+        return true;
+    }
+
     public GrapplingHookItem(Properties properties, boolean reinforced) { super(properties); this.reinforced = reinforced; }
 
     @Override public InteractionResult use(Level level, Player player, InteractionHand hand) {
         if (!(level instanceof ServerLevel server)) { return InteractionResult.SUCCESS; }
-        SalvageHookEntity active = active(player);
-        if (active != null) {
-            active.reel();
+        if (reelActive(player)) {
             return InteractionResult.SUCCESS_SERVER;
         }
         if (player.getCooldowns().isOnCooldown(player.getItemInHand(hand))) { return InteractionResult.FAIL; }

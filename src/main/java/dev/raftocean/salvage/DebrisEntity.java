@@ -97,9 +97,13 @@ public final class DebrisEntity extends Entity {
         return true;
     }
 
+    private boolean canReach(Player player) {
+        return !isRemoved() && player.level() == level() && player.isAlive()
+                && !player.isSpectator() && player.distanceToSqr(this) <= 16;
+    }
+
     public boolean collect(Player player, UUID claimant) {
-        if (!(level() instanceof ServerLevel) || isRemoved() || player.level() != level()
-                || !player.isAlive() || player.isSpectator() || player.distanceToSqr(this) > 16
+        if (!(level() instanceof ServerLevel) || !canReach(player)
                 || (claimed() && !hook.getUUID().equals(claimant))) { return false; }
         rollLoot();
         boolean collected = false;
@@ -130,6 +134,10 @@ public final class DebrisEntity extends Entity {
 
     @Override public InteractionResult interact(Player player, InteractionHand hand, Vec3 location) {
         if (level().isClientSide()) { return InteractionResult.SUCCESS; }
+        if (canReach(player) && player.getItemInHand(hand).getItem() instanceof GrapplingHookItem
+                && GrapplingHookItem.reelActive(player)) {
+            return InteractionResult.SUCCESS_SERVER;
+        }
         return collect(player, null) ? InteractionResult.SUCCESS_SERVER : InteractionResult.FAIL;
     }
     @Override public boolean isPickable() { return !isRemoved(); }

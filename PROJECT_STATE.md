@@ -8,6 +8,10 @@
 
 - Updated: 2026-11-08.
 
+- 0.13.9 preview improvement: right-clicking debris with a cast grappling
+  hook reels in the active cast. Right-clicking with an idle hook still picks
+  up debris within reach. Both hook tiers use the same retrieval path.
+
 - 0.13.9 preview fix: debris picked up by hand or retrieved with the hook
   keeps overflow the server refuses to drop. Accepted items are removed from
   the debris, and the remaining loot can be collected later.

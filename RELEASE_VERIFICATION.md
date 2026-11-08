@@ -3,6 +3,13 @@
 Checked through 2026-11-08: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
 ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.9.
 
+- The hook regression reproduced the debris click intercepting retrieval in
+  build/hook-reel-before.log. With the fix, build, dedicated bootstrap and the
+  existing Ocean World replay passed in build/hook-reel-verified.log. The 120
+  salvage checks include both hook tiers, retrieval movement, ordinary pickup
+  with an idle hook and unchanged durability on reel. The Ocean World replay
+  passed 10,432 assertions.
+
 - The salvage overflow regression reproduced loot loss during a partial pickup
   in build/salvage-overflow-before.log. With the fix, the build, dedicated
   bootstrap and existing isolated Ocean World all passed in
