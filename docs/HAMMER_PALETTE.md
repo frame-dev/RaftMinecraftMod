@@ -20,6 +20,8 @@ It does not yet convert raw wood/rope directly into a placed structure.
 5. Use the existing **R** rotation control for machines/conduits. Walls continue
    to follow clicked edges and their existing corner-joining rules. Palette control
    labels follow remapped keys, including the mouse/keyboard language setting.
+   The build angle stays in sync through respawn and returning from the End.
+   Reconnecting resets it to the default angle.
 
 The selected piece is saved separately on each hammer and survives world reload.
 You can select a known piece even at count zero: its ghost turns red with a missing

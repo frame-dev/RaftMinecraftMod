@@ -6,7 +6,13 @@
 
 
 
-- Updated: 2026-11-03.
+- Updated: 2026-11-08.
+
+- 0.13.9 preview fix: build rotation now follows the play connection through
+  death and return from the End. The first machine or conduit placement keeps
+  the angle shown by the ghost, and reconnecting starts at the default angle.
+  Full build, bootstrap and fresh Ocean World checks pass, including eight
+  rotation regressions. Live respawn and co-op testing remain pending.
 
 - Latest development:0.13.9preview, categorized building hammer palette.
   Targets unchanged: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,

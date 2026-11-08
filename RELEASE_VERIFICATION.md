@@ -1,8 +1,17 @@
 # Verification — 0.13.9 preview
 
-Checked2026-11-03: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+Checked through 2026-11-08: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
 ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.9.
 
+- On November 8, the build rotation regression reproduced the missing offset
+  for a replacement player in build/rotation-respawn-before.log. After storing
+  the offset on the play connection, the build, bootstrap and fresh Ocean World
+  runs passed in build/rotation-respawn-verified.log. Eight new assertions cover
+  respawn, End return, reconnection, rejected angles and a real hammer placement
+  matching the ghost and spending one purifier. Totals are 589 hammer and 10,432
+  Ocean World assertions. Live multiplayer respawn remains to be tested.
+
+- Original November 3 palette verification follows.
 - Full final build/bootstrap passes in build/hammer-0.13.9-final-verified.log. The new native
   hammer suite passes581assertions, including every palette entry against direct
   placement shapes/coordinates at all four rotation offsets, and no grant/spend
@@ -10,8 +19,8 @@ ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.9.
 - Fresh Ocean World passes10424assertions in
   build/hammer-0.13.9-final-verified.log. The new level is
   ocean_world_0_13_9_hammer_final; its native catalog hammer suite has551checks.
-  Both JavaExec and completion-message guards pass. No gameplay/source change
-  followed these successful proofs; user worlds and active client output stay intact.
+  Both JavaExec and completion-message guards passed. User worlds and active
+  client output stayed intact.
 - Hammer coverage includes native item serialization, exact one-piece foundation,
   net and wall placement, no held-item swaps, full/blocked and empty supplies,
   component-preserving inputs, research visibility/stale saved choices, real owned

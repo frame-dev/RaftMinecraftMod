@@ -107,7 +107,7 @@ public final class HammerCheck {
                 var payload=new dev.raftocean.network.HammerMenuPayload(true);dev.raftocean.network.HammerMenuPayload.STREAM_CODEC.encode(buffer,payload);
                 require(dev.raftocean.network.HammerMenuPayload.STREAM_CODEC.decode(buffer).offhand() && !buffer.isReadable(),"Bounded hand-only palette request codec round-trips");
             }finally{buffer.release();}
-            return checks;
+            return checks + dev.raftocean.network.RaftBuildRotationCheck.run(level);
         }finally{
             raft.discard();player.discard();stranger.discard();RaftConfig.HAMMER_PALETTE.set(enabled);RaftConfig.RESEARCH.set(research);RaftConfig.CREW_PERMISSIONS.set(permissions);
         }
