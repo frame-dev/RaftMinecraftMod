@@ -98,16 +98,34 @@ public final class DebrisEntity extends Entity {
     }
 
     public boolean collect(Player player, UUID claimant) {
-        if (!(level() instanceof ServerLevel server) || isRemoved() || player.level() != level()
+        if (!(level() instanceof ServerLevel) || isRemoved() || player.level() != level()
                 || !player.isAlive() || player.isSpectator() || player.distanceToSqr(this) > 16
                 || (claimed() && !hook.getUUID().equals(claimant))) { return false; }
-        for (ItemStack stack : loot()) {
-            player.getInventory().add(stack);
-            if (!stack.isEmpty()) { player.drop(stack, false, net.minecraft.util.Prediction.SERVER_ONLY); }
+        rollLoot();
+        boolean collected = false;
+        for (int slot = 0; slot < loot.getContainerSize(); slot++) {
+            ItemStack original = loot.getItem(slot);
+            if (original.isEmpty()) { continue; }
+            ItemStack remaining = original.copy();
+            player.getInventory().add(remaining);
+            if (remaining.getCount() < original.getCount()) {
+                loot.setItem(slot, remaining);
+                collected = true;
+            }
+            if (!remaining.isEmpty()) {
+                var drop = player.drop(remaining.copy(), false, net.minecraft.util.Prediction.SERVER_ONLY);
+                // The toss can return an item entity even when its spawn was rejected.
+                if (drop != null && drop.isAddedToLevel() && !drop.isRemoved()) {
+                    loot.setItem(slot, ItemStack.EMPTY);
+                    collected = true;
+                }
+            }
         }
-        loot.clearContent();
-        discard();
-        return true;
+        if (loot.isEmpty()) {
+            discard();
+            return true;
+        }
+        return collected;
     }
 
     @Override public InteractionResult interact(Player player, InteractionHand hand, Vec3 location) {

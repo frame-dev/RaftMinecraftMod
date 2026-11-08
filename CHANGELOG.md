@@ -8,6 +8,7 @@
 - Shared ghosts/rotation/support/collision and exact one-item successful commits.
 - Machine and conduit placement keeps the preview rotation after respawn or returning from the End.
 - Rejected Baited Ocean Rod casts keep the Crumb Bait and clear the rejected bobber so the next cast works.
+- Floating debris keeps uncollected loot when the server blocks an overflow drop.
 - Research-aware choices, missing-supply ghosts, per-hammer persistent selection.
 - Default repair/rotation and deliberate sneak dismantling retain existing behavior.
 - Safe component-preserving supplies, crew restrictions and stale-session rejection.

@@ -8,6 +8,10 @@
 
 - Updated: 2026-11-08.
 
+- 0.13.9 preview fix: debris picked up by hand or retrieved with the hook
+  keeps overflow the server refuses to drop. Accepted items are removed from
+  the debris, and the remaining loot can be collected later.
+
 - 0.13.9 preview fix: the Baited Ocean Rod spends one Crumb Bait only after
   the server accepts the bobber. A rejected spawn leaves the bait in inventory
   and clears the hook so the next use can cast again.

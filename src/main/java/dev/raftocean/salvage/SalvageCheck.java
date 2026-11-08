@@ -5,6 +5,8 @@ import dev.raftocean.entity.*;
 import dev.raftocean.registry.ModContent;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
@@ -14,11 +16,15 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.storage.*;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
 
 /** Actual loot, recipes, moving net deposits, save/load, and server-side cast/reel regressions. */
 public final class SalvageCheck {
@@ -131,11 +137,78 @@ public final class SalvageCheck {
                 require(!remaining.claimed() && !remaining.isRemoved() && remaining.collect(player, null), "Cancelled hook releases intact loot"); checks++;
                 other.discard();
             }
+            checks += blockedOverflow(level, player);
         } finally {
             var hook = GrapplingHookItem.active(player); if (hook != null) { hook.discard(); }
             level.removePlayerImmediately(player, Entity.RemovalReason.DISCARDED);
         }
         return checks;
+    }
+
+    private static int blockedOverflow(ServerLevel level, FakePlayer player) {
+        var inventory = player.getInventory();
+        for (int slot = 0; slot < 36; slot++) {
+            inventory.setItem(slot, new ItemStack(Items.STONE, 64));
+        }
+        inventory.setItem(9, new ItemStack(Items.OAK_LOG, 63));
+        var debris = fixed(level, player.position(),
+                List.of(new ItemStack(Items.OAK_LOG, 2), new ItemStack(ModContent.SCRAP.get())));
+        Consumer<ItemTossEvent> rejectToss = event -> {
+            if (event.getPlayer() == player) { event.setCanceled(true); }
+        };
+        Consumer<EntityJoinLevelEvent> rejectSpawn = event -> {
+            if (event.getLevel() == level && event.getEntity() instanceof ItemEntity item
+                    && (item.getItem().is(Items.OAK_LOG) || item.getItem().is(ModContent.SCRAP.get()))) {
+                event.setCanceled(true);
+            }
+        };
+        try {
+            NeoForge.EVENT_BUS.addListener(ItemTossEvent.class, rejectToss);
+            try {
+                require(debris.collect(player, null) && !debris.isRemoved() && inventory.getItem(9).getCount() == 64,
+                        "A blocked toss preserves the debris after the item that fit was collected");
+                require(debris.loot().size() == 2 && debris.loot().getFirst().getCount() == 1,
+                        "Partial pickup subtracts only the log added to the backpack");
+            } finally {
+                NeoForge.EVENT_BUS.unregister(rejectToss);
+            }
+            NeoForge.EVENT_BUS.addListener(EntityJoinLevelEvent.class, rejectSpawn);
+            try {
+                require(!debris.collect(player, null) && !debris.isRemoved()
+                                && debris.loot().stream().mapToInt(ItemStack::getCount).sum() == 2,
+                        "A rejected item spawn leaves every leftover on the debris");
+            } finally {
+                NeoForge.EVENT_BUS.unregister(rejectSpawn);
+            }
+            inventory.setItem(10, ItemStack.EMPTY);
+            inventory.setItem(11, ItemStack.EMPTY);
+            require(debris.collect(player, null) && debris.isRemoved() && !debris.collect(player, null)
+                            && inventory.countItem(Items.OAK_LOG) == 65 && inventory.countItem(ModContent.SCRAP.get()) == 1,
+                    "Freeing backpack slots collects the leftovers exactly once");
+            inventory.setItem(10, new ItemStack(Items.OAK_LOG, 64));
+            inventory.setItem(11, new ItemStack(Items.STONE, 64));
+            var overflow = fixed(level, player.position(), List.of(new ItemStack(ModContent.SCRAP.get(), 2)));
+            var spawned = new AtomicReference<ItemEntity>();
+            Consumer<EntityJoinLevelEvent> observeDrop = event -> {
+                if (event.getLevel() == level && event.getEntity() instanceof ItemEntity item
+                        && item.getItem().is(ModContent.SCRAP.get())) {
+                    spawned.set(item);
+                }
+            };
+            NeoForge.EVENT_BUS.addListener(EntityJoinLevelEvent.class, observeDrop);
+            try {
+                require(overflow.collect(player, null) && overflow.isRemoved() && spawned.get() != null
+                                && spawned.get().isAddedToLevel() && spawned.get().getItem().getCount() == 2,
+                        "Allowed overflow still drops the full stack into the world");
+            } finally {
+                NeoForge.EVENT_BUS.unregister(observeDrop);
+                overflow.discard();
+                if (spawned.get() != null) { spawned.get().discard(); }
+            }
+            return 5;
+        } finally {
+            debris.discard();
+        }
     }
 
     private static boolean settle(DebrisStream state, Vec3 origin, Vec3 course, long readyAt) {

@@ -3,6 +3,13 @@
 Checked through 2026-11-08: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
 ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.9.
 
+- The salvage overflow regression reproduced loot loss during a partial pickup
+  in build/salvage-overflow-before.log. With the fix, the build, dedicated
+  bootstrap and existing isolated Ocean World all passed in
+  build/salvage-overflow-verified.log. The bootstrap passed 116 salvage checks,
+  including canceled tosses, rejected spawns, exact retry counts and allowed
+  overflow drops. The Ocean World replay passed 10,430 assertions.
+
 - The fishing regression reproduced bait loss and a stale bobber on spawn
   cancellation in build/fishing-bait-before.log. The build and dedicated-server
   bootstrap then passed with 981 survival assertions, including an accepted
