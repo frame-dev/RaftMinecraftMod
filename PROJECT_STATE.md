@@ -8,6 +8,10 @@
 
 - Updated: 2026-11-08.
 
+- 0.13.9 preview fix: the Baited Ocean Rod spends one Crumb Bait only after
+  the server accepts the bobber. A rejected spawn leaves the bait in inventory
+  and clears the hook so the next use can cast again.
+
 - 0.13.9 preview fix: build rotation now follows the play connection through
   death and return from the End. The first machine or conduit placement keeps
   the angle shown by the ghost, and reconnecting starts at the default angle.

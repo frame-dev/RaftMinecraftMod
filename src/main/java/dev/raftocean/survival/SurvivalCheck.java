@@ -5,16 +5,20 @@ import dev.raftocean.entity.*;
 import dev.raftocean.menu.RaftStationMenus;
 import dev.raftocean.registry.ModContent;
 import java.util.*;
+import java.util.function.Consumer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.storage.*;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 
 /** Tests real machine recipes, fuel components, transactions, persistence, drinking, and fishing. */
 public final class SurvivalCheck {
@@ -58,8 +62,22 @@ public final class SurvivalCheck {
             require(rod.use(level, player, InteractionHand.MAIN_HAND) == InteractionResult.FAIL && player.fishing == null,
                     "Baited rod refuses unbaited casts"); checks++;
             player.getInventory().setItem(10, new ItemStack(SurvivalContent.BAIT.get(), 2));
-            rod.use(level, player, InteractionHand.MAIN_HAND);
-            require(player.fishing != null && player.getInventory().countItem(SurvivalContent.BAIT.get()) == 1,
+            Consumer<EntityJoinLevelEvent> rejectCast = event -> {
+                if (event.getLevel() == level && event.getEntity() instanceof FishingHook hook && hook.getPlayerOwner() == player) {
+                    event.setCanceled(true);
+                }
+            };
+            NeoForge.EVENT_BUS.addListener(EntityJoinLevelEvent.class, rejectCast);
+            try {
+                require(rod.use(level, player, InteractionHand.MAIN_HAND) == InteractionResult.FAIL
+                                && player.fishing == null && player.getInventory().countItem(SurvivalContent.BAIT.get()) == 2,
+                        "A canceled bobber spawn spends no bait and leaves no active hook"); checks++;
+            } finally {
+                NeoForge.EVENT_BUS.unregister(rejectCast);
+            }
+            require(rod.use(level, player, InteractionHand.MAIN_HAND).consumesAction()
+                            && player.fishing != null && player.fishing.isAddedToLevel()
+                            && player.getInventory().countItem(SurvivalContent.BAIT.get()) == 1,
                     "Native bobber casts and consumes one bait"); checks++;
             rod.use(level, player, InteractionHand.MAIN_HAND);
             require(player.fishing == null && player.getInventory().countItem(SurvivalContent.BAIT.get()) == 1,

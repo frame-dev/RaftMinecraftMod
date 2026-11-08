@@ -3,6 +3,14 @@
 Checked through 2026-11-08: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
 ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.9.
 
+- The fishing regression reproduced bait loss and a stale bobber on spawn
+  cancellation in build/fishing-bait-before.log. The build and dedicated-server
+  bootstrap then passed with 981 survival assertions, including an accepted
+  retry and a free reel-in. The same run's fresh Ocean World hit the 180-second
+  watchdog in OutpostIslandCheck while loading trading-outpost chunks. See
+  build/fishing-bait-verified.log. The previously generated isolated Ocean World
+  passed 10,432 assertions on replay in build/fishing-bait-ocean-replay.log.
+
 - On November 8, the build rotation regression reproduced the missing offset
   for a replacement player in build/rotation-respawn-before.log. After storing
   the offset on the play connection, the build, bootstrap and fresh Ocean World
