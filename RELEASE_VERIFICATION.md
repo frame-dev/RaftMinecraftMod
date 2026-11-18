@@ -3,6 +3,15 @@
 Checked through 2026-11-18: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
 ModDevGradle2.0.147, Gradle9.2.1. API3; handshake 13.10.
 
+- Published v0.13.10 preview on 2026-11-18 from tested commit
+  461c5957073d0b83e0862fcbc97abc558da8f641. GitHub confirms non-draft,
+  pre-release status, and the remote tag resolves to that source commit.
+  Seven asset digests/sizes match the local SHA256SUMS-0.13.10.txt.
+  The standalone API3 SDK passed its own build with Java25.
+  Playable JAR SHA256:
+  a417954c0fced62d5302062270e30b17ff0124f34aec8ffb92af4c83356388d8.
+
+
 - Release candidate 0.13.10 was checked on 2026-11-18 with the project targets
   above and movement/hammer handshake 13.10. Hammer reinforcement uses the
   existing foundation save data, original brace recipe and shark protection.

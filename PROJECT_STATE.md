@@ -8,6 +8,16 @@
 
 - Updated: 2026-11-18.
 
+- Published release: v0.13.10 preview on 2026-11-18.
+  https://github.com/frame-dev/RaftMinecraftMod/releases/tag/v0.13.10
+  Public, non-draft pre-release with seven uploaded assets verified by SHA256
+  and size. The tag points to tested source 461c5957073d0b83e0862fcbc97abc558da8f641.
+  Playable/sources JARs, documentation ZIP, standalone API3 SDK, ZIP sidecars
+  and SHA256SUMS are available. The standalone SDK builds with Java25.
+  Earlier releases remain available. Milestone12 preview publication complete;
+  live GUI, real co-op latency and older-save playthrough remain pending.
+
+
 - Latest development: 0.13.10 preview, hammer foundation reinforcement.
   Minecraft 26.3, NeoForge 26.3.0.48-beta, Java 25, ModDevGradle 2.0.147,
   Gradle 9.2.1, API3 and matching movement/hammer handshake 13.10.
