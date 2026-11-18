@@ -84,7 +84,7 @@ public final class RaftRenderer extends EntityRenderer<RaftEntity, RaftRenderSta
         entity.getBlocks().forEach((pos, visual) -> add(entity, state,
                 new AABB(pos.getX()-.5, 0, pos.getZ()-.5, pos.getX()+.5, .25, pos.getZ()+.5),
                 visual, Vec3.ZERO, 0, 0, 0, 0));
-        entity.getBlocks().keySet().stream().filter(entity::reinforcedFoundation).forEach(pos->{
+        entity.seaLevelCells().stream().filter(entity::reinforcedFoundation).forEach(pos->{
             var metal=ModContent.stationVisual(RaftPiece.Kind.ANVIL).defaultBlockState();
             for(int side:new int[]{-1,1}) {
                 add(entity,state,new AABB(pos.getX()-.44,.02,pos.getZ()+side*.48-.025,pos.getX()+.44,.245,pos.getZ()+side*.48+.025),metal,Vec3.ZERO,0,0,0,0);

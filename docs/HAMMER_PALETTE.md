@@ -1,4 +1,4 @@
-# Building hammer palette — 0.13.10 preview
+# Building hammer palette — 0.13.11 preview
 
 The hammer now selects and places existing crafted raft pieces without moving
 those pieces into your hand. This adds the building-selection/repair portion of
@@ -38,16 +38,20 @@ Repair still consumes one plank and restores twenty-five foundation health.
 **Sneak-use/right-click still dismantles** using the existing support/refund rules,
 including when a build piece is selected. The build ghost is hidden while sneaking
 so the two actions are visually distinct. Unsneak before attempting to build.
-### Reinforce foundations
+
+### Reinforce foundations and nets
 
 Select **Reinforced Brace** from **Structure** after learning its metal research.
-Keep crafted braces in your hotbar/backpack, then aim at an existing foundation.
-The ghost highlights that foundation. Right-click applies its armor and spends
-one ordinary brace. Already armored foundations, missing supplies and disabled
+Keep crafted braces in your hotbar/backpack, then aim at an existing foundation or sea-level collection net.
+The ghost highlights the targeted platform. Right-click applies its armor and spends
+one ordinary brace. Already armored platforms, missing supplies and disabled
 reinforcement give a red preview. Crew guests cannot apply armor.
-The existing recipe yields two braces, so one recipe can protect two foundations.
+The existing recipe yields two braces, so one recipe can protect two foundations or nets.
 Armor is saved on the raft and prevents shark targeting/damage while reinforcement
-is enabled. Direct brace use remains available. Collection-net armor is future work.
+is enabled. Direct brace use remains available. Damaged nets can be repaired in Repair mode
+with one plank per twenty-five health, following the foundation repair cost.
+Unarmored exposed nets can be bitten by sharks. Breaking a net bridge drops
+disconnected pieces and their cargo; the remaining raft stays connected.
 
 This uses the original-game [hammer armor interaction](https://raft.fandom.com/wiki/Foundation_Armor)
 with the mod's existing original brace recipe and foundation protection.
@@ -90,7 +94,7 @@ Direct placement using existing building items remains available either way.
 
 Raw-material construction, a radial wheel and remote storage supply are future
 work. API3 remains current.
-Matching 0.13.10 clients/server are required (movement handshake 13.10).
+Matching 0.13.11 clients/server are required (movement handshake 13.11).
 
 ## Local playtest
 

@@ -149,7 +149,7 @@ public final class OceanCreature extends PathfinderMob {
         }
         preyId=null;
         if(enabled && RaftConfig.RAFT_DAMAGE.get() && cooldown==0 && raftAttackDelay==0 && targetCell==null){
-            targetCell=raft.getBlocks().keySet().stream().filter(raft::attackableFoundation)
+            targetCell=raft.seaLevelCells().stream().filter(raft::attackableFoundation)
                     .min(Comparator.comparingDouble(p->raft.toWorld(new Vec3(p.getX(),0,p.getZ())).distanceToSqr(position()))).orElse(null);
             if(targetCell==null)cooldown=40;
             if(targetCell!=null){
@@ -220,7 +220,7 @@ public final class OceanCreature extends PathfinderMob {
     public Vec3 bitePosition(RaftEntity raft,BlockPos cell) {
         // Choose an exposed cardinal edge, including concave layouts; radial offsets can aim into another cell.
         return List.of(cell.north(),cell.south(),cell.east(),cell.west()).stream()
-                .filter(neighbor->!raft.getBlocks().containsKey(neighbor))
+                .filter(neighbor->!raft.seaLevelPlatform(neighbor))
                 .map(neighbor->raft.toWorld(new Vec3(cell.getX()+(neighbor.getX()-cell.getX())*FoundationBite.BODY_DISTANCE,
                         FoundationBite.BODY_HEIGHT,cell.getZ()+(neighbor.getZ()-cell.getZ())*FoundationBite.BODY_DISTANCE)))
                 .min(Comparator.comparingDouble(position()::distanceToSqr))

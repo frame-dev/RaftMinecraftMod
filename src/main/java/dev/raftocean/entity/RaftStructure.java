@@ -154,6 +154,14 @@ public final class RaftStructure {
         return true;
     }
 
+    /** Shark damage can break a sea-level net even when it bridges other pieces. */
+    boolean breakNet(BlockPos pos) {
+        var piece=pieces.get(pos);
+        if(pos.getY()!=0 || piece==null || piece.kind()!=RaftPiece.Kind.COLLECTION_NET)return false;
+        pieces.remove(pos);
+        return true;
+    }
+
     /** Damage prunes disconnected structures and excess weight so every resulting save remains valid. */
     public Map<BlockPos, RaftPiece> pruneAfterDamage(RaftLayout layout) {
         Map<BlockPos, RaftPiece> removed = new LinkedHashMap<>();

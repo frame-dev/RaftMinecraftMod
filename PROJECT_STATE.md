@@ -8,6 +8,22 @@
 
 - Updated: 2026-11-18.
 
+- Latest development: 0.13.11 preview, sea-level net armor and platform API.
+  Targets remain Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147 and Gradle9.2.1. API3, matching handshake13.11.
+  Hammer/direct braces reinforce nets; armor and damage share the existing
+  platform health save data. Sharks can target exposed unarmored nets.
+  Repair costs match foundations. Broken net bridges prune disconnected
+  pieces and drop their cargo; dismantling refunds armor and clears state.
+  Addons can inspect immutable platform snapshots through RaftPlatforms.
+  See docs/PLATFORM_API.md for a complete monitoring example.
+  Full build/bootstrap/Ocean replay passed with636hammer and10483Ocean
+  assertions, including25new net-armor/API cases. Packaged assets and an
+  external build of the documented monitor plus existing addons passed.
+  Published release remains0.13.10. Live GUI/co-op/older-save checks are pending.
+  Milestones1-11implemented;12preview maintenance. Story remains open-ended.
+
+
 - Published release: v0.13.10 preview on 2026-11-18.
   https://github.com/frame-dev/RaftMinecraftMod/releases/tag/v0.13.10
   Public, non-draft pre-release with seven uploaded assets verified by SHA256

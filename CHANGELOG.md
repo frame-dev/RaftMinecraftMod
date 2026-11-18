@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.13.11 preview — collection-net armor and addon inspection
+
+- Hammer and direct-brace armor for sea-level collection nets, saved alongside cargo.
+- Nets share foundation health, shark edge targeting and plank repairs.
+- Broken net bridges preserve a connected raft remnant and drop detached cargo.
+- Dismantling refunds the installed brace; replacement nets start with fresh state.
+- Additive API3 platform snapshots expose health, armor, active protection and edges.
+- Complete platform-monitor example and addon dependency guidance.
+- Matching 0.13.11 clients/server use handshake 13.11.
+
+
 ## 0.13.10 preview — 2026-11-18 — hammer reinforcement
 
 - Select Reinforced Brace from the hammer Structure category and apply it to existing foundations.

@@ -154,6 +154,15 @@ public final class RaftEntity extends Entity {
 
     public int foundationHealth(BlockPos pos) { return foundationHealth.getOrDefault(pos,100); }
     public boolean reinforcedFoundation(BlockPos pos) { return reinforcedFoundations.contains(pos); }
+    public boolean seaLevelPlatform(BlockPos pos) {
+        var piece=structure.pieces().get(pos);
+        return layout.cells().contains(pos) || pos.getY()==0 && piece!=null && piece.kind()==RaftPiece.Kind.COLLECTION_NET;
+    }
+    public java.util.Set<BlockPos> seaLevelCells() {
+        var cells=new java.util.LinkedHashSet<>(layout.cells());
+        cells.addAll(structure.platforms());
+        return cells;
+    }
     public boolean attackableFoundation(BlockPos pos) { return edgeFoundation(pos) && !(reinforcedFoundation(pos) && dev.raftocean.config.RaftConfig.REINFORCEMENT.get()); }
     public boolean reinforceFoundation(BlockPos pos,Player player,InteractionHand hand) {
         return reinforceFoundation(pos,player,player.getItemInHand(hand));
@@ -162,22 +171,22 @@ public final class RaftEntity extends Entity {
         if(isRemoved() || level().isClientSide() || !player.isAlive() || player.level()!=level()
                 || player.isSpectator() || !dev.raftocean.crew.CrewAccess.allowed(player,this)
                 || player.position().distanceToSqr(toWorld(new Vec3(pos.getX(),DECK_HEIGHT,pos.getZ())))>64
-                || !blocks.containsKey(pos) || reinforcedFoundation(pos)
+                || !seaLevelPlatform(pos) || reinforcedFoundation(pos)
                 || !dev.raftocean.config.RaftConfig.REINFORCEMENT.get() || !held.is(dev.raftocean.survival.CraftingExpansion.item("reinforced_brace")))return false;
         reinforcedFoundations.add(pos.immutable());
         if(!player.getAbilities().instabuild){held.shrink(1);player.getInventory().setChanged();}
         publishHealth();return true;
     }
     public boolean edgeFoundation(BlockPos pos) {
-        return blocks.containsKey(pos) && java.util.List.of(pos.north(),pos.south(),pos.east(),pos.west()).stream().anyMatch(p->!blocks.containsKey(p));
+        return seaLevelPlatform(pos) && java.util.List.of(pos.north(),pos.south(),pos.east(),pos.west()).stream().anyMatch(p->!seaLevelPlatform(p));
     }
     private void publishHealth() {
-        getEntityData().set(HEALTH,layout.cells().stream().filter(pos->foundationHealth.containsKey(pos) || reinforcedFoundation(pos))
+        getEntityData().set(HEALTH,seaLevelCells().stream().filter(pos->foundationHealth.containsKey(pos) || reinforcedFoundation(pos))
                 .map(pos->pos.getX()+","+pos.getZ()+","+foundationHealth(pos)+","+(reinforcedFoundation(pos)?1:0)).collect(java.util.stream.Collectors.joining(";")));
         rebuildLayout();
     }
     public boolean repairFoundation(BlockPos pos, Player player) {
-        if(isRemoved() || level().isClientSide() || !blocks.containsKey(pos) || foundationHealth(pos)==100) { return false; }
+        if(isRemoved() || level().isClientSide() || !seaLevelPlatform(pos) || foundationHealth(pos)==100) { return false; }
         if(!player.getAbilities().instabuild) {
             int supply=-1;
             for(int slot=0;slot<player.getInventory().getContainerSize();slot++) {
@@ -189,11 +198,15 @@ public final class RaftEntity extends Entity {
         foundationHealth.put(pos,Math.min(100,foundationHealth(pos)+25));publishHealth();return true;
     }
     public boolean damageFoundation(BlockPos pos, int amount) {
-        if(isRemoved() || !(level() instanceof ServerLevel server) || !blocks.containsKey(pos) || amount<=0 || !dev.raftocean.config.RaftConfig.RAFT_DAMAGE.get()
+        if(isRemoved() || !(level() instanceof ServerLevel server) || !seaLevelPlatform(pos) || amount<=0 || !dev.raftocean.config.RaftConfig.RAFT_DAMAGE.get()
                 || reinforcedFoundation(pos) && dev.raftocean.config.RaftConfig.REINFORCEMENT.get()) { return false; }
         int health=foundationHealth(pos)-Math.min(100,amount);
         if(health>0){foundationHealth.put(pos,health);publishHealth();return true;}
         var previous=new java.util.LinkedHashSet<>(layout.cells());
+        if(structure.breakNet(pos)){
+            var inventory=storage.remove(pos);
+            if(inventory!=null){net.minecraft.world.Containers.dropContents(server,BlockPos.containing(toWorld(new Vec3(pos.getX(),DECK_HEIGHT,pos.getZ()))),inventory);inventory.clearContent();}
+        }
         RaftLayout remainder=layout.afterDamage(pos, structure.platforms());
         if(remainder==null) {
             for(var entry:new LinkedHashMap<>(structure.pieces()).entrySet()){dropDetachedPiece(server,entry.getKey(),entry.getValue());}
@@ -207,12 +220,14 @@ public final class RaftEntity extends Entity {
             }
         }
         structure.pruneAfterDamage(layout).forEach((cell,piece)->dropDetachedPiece(server,cell,piece));
-        foundationHealth.keySet().retainAll(layout.cells());reinforcedFoundations.retainAll(layout.cells());publishLayout();publishHealth();navigation.sync();return true;
+        foundationHealth.keySet().retainAll(seaLevelCells());reinforcedFoundations.retainAll(seaLevelCells());publishLayout();publishHealth();navigation.sync();return true;
     }
     private void dropDetachedPiece(ServerLevel server,BlockPos pos,RaftPiece piece) {
         addonMachines.detach(pos,piece);
         Vec3 world=toWorld(new Vec3(pos.getX(),DECK_HEIGHT+pos.getY()-1,pos.getZ()));
         var inventory=storage.remove(pos);
+        if(reinforcedFoundations.remove(pos)){spawnAtLocation(server,new ItemStack(dev.raftocean.survival.CraftingExpansion.item("reinforced_brace")));}
+        foundationHealth.remove(pos);
         boolean spent = piece.kind()==RaftPiece.Kind.DISPOSABLE_ANCHOR && inventory!=null && inventory.enabled;
         if(inventory!=null){net.minecraft.world.Containers.dropContents(server,BlockPos.containing(world),inventory);inventory.clearContent();}
         if(spent)return;
@@ -291,6 +306,7 @@ public final class RaftEntity extends Entity {
             net.minecraft.world.Containers.dropContents(level(), BlockPos.containing(center), inventory);
             inventory.clearContent();
         }
+        foundationHealth.remove(pos);reinforcedFoundations.remove(pos);publishHealth();
         publishLayout();
         navigation.sync();
         return true;
@@ -536,7 +552,7 @@ public final class RaftEntity extends Entity {
         if(hammerBuild){held=dev.raftocean.building.BuildingHammer.preview(player,held);if(held.isEmpty())return null;}
         if(dev.raftocean.building.BuildingHammer.reinforcement(held)){
             String failure="";
-            if(pick.piece()!=null || !blocks.containsKey(pick.cell())){failure="foundation";}
+            if(!seaLevelPlatform(pick.cell())){failure="foundation";}
             else if(!dev.raftocean.config.RaftConfig.REINFORCEMENT.get()){failure="reinforce_disabled";}
             else if(reinforcedFoundation(pick.cell())){failure="reinforced";}
             else if(hammerBuild && !dev.raftocean.progression.Research.allowed(player,held)){failure="research";}
@@ -632,6 +648,7 @@ public final class RaftEntity extends Entity {
                     ? InteractionResult.SUCCESS : InteractionResult.PASS;
         }
         if (remove) {
+            boolean armored=reinforcedFoundation(selected);
             boolean spentAnchor = selectedPiece!=null && selectedPiece.kind()==RaftPiece.Kind.DISPOSABLE_ANCHOR && storage(selected).enabled;
             RaftLayout candidate = RaftLayout.decode(layout.encode(), structure.platforms());
             boolean removed = selectedPiece != null ? removeStructuralPiece(selected)
@@ -640,7 +657,6 @@ public final class RaftEntity extends Entity {
                 player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("raft_ocean.build.connected"));
                 return InteractionResult.FAIL;
             }
-            boolean armored=selectedPiece==null && reinforcedFoundation(selected);
             if (selectedPiece == null) { layout = candidate; foundationHealth.remove(selected);reinforcedFoundations.remove(selected); publishLayout(); publishHealth(); }
             if (!player.getAbilities().instabuild && !spentAnchor) {
                 spawnAtLocation((ServerLevel) level(), new ItemStack(selectedPiece == null
@@ -649,12 +665,12 @@ public final class RaftEntity extends Entity {
             }
             return InteractionResult.SUCCESS_SERVER;
         }
-        if(selectedPiece==null && held.is(dev.raftocean.survival.CraftingExpansion.item("reinforced_brace"))) {
+        if(seaLevelPlatform(selected) && held.is(dev.raftocean.survival.CraftingExpansion.item("reinforced_brace"))) {
             boolean done=reinforceFoundation(selected,player,hand);
             player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable(done?"raft_ocean.reinforce.done":"raft_ocean.reinforce.help"));
             return done?InteractionResult.SUCCESS_SERVER:InteractionResult.FAIL;
         }
-        if(held.is(ModContent.BUILDING_HAMMER.get()) && selectedPiece==null) {
+        if(held.is(ModContent.BUILDING_HAMMER.get()) && seaLevelPlatform(selected)) {
             boolean repaired=repairFoundation(selected,player);
             player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable(repaired ? "raft_ocean.repair.done" : "raft_ocean.repair.help",foundationHealth(selected)));
             return repaired ? InteractionResult.SUCCESS_SERVER : InteractionResult.FAIL;
@@ -929,7 +945,7 @@ public final class RaftEntity extends Entity {
         output.putInt("DeckVersion", 4);
         output.putFloat("HullYaw", getYRot());
         var health=output.childrenList("FoundationHealth");
-        layout.cells().stream().filter(pos->foundationHealth.containsKey(pos) || reinforcedFoundation(pos)).forEach(pos->{var entry=health.addChild();entry.putInt("X",pos.getX());entry.putInt("Z",pos.getZ());entry.putInt("HP",foundationHealth(pos));entry.putBoolean("Armored",reinforcedFoundation(pos));});
+        seaLevelCells().stream().filter(pos->foundationHealth.containsKey(pos) || reinforcedFoundation(pos)).forEach(pos->{var entry=health.addChild();entry.putInt("X",pos.getX());entry.putInt("Z",pos.getZ());entry.putInt("HP",foundationHealth(pos));entry.putBoolean("Armored",reinforcedFoundation(pos));});
         output.putString("Layout", layout.encode());
         output.putString("Structure", structure.encode());
         addonMachines.save(output);
@@ -968,7 +984,7 @@ public final class RaftEntity extends Entity {
         storage.clear();foundationHealth.clear();reinforcedFoundations.clear();
         for(var entry:input.childrenListOrEmpty("FoundationHealth")) {
             BlockPos pos=new BlockPos(entry.getIntOr("X",0),0,entry.getIntOr("Z",0));
-            if(layout.cells().contains(pos)){foundationHealth.put(pos,Math.clamp(entry.getIntOr("HP",100),1,100));if(entry.getBooleanOr("Armored",false))reinforcedFoundations.add(pos);}
+            if(seaLevelPlatform(pos)){foundationHealth.put(pos,Math.clamp(entry.getIntOr("HP",100),1,100));if(entry.getBooleanOr("Armored",false))reinforcedFoundations.add(pos);}
         }
         for (var entry : input.childrenListOrEmpty("StationStorage")) {
             BlockPos pos = new BlockPos(entry.getIntOr("X", 0), entry.getIntOr("Y", 0), entry.getIntOr("Z", 0));

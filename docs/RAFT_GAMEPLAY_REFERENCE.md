@@ -24,6 +24,13 @@ The comparisons with the mod and the priority order are our engineering assessme
 
 ## Implemented follow-up
 
+0.13.11 extends the hammer armor interaction to sea-level collection nets.
+Nets participate in edge targeting, saved platform health and plank repairs.
+Armor prevents shark damage while protection is enabled. Net bridge destruction
+prunes disconnected pieces with their cargo. Reference:
+[Foundation Armor](https://raft.fandom.com/wiki/Foundation_Armor).
+Addons gain platform inspection snapshots for damage-monitoring machines.
+
 0.13.10 adds reinforcement selection to the hammer palette. One existing crafted
 Reinforced Brace protects an existing foundation with a target preview, research
 gate and backpack supply. Original-game reference rechecked 2026-11-18:

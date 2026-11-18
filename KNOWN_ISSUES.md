@@ -1,10 +1,10 @@
-# Known limitations — 0.13.10 preview
+# Known limitations — 0.13.11 preview
 
 - The hammer palette uses already crafted pieces and reinforcement braces, with an item count per choice.
   Raw-material construction, a radial wheel and remote storage supply are future
   work. Sneak-use keeps its existing dismantle action.
-  Reinforcement currently applies to foundations. Collection-net armor remains
-  future work. Live palette appearance and real co-op latency still need testing.
+  Reinforcement applies to foundations and sea-level collection nets.
+  Live palette appearance and real co-op latency still need testing.
 
 - Juicers use native portable batteries, four food slots and separate glass serving.
   Wired/foreign energy, bonus-water reserves and invalid-recipe leftovers are absent.

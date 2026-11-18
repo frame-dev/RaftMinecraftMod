@@ -10,6 +10,14 @@ ModDevGradle 2.0.147 and Gradle 9.2.1. All peers need matching main-mod and addo
 versions. `RaftBuildables.API_VERSION` is 3. Check supported versions with a
 range, rather than assuming every future API version is compatible.
 
+## Platform diagnostics added in 0.13.11
+
+The [platform inspection API](PLATFORM_API.md) exposes immutable foundation and
+sea-level net snapshots, including health, installed armor, active protection
+and exposed edges. It includes a complete machine-monitor example.
+Addons calling these methods require main-mod version [0.13.11,0.14).
+Existing API3 utility consumers retain their contracts.
+
 ## Complete working projects
 
 The [example addon](../examples/raft-addon/README.md) includes:

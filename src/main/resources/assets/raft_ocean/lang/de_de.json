@@ -523,8 +523,8 @@
   "item.raft_ocean.raft_wide_floor": "Breiter Boden",
   "item.raft_ocean.raft_wide_crafting_table": "Breite Werkbank",
   "item.raft_ocean.raft_addon": "Addon-Platzhalter",
-  "raft_ocean.reinforce.done": "Fundament verstärkt. Haie können es nicht beschädigen.",
-  "raft_ocean.reinforce.help": "Mit einer verstärkten Strebe auf ein ungeschütztes Fundament zielen; Verstärkung muss aktiviert sein.",
+  "raft_ocean.reinforce.done": "Plattform verstärkt. Haie können sie nicht beschädigen.",
+  "raft_ocean.reinforce.help": "Ziele mit einer verstärkten Strebe auf ein ungeschütztes Fundament oder ein Netz auf Meereshöhe; Verstärkung muss aktiviert sein.",
   "raft_ocean.stash.result": "%s passende Rucksackgegenstände eingelagert. Schnellleiste bleibt erhalten.",
   "raft_ocean.config.building.foundationReinforcement": "Fundamentverstärkung",
   "raft_ocean.config.building.quickStash": "Schnelles Einlagern",
@@ -929,9 +929,9 @@
   "raft_ocean.config.building.hammerPalette": "Bauhammerauswahl aktivieren",
   "raft_ocean.hammer.tip": "In die Luft benutzen, um Bauteile zu wählen. Schleichend benutzen zum Abbauen.",
   "raft_ocean.hammer.selected": "Auswahl: %s",
-  "raft_ocean.ghost.reinforce_ready": "Rechtsklick zum Verstärken dieses Fundaments",
-  "raft_ocean.ghost.reinforce_disabled": "Fundamentverstärkung ist deaktiviert",
-  "raft_ocean.ghost.reinforced": "Dieses Fundament ist bereits verstärkt",
-  "raft_ocean.build.reinforce_disabled": "Fundamentverstärkung ist deaktiviert.",
-  "raft_ocean.build.reinforced": "Dieses Fundament ist bereits verstärkt."
+  "raft_ocean.ghost.reinforce_ready": "Rechtsklick zum Verstärken dieser Plattform",
+  "raft_ocean.ghost.reinforce_disabled": "Plattformverstärkung ist deaktiviert",
+  "raft_ocean.ghost.reinforced": "Diese Plattform ist bereits verstärkt",
+  "raft_ocean.build.reinforce_disabled": "Plattformverstärkung ist deaktiviert.",
+  "raft_ocean.build.reinforced": "Diese Plattform ist bereits verstärkt."
 }

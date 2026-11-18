@@ -1,7 +1,25 @@
-# Verification — 0.13.10 preview
+# Verification — 0.13.11 preview
 
 Checked through 2026-11-18: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
-ModDevGradle2.0.147, Gradle9.2.1. API3; handshake 13.10.
+ModDevGradle2.0.147, Gradle9.2.1. API3; handshake 13.11.
+
+- 0.13.11 development build and both server checks passed in
+  build/net-armor-0.13.11-final.log. Totals include 636 hammer assertions with
+  25 new net-armor/API checks, and 10,483 Ocean World replay assertions.
+  These cover saved armor/cargo, actual hammer use, duplicate protection,
+  plank repair costs, ten-bite net destruction, bridge pruning and cargo drops.
+  Snapshot tests cover values, copied mutable coordinates and immutable lists.
+- The final resource/package build passed in build/net-armor-0.13.11-package.log.
+  Packaged model, surface, 935-key EN/DE, research and story audits passed.
+- The documentation's PlatformMonitor example was compiled with the existing
+  addon examples against the exact 0.13.11 JAR. Build proof is in
+  build/platform-addon-0.13.11-verified.log. The initial addon check used a
+  relative init-script path resolved under the example project and failed;
+  using the absolute init-script path resolved the harness error.
+- Live appearance, co-op latency and old user saves remain pending.
+  The published GitHub release remains 0.13.10.
+
+- Earlier 0.13.10 publication and verification follows.
 
 - Published v0.13.10 preview on 2026-11-18 from tested commit
   461c5957073d0b83e0862fcbc97abc558da8f641. GitHub confirms non-draft,

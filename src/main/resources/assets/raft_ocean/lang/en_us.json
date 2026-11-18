@@ -523,8 +523,8 @@
   "item.raft_ocean.raft_wide_floor": "Wide Floor",
   "item.raft_ocean.raft_wide_crafting_table": "Wide Crafting Bench",
   "item.raft_ocean.raft_addon": "Addon placeholder",
-  "raft_ocean.reinforce.done": "Foundation reinforced. Sharks cannot damage it.",
-  "raft_ocean.reinforce.help": "Aim a Reinforced Brace at an unarmored foundation; reinforcement must be enabled.",
+  "raft_ocean.reinforce.done": "Platform reinforced. Sharks cannot damage it.",
+  "raft_ocean.reinforce.help": "Aim a Reinforced Brace at an unarmored foundation or sea-level net; reinforcement must be enabled.",
   "raft_ocean.stash.result": "Stored %s matching backpack items. Hotbar preserved.",
   "raft_ocean.config.building.foundationReinforcement": "Foundation reinforcement",
   "raft_ocean.config.building.quickStash": "Quick stash",
@@ -929,9 +929,9 @@
   "raft_ocean.config.building.hammerPalette": "Enable building hammer palette",
   "raft_ocean.hammer.tip": "Use in air to choose crafted pieces. Sneak-use dismantles.",
   "raft_ocean.hammer.selected": "Selected: %s",
-  "raft_ocean.ghost.reinforce_ready": "Right-click to reinforce this foundation",
-  "raft_ocean.ghost.reinforce_disabled": "Foundation reinforcement is disabled",
-  "raft_ocean.ghost.reinforced": "This foundation is already reinforced",
-  "raft_ocean.build.reinforce_disabled": "Foundation reinforcement is disabled.",
-  "raft_ocean.build.reinforced": "This foundation is already reinforced."
+  "raft_ocean.ghost.reinforce_ready": "Right-click to reinforce this platform",
+  "raft_ocean.ghost.reinforce_disabled": "Platform reinforcement is disabled",
+  "raft_ocean.ghost.reinforced": "This platform is already reinforced",
+  "raft_ocean.build.reinforce_disabled": "Platform reinforcement is disabled.",
+  "raft_ocean.build.reinforced": "This platform is already reinforced."
 }
