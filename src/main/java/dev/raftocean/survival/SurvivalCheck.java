@@ -200,6 +200,7 @@ public final class SurvivalCheck {
             checks += AutomationCheck.run(level);
             checks += BatteryCheck.run(level);
             checks += StarterSurvivalCheck.run(level);
+            checks += BonusThirstCheck.run(level);
             checks += dev.raftocean.compat.CompatibilityCheck.run(level);
             return checks;
         } finally {

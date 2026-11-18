@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.13.12 preview — prepared-drink bonus thirst
+
+- Prepared juices add a capped reserve that drains before normal hydration.
+- Purple HUD reserve meter, translated drink guidance and low-water warning handling.
+- Saved reserve and depletion progress, with a death reset and Peaceful exemptions.
+- Configurable gain and depletion multiplier, independent of potion-effect bonuses.
+- Matching 0.13.12 clients/server use handshake 13.12.
+
+
 ## 0.13.11 preview — collection-net armor and addon inspection
 
 - Hammer and direct-brace armor for sea-level collection nets, saved alongside cargo.

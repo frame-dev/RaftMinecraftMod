@@ -1,7 +1,20 @@
-# Verification — 0.13.11 preview
+# Verification — 0.13.12 preview
 
 Checked through 2026-11-18: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
-ModDevGradle2.0.147, Gradle9.2.1. API3; handshake 13.11.
+ModDevGradle2.0.147, Gradle9.2.1. API3; handshake 13.12.
+
+- 0.13.12 build, bootstrap and Ocean World replay passed in
+  build/bonus-thirst-0.13.12.log. The survival suite includes 21 focused reserve
+  assertions covering actual juice consumption/glass return, fresh-water
+  behavior, caps, zero gain, drain boundaries, batched timing, sprinting,
+  native save/load, death and non-death replacement, Creative and Peaceful.
+  The existing juicer suite also passed. The Ocean replay passed 10,483
+  assertions, and the bootstrap survival suite passed 993 assertions.
+- Package audits passed for 172 items, 787 blocks, 7 renderers, 27 polygon
+  meshes, 939 EN/DE keys and placeholders, all config presets, 30 research
+  projects/64 unlocks and 7 stable story plans/8 gates. Surface envelopes
+  match the 0.13.11 baseline. HUD position and real co-op sync need live checks.
+- The latest GitHub release remains 0.13.10. These are development artifacts.
 
 - 0.13.11 development build and both server checks passed in
   build/net-armor-0.13.11-final.log. Totals include 636 hammer assertions with

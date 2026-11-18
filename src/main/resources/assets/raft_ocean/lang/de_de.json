@@ -933,5 +933,9 @@
   "raft_ocean.ghost.reinforce_disabled": "Plattformverstärkung ist deaktiviert",
   "raft_ocean.ghost.reinforced": "Diese Plattform ist bereits verstärkt",
   "raft_ocean.build.reinforce_disabled": "Plattformverstärkung ist deaktiviert.",
-  "raft_ocean.build.reinforced": "Diese Plattform ist bereits verstärkt."
+  "raft_ocean.build.reinforced": "Diese Plattform ist bereits verstärkt.",
+  "raft_ocean.hud.hydration_reserve": "Reserve %s%%",
+  "raft_ocean.juicer.reserve_help": "+%s Bonusdurst; sinkt %s× langsamer",
+  "raft_ocean.config.survival.juiceBonusHydration": "Durstreserve durch zubereiteten Saft",
+  "raft_ocean.config.survival.bonusThirstPeriodMultiplier": "Multiplikator für Bonusdurst-Dauer"
 }

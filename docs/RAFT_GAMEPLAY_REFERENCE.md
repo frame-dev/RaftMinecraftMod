@@ -24,6 +24,12 @@ The comparisons with the mod and the priority order are our engineering assessme
 
 ## Implemented follow-up
 
+0.13.12 adds [bonus thirst from prepared juices](BONUS_THIRST.md), with saved
+reserve/progress, a separate HUD meter and configurable slower depletion.
+Reference rechecked 2026-11-18:
+[Thirst](https://raft.fandom.com/wiki/Thirst). The default gain is six points
+on the mod's twenty-point scale. Fresh-water cups retain ordinary hydration.
+
 0.13.11 extends the hammer armor interaction to sea-level collection nets.
 Nets participate in edge targeting, saved platform health and plank repairs.
 Armor prevents shark damage while protection is enabled. Net bridge destruction

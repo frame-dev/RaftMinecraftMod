@@ -17,6 +17,9 @@ public final class SurvivalContent {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> THIRST = ATTACHMENTS.register(
             "thirst", () -> AttachmentType.builder(() -> 20).serialize(Codec.intRange(0, 20).fieldOf("value"))
                     .sync((holder, player) -> holder == player, ByteBufCodecs.VAR_INT).build());
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> BONUS_THIRST = ATTACHMENTS.register(
+            "bonus_thirst", () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0, 20).fieldOf("value"))
+                    .sync((holder, player) -> holder == player, ByteBufCodecs.VAR_INT).build());
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<RaftBeds.Home>> BED_HOME = ATTACHMENTS.register(
             "bed_home", () -> AttachmentType.builder(() -> RaftBeds.Home.EMPTY).serialize(RaftBeds.Home.CODEC).copyOnDeath().build());
     public static final DeferredItem<Item> EMPTY_CUP = ModContent.ITEMS.registerItem("empty_cup", p -> new WaterCupItem(p.stacksTo(16), false));

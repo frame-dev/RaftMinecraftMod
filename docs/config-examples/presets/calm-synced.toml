@@ -3,6 +3,8 @@
 gameMode = "EASY"
 
 [survival]
+	juiceBonusHydration = 6
+	bonusThirstPeriodMultiplier = 2
 	# Prepare one cooking-pot batch per Cook press; false restores automatic cooking.
 	manualCooking = true
 	preparedMealBonuses = true

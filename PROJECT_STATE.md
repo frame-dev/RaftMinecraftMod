@@ -8,6 +8,21 @@
 
 - Updated: 2026-11-18.
 
+- Latest development: 0.13.12 preview, bonus thirst from prepared juices.
+  Targets remain Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+  ModDevGradle2.0.147, Gradle9.2.1 and API3. Matching handshake13.12.
+  Each juice adds6reserve points by default, capped20, draining before
+  normal hydration at twice the ordinary period. Sprinting still applies.
+  Reserve/progress are saved; death resets reserve. Exempt modes clear it.
+  Synced survival.juiceBonusHydration(0-20) and
+  survival.bonusThirstPeriodMultiplier(1-8); purple HUD and EN/DE guidance.
+  Potion-effect bonuses remain separately configurable.
+  Build/bootstrap/Ocean replay and packaged audits pass. The bootstrap
+  includes21focused reserve cases; Ocean replay passes10483assertions.
+  Published release remains0.13.10. Live HUD/co-op/older-save testing pending.
+  Milestones1-11implemented;12preview maintenance. Story remains open-ended.
+
+
 - Latest development: 0.13.11 preview, sea-level net armor and platform API.
   Targets remain Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
   ModDevGradle2.0.147 and Gradle9.2.1. API3, matching handshake13.11.

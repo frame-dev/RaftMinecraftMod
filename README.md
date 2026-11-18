@@ -1,12 +1,12 @@
-# Raft Ocean — 0.13.11 preview
+# Raft Ocean — 0.13.12 preview
 
-This development preview adds armor, repair and shark damage for sea-level
-collection nets. Use the hammer's Reinforced Brace selection on foundations or
-nets, and repair damaged nets with planks. Reinforced nets retain their armor
-and stored salvage across saves.
+This development preview adds [bonus thirst from prepared juices](docs/BONUS_THIRST.md).
+A separate reserve drains before ordinary hydration and lasts longer per point.
+Drink before an expedition, watch the purple HUD meter, and configure the amount
+and drain period. Reserve and partial depletion progress persist across saves.
 
-Addon authors can read platform health, armor and exposed edges through the
-new [platform inspection API](docs/PLATFORM_API.md).
+Collection-net armor, plank repairs and the addon platform inspection API are
+also included. See the [platform API guide](docs/PLATFORM_API.md) for addon usage.
 
 The [addon API v3](docs/API_V3_UTILITIES.md) supports utility
 inputs, preflighted processing, generator demand and opt-in output collection.
@@ -35,9 +35,9 @@ are not supported by this build.
 
 The published [0.13.10 preview release](https://github.com/frame-dev/RaftMinecraftMod/releases/tag/v0.13.10)
 includes the playable JAR, documentation, sources, addon SDK and checksums.
-The changes described here are in the 0.13.11 development preview.
+The changes described here are in the 0.13.12 development preview.
 
-Install `raft_ocean-0.13.11.jar` in the matching NeoForge profile's `mods`
+Install `raft_ocean-0.13.12.jar` in the matching NeoForge profile's `mods`
 folder. Keep exactly one Raft Ocean jar installed. Sources jars are for
 developers. Use the same version on every multiplayer client and server.
 

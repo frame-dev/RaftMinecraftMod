@@ -933,5 +933,9 @@
   "raft_ocean.ghost.reinforce_disabled": "Platform reinforcement is disabled",
   "raft_ocean.ghost.reinforced": "This platform is already reinforced",
   "raft_ocean.build.reinforce_disabled": "Platform reinforcement is disabled.",
-  "raft_ocean.build.reinforced": "This platform is already reinforced."
+  "raft_ocean.build.reinforced": "This platform is already reinforced.",
+  "raft_ocean.hud.hydration_reserve": "Reserve %s%%",
+  "raft_ocean.juicer.reserve_help": "+%s bonus thirst; drains %s× slower",
+  "raft_ocean.config.survival.juiceBonusHydration": "Prepared juice thirst reserve",
+  "raft_ocean.config.survival.bonusThirstPeriodMultiplier": "Bonus thirst period multiplier"
 }

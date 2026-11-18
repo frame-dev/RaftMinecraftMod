@@ -10,10 +10,11 @@ public final class ThirstHud {
     private ThirstHud() { }
     public static void draw(GuiGraphicsExtractor graphics, Minecraft minecraft) {
         int amount = Math.clamp(Thirst.value(minecraft.player), 0, 20);
-        int x = graphics.guiWidth()/2+8, y = graphics.guiHeight()-70;
-        boolean low = amount <= 4;
+        int reserve=Math.clamp(Thirst.reserve(minecraft.player),0,20);
+        int x = graphics.guiWidth()/2+8, y = graphics.guiHeight()-(reserve>0?86:70);
+        boolean low = amount <= 4 && reserve==0;
         int fill = low ? 0xFFFFA65F : 0xFF59D3EB;
-        graphics.fill(x-3,y-3,x+96,y+23,0xD9182B35);
+        graphics.fill(x-3,y-3,x+96,y+(reserve>0?39:23),0xD9182B35);
         graphics.fill(x-3,y-3,x+96,y-2,low ? 0xFFE89856 : 0xFF409FB8);
         graphics.text(minecraft.font,Component.translatable("raft_ocean.hud.hydration",amount*5),x,y,0xFFF0F6F8);
         for (int drop=0;drop<10;drop++) {
@@ -31,6 +32,11 @@ public final class ThirstHud {
                     graphics.fill(dx+2,dy+5,dx+3,dy+6,0xFFCDF8FF);
                 }
             }
+        }
+        if(reserve>0){
+            graphics.text(minecraft.font,Component.translatable("raft_ocean.hud.hydration_reserve",reserve*5),x,y+24,0xFFD7A4F4);
+            graphics.fill(x,y+35,x+90,y+38,0xFF426575);
+            graphics.fill(x,y+35,x+reserve*90/20,y+38,0xFFD7A4F4);
         }
         if(low) {
             int color=(minecraft.player.tickCount/10)%2==0 ? 0xFFFFCE91 : 0xFFFFA65F;

@@ -1,11 +1,12 @@
-# Juicer and prepared drinks — 0.13.8 preview
+# Juicer and prepared drinks — 0.13.12 preview
 
 The new Raft Juicer turns four crop/fruit portions into a prepared drink. Its
 battery, deliberate Blend action, finished batch and separate glass-serving step
 follow the core interaction described by the [Raft juicer reference](https://raft.fandom.com/wiki/Juicer).
 Names, recipes, bonuses and all models are original. This mod returns reusable
-glasses after drinking; it does not implement Raft's bonus-water meter, consumed
-glasses or invalid-recipe leftovers.
+glasses after drinking. Prepared drinks now add a separate
+[bonus-thirst reserve](BONUS_THIRST.md), with configurable gain and drain timing.
+Invalid-recipe leftovers remain future work.
 
 ## Research and crafting
 
@@ -70,7 +71,8 @@ server and refresh through the existing client recipe cache.
 | Orchard Cooler | 2 apples + 2 melon slices | Night Vision |
 | Shoreberry Tonic | 2 sweet berries + 1 carrot + 1 beetroot | Resistance I |
 
-All three restore twelve hydration by default, capped at twenty. The existing
+All three restore twelve hydration and add six bonus-thirst points by default.
+Both meters are capped at twenty. The reserve drains first at twice the normal period. The existing
 prepared-meal bonus enable/duration settings also govern drink bonuses; at
 defaults they last two minutes. Drinking refreshes a bonus instead of increasing
 its level. The ingredient crops use the existing farming and exploration systems.

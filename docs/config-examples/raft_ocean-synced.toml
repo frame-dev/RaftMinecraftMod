@@ -6,6 +6,8 @@ gameMode = "WORLD"
 	juicingEnabled = true
 	juicerSpeed = 1
 	juiceHydration = 12
+	juiceBonusHydration = 6
+	bonusThirstPeriodMultiplier = 2
 	# Prepare one cooking-pot batch per Cook press; false restores automatic cooking.
 	manualCooking = true
 	preparedMealBonuses = true
