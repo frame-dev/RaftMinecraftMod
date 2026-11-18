@@ -24,6 +24,12 @@ The comparisons with the mod and the priority order are our engineering assessme
 
 ## Implemented follow-up
 
+0.13.10 adds reinforcement selection to the hammer palette. One existing crafted
+Reinforced Brace protects an existing foundation with a target preview, research
+gate and backpack supply. Original-game reference rechecked 2026-11-18:
+[Foundation Armor](https://raft.fandom.com/wiki/Foundation_Armor). The mod retains
+its original brace recipe. Collection-net armor remains future work.
+
 0.13.9 adds priority6's [categorized hammer palette](HAMMER_PALETTE.md): persistent
 selection, crafted-piece inventory counts, research visibility and shared placement
 with ghosts, rotation, support, collision, crew checks and repair access. It spends

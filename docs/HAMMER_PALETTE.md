@@ -1,4 +1,4 @@
-# Building hammer palette — 0.13.9 preview
+# Building hammer palette — 0.13.10 preview
 
 The hammer now selects and places existing crafted raft pieces without moving
 those pieces into your hand. This adds the building-selection/repair portion of
@@ -38,7 +38,19 @@ Repair still consumes one plank and restores twenty-five foundation health.
 **Sneak-use/right-click still dismantles** using the existing support/refund rules,
 including when a build piece is selected. The build ghost is hidden while sneaking
 so the two actions are visually distinct. Unsneak before attempting to build.
-Foundation reinforcement still uses the existing metal brace item directly.
+### Reinforce foundations
+
+Select **Reinforced Brace** from **Structure** after learning its metal research.
+Keep crafted braces in your hotbar/backpack, then aim at an existing foundation.
+The ghost highlights that foundation. Right-click applies its armor and spends
+one ordinary brace. Already armored foundations, missing supplies and disabled
+reinforcement give a red preview. Crew guests cannot apply armor.
+The existing recipe yields two braces, so one recipe can protect two foundations.
+Armor is saved on the raft and prevents shark targeting/damage while reinforcement
+is enabled. Direct brace use remains available. Collection-net armor is future work.
+
+This uses the original-game [hammer armor interaction](https://raft.fandom.com/wiki/Foundation_Armor)
+with the mod's existing original brace recipe and foundation protection.
 
 ## Inventory, research and cooperation
 
@@ -76,10 +88,9 @@ False closes palette access and restores the old hammer's repair/rotate behavior
 Saved build choices remain on the item and become available again when re-enabled.
 Direct placement using existing building items remains available either way.
 
-No recipes, models, textures, movement formulas, predator delays or story chapters
-are changed in this update. Raw-material construction, a radial wheel, hammer-based
-reinforcement and remote storage supply are future work. API3 remains current.
-Matching0.13.9clients/server are required (movement handshake13.9).
+Raw-material construction, a radial wheel and remote storage supply are future
+work. API3 remains current.
+Matching 0.13.10 clients/server are required (movement handshake 13.10).
 
 ## Local playtest
 
@@ -90,6 +101,9 @@ Matching0.13.9clients/server are required (movement handshake13.9).
 - Choose Repair, damage/repair a foundation and test deliberate sneak dismantling.
 - Save/reload while holding a selected hammer, then test drifting/turning placement.
 - Repeat with a co-op crew member and guest, and test a registered addon machine.
+
+- Select Reinforced Brace, apply it to a foundation, and repeat on the same target.
+  Expect one brace spent on the first use and an already-reinforced message on the second.
 
 The automated evidence and outstanding live GUI/co-op checks are recorded in
 RELEASE_VERIFICATION.md. Existing user worlds are not opened by development checks.

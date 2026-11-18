@@ -6,7 +6,20 @@
 
 
 
-- Updated: 2026-11-08.
+- Updated: 2026-11-18.
+
+- Latest development: 0.13.10 preview, hammer foundation reinforcement.
+  Minecraft 26.3, NeoForge 26.3.0.48-beta, Java 25, ModDevGradle 2.0.147,
+  Gradle 9.2.1, API3 and matching movement/hammer handshake 13.10.
+  Select Reinforced Brace under Structure and use the hammer on a foundation.
+  Consumes one ordinary crafted brace from the backpack after research,
+  crew, target and configuration validation. Existing armor saves are retained.
+  Story remains open-ended. Milestones 1-11 implemented, 12 preview maintenance.
+  Full build, dedicated bootstrap and existing Ocean World replay pass,
+  including 611 hammer and 10,458 Ocean World assertions. Package/model,
+  language, research and story audits pass.
+  Live appearance/co-op/older-save testing remains pending.
+
 
 - 0.13.9 preview improvement: right-clicking debris with a cast grappling
   hook reels in the active cast. Right-clicking with an idle hook still picks

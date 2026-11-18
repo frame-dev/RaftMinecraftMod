@@ -113,10 +113,15 @@ public final class RaftOceanClient {
                     || !dev.raftocean.client.render.RaftPlacementGhost.belongsTo(raft)) {return;}
             var item=dev.raftocean.building.BuildingHammer.preview(game.player,game.player.getMainHandItem());var offhand=dev.raftocean.building.BuildingHammer.preview(game.player,game.player.getOffhandItem());
             if(!item.is(ModContent.FOUNDATION.get()) && ModContent.structuralKind(item)==null
-                    && !offhand.is(ModContent.FOUNDATION.get()) && ModContent.structuralKind(offhand)==null){return;}
+                    && !dev.raftocean.building.BuildingHammer.reinforcement(item)
+                    && !offhand.is(ModContent.FOUNDATION.get()) && ModContent.structuralKind(offhand)==null
+                    && !dev.raftocean.building.BuildingHammer.reinforcement(offhand)){return;}
+            boolean reinforcement=dev.raftocean.building.BuildingHammer.reinforcement(item)
+                    || item.isEmpty() && dev.raftocean.building.BuildingHammer.reinforcement(offhand);
+            String readyKey=reinforcement?"raft_ocean.ghost.reinforce_ready":"raft_ocean.ghost.ready";
             var label=ghost.valid() && ghost.piece()!=null && ghost.piece().kind().rotatable()
                     ?Component.translatable("raft_ocean.ghost.ready.rotate",ghost.piece().rotation()*90)
-                    :Component.translatable(ghost.valid()?"raft_ocean.ghost.ready":"raft_ocean.ghost."+ghost.failure());
+                    :Component.translatable(ghost.valid()?readyKey:"raft_ocean.ghost."+ghost.failure());
             int width=game.font.width(label),x=(graphics.guiWidth()-width)/2,y=graphics.guiHeight()/2+22;
             graphics.fill(x-5,y-3,x+width+5,y+12,0xBB102229);
             graphics.text(game.font,label,x,y,ghost.valid()?0xFF75E8BB:0xFFFF8D83);

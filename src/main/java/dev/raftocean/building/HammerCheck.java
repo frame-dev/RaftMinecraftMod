@@ -28,7 +28,7 @@ public final class HammerCheck {
         player.setXRot((float)-Math.toDegrees(Math.atan2(delta.y,delta.horizontalDistance())));
     }
     public static int run(ServerLevel level){
-        checks=0;boolean enabled=RaftConfig.HAMMER_PALETTE.get(),research=RaftConfig.RESEARCH.get(),permissions=RaftConfig.CREW_PERMISSIONS.get();
+        checks=0;boolean enabled=RaftConfig.HAMMER_PALETTE.get(),research=RaftConfig.RESEARCH.get(),permissions=RaftConfig.CREW_PERMISSIONS.get(),reinforcement=RaftConfig.REINFORCEMENT.get();
         var raft=new RaftEntity(ModContent.RAFT.get(),level);raft.setPos(8,level.getMaxY()-12,8);level.getChunkAt(BlockPos.containing(raft.position()));level.addFreshEntity(raft);
         var player=new FakePlayer(level,new GameProfile(UUID.randomUUID(),"HammerCheck"));var stranger=new FakePlayer(level,new GameProfile(UUID.randomUUID(),"HammerOther"));
         try{
@@ -85,8 +85,56 @@ public final class HammerCheck {
             }
             var forged=hammer.copy();net.minecraft.world.item.component.CustomData.update(DataComponents.CUSTOM_DATA,forged,tag->tag.putString(BuildingHammer.CHOICE,"minecraft:diamond"));
             require(BuildingHammer.selection(forged).isEmpty(),"Forged non-buildable item selection is ignored safely");
+            var brace=dev.raftocean.survival.CraftingExpansion.item("reinforced_brace");
+            int reinforceButton=button(menu,brace);
+            player.setData(Research.KNOWLEDGE,0);
+            require(!menu.allowed(reinforceButton-1) && !menu.clickMenuButton(player,reinforceButton),"Unresearched reinforcement stays locked in the palette");
+            BuildingHammer.choose(hammer,new ItemStack(brace));
+            aim(player,raft,new Vec3(1,.24,-1));
+            require(!raft.placeWithHammer(player,InteractionHand.MAIN_HAND).consumesAction(),"A forged brace selection cannot bypass research");
+            player.setData(Research.KNOWLEDGE,Research.ALL_PROJECTS);
+            require(menu.clickMenuButton(player,reinforceButton),"Known reinforcement is selectable in the structure category");
+            var targetCell=new BlockPos(1,0,-1);
+            RaftConfig.REINFORCEMENT.set(true);
+            require(raft.placement(player,hammer,raft.pick(player)).failure().equals("materials"),"Reinforcement ghost reports missing backpack braces");
+            var namedBrace=new ItemStack(brace);
+            namedBrace.set(DataComponents.CUSTOM_NAME,Component.literal("Keep this brace"));
+            player.getInventory().setItem(13,namedBrace);
+            require(!raft.placeWithHammer(player,InteractionHand.MAIN_HAND).consumesAction() && namedBrace.getCount()==1,"Reinforcement preserves component-bearing supplies");
+            player.getInventory().setItem(14,new ItemStack(brace,2));
+            RaftConfig.REINFORCEMENT.set(false);
+            require(raft.placement(player,hammer,raft.pick(player)).failure().equals("reinforce_disabled")
+                    && !raft.placeWithHammer(player,InteractionHand.MAIN_HAND).consumesAction(),"Disabled reinforcement gives a red ghost and spends no brace");
+            RaftConfig.REINFORCEMENT.set(true);
+            RaftConfig.CREW_PERMISSIONS.set(true);
+            player.setItemInHand(InteractionHand.OFF_HAND,new ItemStack(brace));
+            require(!raft.placeWithHammer(player,InteractionHand.MAIN_HAND).consumesAction()
+                    && !raft.reinforceFoundation(targetCell,player,InteractionHand.OFF_HAND),"Guest cannot reinforce through the hammer or direct API");
+            player.setItemInHand(InteractionHand.OFF_HAND,ItemStack.EMPTY);
+            RaftConfig.CREW_PERMISSIONS.set(false);
+            var reinforcementPlan=raft.placement(player,hammer,raft.pick(player));
+            require(reinforcementPlan.valid() && reinforcementPlan.cell().equals(targetCell)
+                    && raft.interact(player,InteractionHand.MAIN_HAND,Vec3.ZERO).consumesAction()
+                    && raft.reinforcedFoundation(targetCell) && player.getInventory().getItem(14).getCount()==1
+                    && player.getMainHandItem()==hammer,"Actual hammer reinforcement applies the ghost target, spends one brace and preserves the held hammer");
+            require(!raft.attackableFoundation(targetCell) && !raft.damageFoundation(targetCell,25),"Hammer reinforcement prevents shark targeting and foundation damage");
+            require(raft.placement(player,hammer,raft.pick(player)).failure().equals("reinforced")
+                    && !raft.placeWithHammer(player,InteractionHand.MAIN_HAND).consumesAction()
+                    && player.getInventory().getItem(14).getCount()==1,"Already reinforced foundations cannot consume a duplicate brace");
+            var savedRaft=net.minecraft.world.level.storage.TagValueOutput.createWithContext(net.minecraft.util.ProblemReporter.DISCARDING,level.registryAccess());
+            raft.saveWithoutId(savedRaft);
+            var restoredRaft=new RaftEntity(ModContent.RAFT.get(),level);
+            try{
+                restoredRaft.load(net.minecraft.world.level.storage.TagValueInput.create(net.minecraft.util.ProblemReporter.DISCARDING,level.registryAccess(),savedRaft.buildResult()));
+                require(restoredRaft.reinforcedFoundation(targetCell),"Hammer reinforcement survives the existing raft save format");
+            }finally{restoredRaft.discard();}
+            aim(player,raft,new Vec3(-1,1,-1.48));
+            require(raft.pick(player)!=null && raft.pick(player).piece()!=null
+                    && raft.placement(player,hammer,raft.pick(player)).failure().equals("foundation")
+                    && !raft.placeWithHammer(player,InteractionHand.MAIN_HAND).consumesAction(),"Reinforcement rejects walls without spending materials");
+            aim(player,raft,new Vec3(1,.24,-1));
             require(menu.clickMenuButton(player,0) && BuildingHammer.selection(hammer).isEmpty(),"Repair control clears build mode");
-            var repairCell=new BlockPos(1,0,-1);raft.damageFoundation(repairCell,25);player.getInventory().setItem(12,new ItemStack(Items.OAK_PLANKS,2));aim(player,raft,new Vec3(1,.24,-1));
+            var repairCell=new BlockPos(0,0,-1);raft.damageFoundation(repairCell,25);player.getInventory().setItem(12,new ItemStack(Items.OAK_PLANKS,2));aim(player,raft,new Vec3(0,.24,-1));
             require(raft.interact(player,InteractionHand.MAIN_HAND,Vec3.ZERO).consumesAction() && raft.foundationHealth(repairCell)==100 && player.getInventory().getItem(12).getCount()==1,"Legacy hammer repair still spends one plank and repairs twenty-five health");
             require(menu.clickMenuButton(player,foundation),"Return to build mode");RaftConfig.HAMMER_PALETTE.set(false);
             require(!menu.stillValid(player) && !menu.clickMenuButton(player,0) && BuildingHammer.selection(hammer).isEmpty(),"Config disable closes palette and returns legacy hammer behavior");
@@ -94,6 +142,18 @@ public final class HammerCheck {
             player.setItemInHand(InteractionHand.MAIN_HAND,hammer.copy());require(!menu.stillValid(player) && !menu.clickMenuButton(player,0),"Replacing held hammer invalidates old session");
             player.setItemInHand(InteractionHand.MAIN_HAND,ItemStack.EMPTY);player.setItemInHand(InteractionHand.OFF_HAND,hammer);var off=new HammerMenu(5,player.getInventory(),InteractionHand.OFF_HAND);
             require(off.stillValid(player) && off.clickMenuButton(player,foundation),"Offhand palette tracks its actual hammer");
+            require(off.clickMenuButton(player,reinforceButton),"Offhand hammer can choose foundation reinforcement");
+            player.getInventory().setItem(14,ItemStack.EMPTY);
+            aim(player,raft,new Vec3(1,.24,0));
+            var offhandPlan=raft.placement(player,hammer,raft.pick(player));
+            require(offhandPlan!=null && offhandPlan.failure().equals("materials")
+                    && !raft.placeWithHammer(player,InteractionHand.OFF_HAND).consumesAction(),"Offhand reinforcement needs ordinary supplies in survival");
+            player.getAbilities().instabuild=true;
+            require(raft.placement(player,hammer,raft.pick(player)).valid()
+                    && raft.placeWithHammer(player,InteractionHand.OFF_HAND).consumesAction()
+                    && raft.reinforcedFoundation(new BlockPos(1,0,0))
+                    && player.getOffhandItem()==hammer,"Creative offhand hammer reinforces without supplies or hand swapping");
+            require(off.clickMenuButton(player,foundation),"Offhand hammer can return to foundation building after reinforcement");
             player.getAbilities().instabuild=true;player.getInventory().setItem(9,ItemStack.EMPTY);aim(player,raft,new Vec3(1.48,.24,-1));
             require(raft.placeWithHammer(player,InteractionHand.OFF_HAND).consumesAction() && raft.getBlocks().containsKey(new BlockPos(2,0,-1)) && player.getItemInHand(InteractionHand.OFF_HAND)==hammer,"Creative placement needs no prefab and preserves the offhand hammer");player.getAbilities().instabuild=false;
             raft.setYRot(73);raft.setPos(raft.position().add(16,0,16));level.getChunkAt(BlockPos.containing(raft.position()));player.setPos(raft.toWorld(new Vec3(0,.626,0)));
@@ -109,7 +169,7 @@ public final class HammerCheck {
             }finally{buffer.release();}
             return checks + dev.raftocean.network.RaftBuildRotationCheck.run(level);
         }finally{
-            raft.discard();player.discard();stranger.discard();RaftConfig.HAMMER_PALETTE.set(enabled);RaftConfig.RESEARCH.set(research);RaftConfig.CREW_PERMISSIONS.set(permissions);
+            raft.discard();player.discard();stranger.discard();RaftConfig.HAMMER_PALETTE.set(enabled);RaftConfig.RESEARCH.set(research);RaftConfig.CREW_PERMISSIONS.set(permissions);RaftConfig.REINFORCEMENT.set(reinforcement);
         }
     }
     private HammerCheck() { }

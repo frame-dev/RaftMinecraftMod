@@ -22,6 +22,8 @@ public final class BuildingHammer extends Item {
     public BuildingHammer(Properties properties){super(properties);}
     public static List<Entry> catalog(){
         Map<Item,Entry> items=new HashMap<>();items.put(ModContent.FOUNDATION.get(),new Entry(ModContent.FOUNDATION.get(),0));
+        var brace=dev.raftocean.survival.CraftingExpansion.item("reinforced_brace");
+        items.put(brace,new Entry(brace,0));
         for(var kind:RaftPiece.Kind.values())if(kind!=RaftPiece.Kind.ADDON){
             int category=kind.furniture()?2:kind==RaftPiece.Kind.COLLECTION_NET?0:kind.station() || kind.navigation()?1:0;
             var item=ModContent.structuralItem(kind);items.put(item,new Entry(item,category));
@@ -31,9 +33,12 @@ public final class BuildingHammer extends Item {
         if(entries.size()>512)throw new IllegalStateException("Hammer palette exceeds its bounded menu capacity");return entries;
     }
     private static boolean buildable(ItemStack stack){
-        if(stack.is(ModContent.FOUNDATION.get()) || RaftBuildables.forItem(stack).isPresent())return true;
+        if(stack.is(ModContent.FOUNDATION.get()) || reinforcement(stack) || RaftBuildables.forItem(stack).isPresent())return true;
         var kind=ModContent.structuralKind(stack);
         return kind!=null && kind!=RaftPiece.Kind.ADDON && BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("raft_ocean");
+    }
+    public static boolean reinforcement(ItemStack stack){
+        return stack.is(dev.raftocean.survival.CraftingExpansion.item("reinforced_brace"));
     }
     public static ItemStack selection(ItemStack hammer){
         if(!hammer.is(ModContent.BUILDING_HAMMER.get()) || !dev.raftocean.config.RaftConfig.HAMMER_PALETTE.get())return ItemStack.EMPTY;

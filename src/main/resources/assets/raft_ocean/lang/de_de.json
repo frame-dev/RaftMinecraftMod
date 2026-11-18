@@ -928,5 +928,10 @@
   "raft_ocean.ghost.research": "Forschung erforderlich",
   "raft_ocean.config.building.hammerPalette": "Bauhammerauswahl aktivieren",
   "raft_ocean.hammer.tip": "In die Luft benutzen, um Bauteile zu wählen. Schleichend benutzen zum Abbauen.",
-  "raft_ocean.hammer.selected": "Auswahl: %s"
+  "raft_ocean.hammer.selected": "Auswahl: %s",
+  "raft_ocean.ghost.reinforce_ready": "Rechtsklick zum Verstärken dieses Fundaments",
+  "raft_ocean.ghost.reinforce_disabled": "Fundamentverstärkung ist deaktiviert",
+  "raft_ocean.ghost.reinforced": "Dieses Fundament ist bereits verstärkt",
+  "raft_ocean.build.reinforce_disabled": "Fundamentverstärkung ist deaktiviert.",
+  "raft_ocean.build.reinforced": "Dieses Fundament ist bereits verstärkt."
 }

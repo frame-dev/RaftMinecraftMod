@@ -1,7 +1,27 @@
-# Verification — 0.13.9 preview
+# Verification — 0.13.10 preview
 
-Checked through 2026-11-08: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
-ModDevGradle2.0.147, Gradle9.2.1. API3; handshake13.9.
+Checked through 2026-11-18: Minecraft26.3, NeoForge26.3.0.48-beta, Java25,
+ModDevGradle2.0.147, Gradle9.2.1. API3; handshake 13.10.
+
+- Release candidate 0.13.10 was checked on 2026-11-18 with the project targets
+  above and movement/hammer handshake 13.10. Hammer reinforcement uses the
+  existing foundation save data, original brace recipe and shark protection.
+  Build and both completion-message guards passed in
+  build/release-0.13.10-verified.log, with 611 bootstrap hammer assertions and
+  10,458 Ocean World replay assertions. Existing crafting (263,891), research
+  (784), movement (2,904), collision (425) and salvage (120) suites passed.
+  New cases cover research/forged selection, component-bearing supplies,
+  configuration, real crew guest denial, exact consumption, duplicate clicks,
+  save/load, shark targeting/damage, invalid walls and offhand/creative use.
+  User worlds and active client outputs were kept separate from these checks.
+  Package audits passed for 172 items, 787 blocks, 7 renderers and 27 polygon
+  meshes; 935 English/German keys and placeholders; 30 research projects and 64
+  unlocks; 7 stable story plans and 8 gates. The surface audit passed against
+  the 0.13.9 baseline. Its initial missing Pillow dependency was resolved in
+  the ignored task tools before rerunning successfully.
+  Live palette appearance, real co-op latency and older user saves need testing.
+
+- Earlier 0.13.9 development verification follows.
 
 - The hook regression reproduced the debris click intercepting retrieval in
   build/hook-reel-before.log. With the fix, build, dedicated bootstrap and the

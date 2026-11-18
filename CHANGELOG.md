@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.10 preview — 2026-11-18 — hammer reinforcement
+
+- Select Reinforced Brace from the hammer Structure category and apply it to existing foundations.
+- Backpack counts, research gates, missing-supply and already-reinforced previews.
+- One crafted brace per successful foundation, with crew permissions and saved armor.
+- Includes the hammer palette and respawn rotation, bait-cast and salvage fixes since 0.13.8.
+- Matching 0.13.10 clients/server use handshake 13.10.
+
 ## 0.13.9 preview — categorized building hammer
 
 - A native hammer palette selects structure, equipment, cabin and addon pieces.

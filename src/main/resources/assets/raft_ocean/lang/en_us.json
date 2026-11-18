@@ -928,5 +928,10 @@
   "raft_ocean.ghost.research": "Research required",
   "raft_ocean.config.building.hammerPalette": "Enable building hammer palette",
   "raft_ocean.hammer.tip": "Use in air to choose crafted pieces. Sneak-use dismantles.",
-  "raft_ocean.hammer.selected": "Selected: %s"
+  "raft_ocean.hammer.selected": "Selected: %s",
+  "raft_ocean.ghost.reinforce_ready": "Right-click to reinforce this foundation",
+  "raft_ocean.ghost.reinforce_disabled": "Foundation reinforcement is disabled",
+  "raft_ocean.ghost.reinforced": "This foundation is already reinforced",
+  "raft_ocean.build.reinforce_disabled": "Foundation reinforcement is disabled.",
+  "raft_ocean.build.reinforced": "This foundation is already reinforced."
 }

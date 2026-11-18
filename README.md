@@ -1,10 +1,11 @@
-# Raft Ocean — 0.13.9 preview
+# Raft Ocean — 0.13.10 preview
 
-This update adds a [building hammer palette](docs/HAMMER_PALETTE.md).
-Choose crafted pieces by category, keep the hammer equipped and place from your
-backpack with the existing ghosts, support, collision and crew checks. Repair,
-rotation and deliberate sneak dismantling remain available. The juicer, recycling,
-cooperative sailing and open-ended story are retained.
+This update adds foundation reinforcement to the [building hammer palette](docs/HAMMER_PALETTE.md).
+Select Reinforced Brace in Structure, keep crafted braces in your backpack, and
+right-click an existing foundation to protect it from shark damage. The ghost
+reports missing supplies, disabled reinforcement and already armored foundations.
+The release also includes the palette, respawn rotation and salvage/fishing fixes
+developed since 0.13.8.
 
 The [addon API v3](docs/API_V3_UTILITIES.md) supports utility
 inputs, preflighted processing, generator demand and opt-in output collection.
@@ -31,11 +32,10 @@ are not supported by this build.
 
 ## Install and start
 
-The latest published [0.13.8 preview release](https://github.com/frame-dev/RaftMinecraftMod/releases/tag/v0.13.8)
-contains the earlier playable JAR, documentation bundle, sources, SDK and checksums.
-The 0.13.9 development preview below adds the hammer palette and is not a GitHub release yet.
+The [0.13.10 preview release](https://github.com/frame-dev/RaftMinecraftMod/releases/tag/v0.13.10)
+includes the playable JAR, documentation bundle, sources, addon SDK and checksums.
 
-Install `raft_ocean-0.13.9.jar` in the matching NeoForge profile's `mods`
+Install `raft_ocean-0.13.10.jar` in the matching NeoForge profile's `mods`
 folder. Keep exactly one Raft Ocean jar installed. Sources jars are for
 developers. Use the same version on every multiplayer client and server.
 

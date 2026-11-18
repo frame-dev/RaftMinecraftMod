@@ -156,8 +156,11 @@ public final class RaftEntity extends Entity {
     public boolean reinforcedFoundation(BlockPos pos) { return reinforcedFoundations.contains(pos); }
     public boolean attackableFoundation(BlockPos pos) { return edgeFoundation(pos) && !(reinforcedFoundation(pos) && dev.raftocean.config.RaftConfig.REINFORCEMENT.get()); }
     public boolean reinforceFoundation(BlockPos pos,Player player,InteractionHand hand) {
-        var held=player.getItemInHand(hand);
+        return reinforceFoundation(pos,player,player.getItemInHand(hand));
+    }
+    private boolean reinforceFoundation(BlockPos pos,Player player,ItemStack held) {
         if(isRemoved() || level().isClientSide() || !player.isAlive() || player.level()!=level()
+                || player.isSpectator() || !dev.raftocean.crew.CrewAccess.allowed(player,this)
                 || player.position().distanceToSqr(toWorld(new Vec3(pos.getX(),DECK_HEIGHT,pos.getZ())))>64
                 || !blocks.containsKey(pos) || reinforcedFoundation(pos)
                 || !dev.raftocean.config.RaftConfig.REINFORCEMENT.get() || !held.is(dev.raftocean.survival.CraftingExpansion.item("reinforced_brace")))return false;
@@ -531,6 +534,15 @@ public final class RaftEntity extends Entity {
         if(pick==null){return null;}
         boolean hammerBuild=held.is(ModContent.BUILDING_HAMMER.get());
         if(hammerBuild){held=dev.raftocean.building.BuildingHammer.preview(player,held);if(held.isEmpty())return null;}
+        if(dev.raftocean.building.BuildingHammer.reinforcement(held)){
+            String failure="";
+            if(pick.piece()!=null || !blocks.containsKey(pick.cell())){failure="foundation";}
+            else if(!dev.raftocean.config.RaftConfig.REINFORCEMENT.get()){failure="reinforce_disabled";}
+            else if(reinforcedFoundation(pick.cell())){failure="reinforced";}
+            else if(hammerBuild && !dev.raftocean.progression.Research.allowed(player,held)){failure="research";}
+            else if(hammerBuild && !player.getAbilities().instabuild && dev.raftocean.building.BuildingHammer.count(player,held)==0){failure="materials";}
+            return new Placement(pick.cell(),null,List.of(cellBox(pick.cell(),Vec3.ZERO)),failure);
+        }
         boolean foundation=held.is(ModContent.FOUNDATION.get());
         var kind=ModContent.structuralKind(held);
         if(!foundation && kind==null){return null;}
@@ -746,6 +758,11 @@ public final class RaftEntity extends Entity {
             player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("raft_ocean.build."+reason,
                     dev.raftocean.config.RaftConfig.FOUNDATION_LIMIT.get()));
             return InteractionResult.FAIL;
+        }
+        if(dev.raftocean.building.BuildingHammer.reinforcement(held)){
+            if(!reinforceFoundation(plan.cell(),player,held)){return InteractionResult.FAIL;}
+            player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("raft_ocean.reinforce.done"));
+            return InteractionResult.SUCCESS_SERVER;
         }
         var occupied=structure.pieces().get(plan.cell());
         boolean placed=plan.piece()==null?layout.add(plan.cell(),structure.platforms())
